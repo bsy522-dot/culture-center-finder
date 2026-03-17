@@ -1,0 +1,661 @@
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <title>홈플러스 문화센터</title>
+    <script type='text/javascript' src='//static.queue-it.net/script/queueclient.min.js'></script>
+    <script data-queueit-c='hmpqueueit'
+            type='text/javascript'
+            src='//static.queue-it.net/script/queueconfigloader.min.js'>
+    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+    <link rel="canonical" href="https://mschool.homeplus.co.kr">
+    <!--<meta name="robots" content="noindex,nofollow" />-->
+    <meta property="og:title" content="홈플러스 문화센터">
+    <meta property="og:url" content="https://mschool.homeplus.co.kr">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://mschool.homeplus.co.kr/images/common/OtherMobileAppImage.png">
+    <meta property="og:decsription" content="홈플러스 문화센터를 이용해주셔서 감사합니다.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" type="text/css" href="/css/common.css?v=20251217" />
+    <link rel="stylesheet" type="text/css" href="/css/newcultural.css?v=20251217_2" />
+
+</head>
+<body>
+
+    <div id="wrapper" class="wrap newHome_search_wrap">
+
+        <!-- header -->
+        <header class="header">
+            <div class="search_top_wrap">
+                <h2>수강신청</h2>
+                <a href="javascript:void(0)" onclick="document.referrer ? history.back() : location.href='/';"><i class="icon_close_1"><span class="visually_hidden">수강신청 닫기</span></i></a>
+            </div>
+            <div class="search_bottom_wrap">
+                <div class="search_box_wrap">
+                    <input type="text" class="ipt_search" placeholder="강좌명,강사명,강의일(예시: 1/1)로 입력" value="">
+                    <button type="button" class="btn_search_practice" onclick="sendSearchModel()"><i class="icon_search_gray_1"><span class="visually_hidden">검색</span></i></button>
+                </div>
+            </div>
+        </header>
+        <!-- //header -->
+
+        <section class="search_body">
+            <div class="search_menu_wrap">
+                <div class="menu_depth_1_wrap">
+                    <ul>
+                        <li class="on"><button type="button" class="btn_depth_1"><span>지점</span></button></li>
+                        <li><button type="button" class="btn_depth_1"><span>대상·강좌군</span></button></li>
+                        <li><button type="button" class="btn_depth_1"><span>강의일정</span></button></li>
+                        <li><button type="button" class="btn_depth_1"><span>강좌상태</span></button></li>
+                        <li><button type="button" class="btn_depth_1"><span>개강월</span></button></li>
+                    </ul>
+                </div>
+                <div class="menu_depth_2_wrap">
+                    <div class="tree_wrap">
+                        <div class="con">
+                            <!-- 지점 -->
+                            <ul class="tree_menu tree_menu_1 on">
+                                <!-- 2024-02-14 나의지점 추가 -->
+                                <li class="depth_2">
+                                    <button type="button" class="myStore__btn" data-store-code="">
+                                        <div>
+                                            <span class="myStore__tit">나의지점</span>
+                                            <span id="myStoreText" class="myStore__text"></span>
+                                        </div>
+                                    </button>
+                                </li>
+                                <!-- 2024-02-14 나의지점 추가 -->
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>서울</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;">
+                                        
+                                    </ul>
+                                </li>
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>인천, 부천</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;"></ul>
+                                </li>
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>수원, 화성</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;"></ul>
+                                </li>
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>경기</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;"></ul>
+                                </li>
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>대전, 세종</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;"></ul>
+                                </li>
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>충청</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;"></ul>
+                                </li>
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>광주, 전라</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;"></ul>
+                                </li>
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>강원</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;"></ul>
+                                </li>
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>대구</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;"></ul>
+                                </li>
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>울산</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;"></ul>
+                                </li>
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>경북</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;"></ul>
+                                </li>
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>경남</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;"></ul>
+                                </li>
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>부산</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;"></ul>
+                                </li>
+
+                            </ul>
+
+                            <!-- 대상.강좌군 -->
+                            <ul class="tree_menu tree_menu_2">
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>Adult</span><em></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;">
+                                        <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="AD"><span>Adult 전체</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="AD" data-lecture-group="1000"><span>공예DIY</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="AD" data-lecture-group="1100"><span>취미,뷰티</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="AD" data-lecture-group="1300"><span>미술</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="AD" data-lecture-group="1800"><span>악기</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="AD" data-lecture-group="1900"><span>언어,외국어</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="AD" data-lecture-group="2100"><span>쿠킹,베이킹</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="AD" data-lecture-group="2200"><span>댄스,운동</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="AD" data-lecture-group="2400"><span>음악,노래</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="AD" data-lecture-group="2500"><span>인문학,재테크</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="AD" data-lecture-group="3100"><span>자기계발,자녀교육</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="AD" data-lecture-group="3200"><span>소모임</span></button></li>
+                                    </ul>
+                                </li>
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>Kids</span><em></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;">
+                                        <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="MH|EL|IF"><span>Kids 전체</span></button></li>
+                                        
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="MH" data-lecture-group="2800"><span>진로창의체험</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="EL|IF" data-lecture-group="1300"><span>미술</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="EL|IF" data-lecture-group="1400"><span>인지사고력</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="EL|IF" data-lecture-group="1500"><span>수리과학</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="EL|IF" data-lecture-group="1600"><span>신체운동</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="EL|IF" data-lecture-group="1700"><span>댄스,무용</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="EL|IF" data-lecture-group="1900"><span>언어,외국어</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="EL|IF" data-lecture-group="2100"><span>쿠킹,베이킹</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="EL|IF" data-lecture-group="2300"><span>음악</span></button></li>
+                                    </ul>
+                                </li>
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>Baby</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;">
+                                        <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="BB"><span>Baby 전체</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="BB" data-lecture-group="1300"><span>미술</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="BB" data-lecture-group="1400"><span>인지사고력</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="BB" data-lecture-group="1600"><span>신체운동</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="BB" data-lecture-group="1900"><span>언어,외국어</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="BB" data-lecture-group="2100"><span>쿠킹,베이킹</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="BB" data-lecture-group="2300"><span>음악</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-target="BB" data-lecture-group="2900"><span>통합놀이</span></button></li>
+                                        <li class="depth_3_list_type2">
+                                            <div class="writing_wrap">
+                                                <span>우리아이 개월 수</span>
+                                                <input type="number" class="ipt_writing" title="개월 수 입력" value="">
+                                                <span>개월</span>
+                                            </div>
+                                            <button type="button" class="btn_depth_3_type2 btn_filter_add ipt_add ipt_baby" data-lecture-age=""><span class="visually_hidden">추가</span></button>
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>테마강좌</span><em></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;">
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-web-theme="360"><span>Only강좌</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-web-theme="240"><span>상품체험강좌콜라보클래스</span></button></li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <!-- 강의일정 -->
+                            <ul class="tree_menu tree_menu_3">
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>요일</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;">
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-week="2"><span>월요일</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-week="3"><span>화요일</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-week="4"><span>수요일</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-week="5"><span>목요일</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-week="6"><span>금요일</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-week="7"><span>토요일</span></button></li>
+                                            <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-week="1"><span>일요일</span></button></li>
+                                    </ul>
+                                </li>
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>횟수</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;">
+                                        <li><button type="button" class="btn_depth_3 btn_filter_add" data-class-count="1"><span>1회</span></button></li>
+                                        <li><button type="button" class="btn_depth_3 btn_filter_add" data-class-count="2|3|4|5"><span>2~5회</span></button></li>
+                                        <li><button type="button" class="btn_depth_3 btn_filter_add" data-class-count="6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30"><span>6회 이상</span></button></li>
+                                    </ul>
+                                </li>
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>시간</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;">
+                                        <li>
+                                            <button type="button" class="btn_depth_3 no_icon btn_filter_add" data-lecture-time-group="1">
+                                                <span>[오전] 09:00~12:50</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="btn_depth_3 no_icon btn_filter_add" data-lecture-time-group="2">
+                                                <span>[오후] 13:00~17:50</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="btn_depth_3 no_icon btn_filter_add" data-lecture-time-group="3">
+                                                <span>[저녁] 18:00~22:50</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <!-- 강좌상태 -->
+                            <ul class="tree_menu tree_menu_4">
+                                <li class="depth_2">
+                                    <button type="button" class="btn_tree_dpt2">
+                                        <span>수강신청중</span><em><span class="visually_hidden">하위폴더 닫힘</span></em>
+                                    </button>
+                                    <ul class="depth_3" style="display:none;">
+                                        <li><button type="button" class="btn_depth_3 btn_filter_add" data-lecture-status-search="1"><span>수강신청</span></button></li>
+                                        <li><button type="button" class="btn_depth_3 btn_filter_add" data-deadline="Y"><span>마감임박</span></button></li>
+                                        <li><button type="button" class="btn_depth_3 btn_filter_add" data-confirmed="Y"><span>개강확정</span></button></li>
+                                        <li><button type="button" class="btn_depth_3 btn_filter_add" data-discount="Y"><span>할인강좌</span></button></li>
+                                    </ul>
+                                </li>
+
+                                <li class="depth_2 depth_2_type2 item_4_3">
+                                    <button type="button" class="btn_tree_dpt2 btn_tree_dpt2_type2 btn_filter_add" data-lecture-status-search="2">
+                                        <span>대기신청</span>
+                                    </button>
+                                </li>
+                            </ul>
+
+                            <!-- 개강월 -->
+                            <ul class="tree_menu tree_menu_5">
+                                    <li class="depth_2 depth_2_type2 item_5_0">
+                                        <button type="button" class="btn_tree_dpt2 btn_tree_dpt2_type2 btn_filter_add" data-lecture-start-month="1">
+                                            <span>1월</span>
+                                        </button>
+                                    </li>
+                                    <li class="depth_2 depth_2_type2 item_5_1">
+                                        <button type="button" class="btn_tree_dpt2 btn_tree_dpt2_type2 btn_filter_add" data-lecture-start-month="2">
+                                            <span>2월</span>
+                                        </button>
+                                    </li>
+                                    <li class="depth_2 depth_2_type2 item_5_2">
+                                        <button type="button" class="btn_tree_dpt2 btn_tree_dpt2_type2 btn_filter_add" data-lecture-start-month="3">
+                                            <span>3월</span>
+                                        </button>
+                                    </li>
+                                    <li class="depth_2 depth_2_type2 item_5_3">
+                                        <button type="button" class="btn_tree_dpt2 btn_tree_dpt2_type2 btn_filter_add" data-lecture-start-month="4">
+                                            <span>4월</span>
+                                        </button>
+                                    </li>
+                                    <li class="depth_2 depth_2_type2 item_5_4">
+                                        <button type="button" class="btn_tree_dpt2 btn_tree_dpt2_type2 btn_filter_add" data-lecture-start-month="5">
+                                            <span>5월</span>
+                                        </button>
+                                    </li>
+                                    <li class="depth_2 depth_2_type2 item_5_5">
+                                        <button type="button" class="btn_tree_dpt2 btn_tree_dpt2_type2 btn_filter_add" data-lecture-start-month="6">
+                                            <span>6월</span>
+                                        </button>
+                                    </li>
+                                    <li class="depth_2 depth_2_type2 item_5_6">
+                                        <button type="button" class="btn_tree_dpt2 btn_tree_dpt2_type2 btn_filter_add" data-lecture-start-month="7">
+                                            <span>7월</span>
+                                        </button>
+                                    </li>
+                                    <li class="depth_2 depth_2_type2 item_5_7">
+                                        <button type="button" class="btn_tree_dpt2 btn_tree_dpt2_type2 btn_filter_add" data-lecture-start-month="8">
+                                            <span>8월</span>
+                                        </button>
+                                    </li>
+                                    <li class="depth_2 depth_2_type2 item_5_8">
+                                        <button type="button" class="btn_tree_dpt2 btn_tree_dpt2_type2 btn_filter_add" data-lecture-start-month="9">
+                                            <span>9월</span>
+                                        </button>
+                                    </li>
+                                    <li class="depth_2 depth_2_type2 item_5_9">
+                                        <button type="button" class="btn_tree_dpt2 btn_tree_dpt2_type2 btn_filter_add" data-lecture-start-month="10">
+                                            <span>10월</span>
+                                        </button>
+                                    </li>
+                                    <li class="depth_2 depth_2_type2 item_5_10">
+                                        <button type="button" class="btn_tree_dpt2 btn_tree_dpt2_type2 btn_filter_add" data-lecture-start-month="11">
+                                            <span>11월</span>
+                                        </button>
+                                    </li>
+                                    <li class="depth_2 depth_2_type2 item_5_11">
+                                        <button type="button" class="btn_tree_dpt2 btn_tree_dpt2_type2 btn_filter_add" data-lecture-start-month="12">
+                                            <span>12월</span>
+                                        </button>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- footer -->
+        <footer class="footer">
+            <div class="footer_top_scroll">
+                <!--<button type="button" class="btn_select_item"><span>서대전점</span></button>-->
+            </div>
+            <div class="footer_inner_bottom">
+                <button type="button" class="btn_reload"><i class="icon_reload_1"></i><span>초기화</span></button>
+                <button type="button" class="btn_reuslt_search" onclick="sendSearchModel()"><span>강좌검색</span></button>
+            </div>
+        </footer>
+        <!-- //footer -->
+
+    </div>
+
+    <link rel="stylesheet" href="/css/swiper.min.css" />
+    <script type="text/javascript" src="/Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/Scripts/swiper.min.js"></script>
+    <script type="text/javascript" src="/Scripts/common.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.redirect.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.querystring.js"></script>
+    <script type="text/javascript" src="/Scripts/utils.js?v=20180420"></script>
+    <script type="text/javascript" src="/Scripts/newhome_common.js"></script>
+    <script type="text/javascript" src="/Scripts/Views/Store.Search.js?v=2026031715"></script>
+    
+    <script type="text/javascript">
+
+        var makeSearchModel = function () {
+            var model = {};
+            var arr = [];
+
+            $("div.footer_top_scroll > button").each(function () {
+                var id = $(this).attr("id");
+                var txt = $(this).find("span").text();
+                var data = $(this).data();
+
+                var rtn = {
+                    id: id,
+                    txt: txt,
+                    data: data
+                };
+
+
+
+                arr.push(rtn);
+            });
+            model.prm = arr;
+
+            return model;
+        }
+
+        var sendSearchModel = function () {
+
+            var model = makeSearchModel();
+            model.word = $("input.ipt_search").val();
+
+            if (model.word != "" && model.word.length < 2) {
+                alert("검색어는 두글자 이상 입력해주세요.");
+                return false;
+            }
+
+            if (model.word == "" && model.prm.length < 1) {
+                alert("검색 조건을 추가해주세요.");
+                return false;
+            }
+
+            if (model.word == "" && model.prm.filter(function (x) { return x.data.storeCode; }).length < 1) {
+                alert("지점을 선택해주세요.");
+                return false;
+            }
+
+            $.redirect("/Lecture/SearchResult", model, "POST", null, null, true);
+        }
+
+        $(function () {
+
+            var areaList = Store.Area.List;
+            //console.log(areaList);
+
+            // 트리메뉴 세팅
+            $(".tree_menu_1 .btn_tree_dpt2").each(function () {
+                var txt = $(this).find("span:eq(0)").text();
+                var ul = $(this).next();
+                //ul.find("li").remove();
+                Store.Area.List.filter(function (x) { return x.AreaName == txt; }).forEach(function (e) {
+                    // 지역 전체
+                    var arrCode = Object.keys(e.Info).map(function (idx) { return e.Info[idx].StoreCode; });
+                    ul.append("<li><button type=\"button\" class=\"btn_depth_3 btn_filter_add\" data-store-code=\"" + arrCode.join('|') + "\"><span>" + e.AreaName + " 전체</span></button></li>");
+                    // 지점
+                    e.Info.forEach(function (t) {
+                        ul.append("<li><button type=\"button\" class=\"btn_depth_3 btn_filter_add\" data-store-code=\"" + t.StoreCode + "\"><span>" + t.StoreName + "</span></button></li>");
+                    });
+                });
+            });
+        });
+    </script>
+    <script>
+        // 문화센터 개선 2023
+        $(function () {
+            var isFull = false;
+
+            // 트리메뉴 초기화
+            $('.newHome_search_wrap .search_body .tree_menu').each(function () {
+                var tree_menu_idx = $(this).index() + 1;
+                $('>li', this).each(function () {
+                    if ($(this).hasClass('depth_2_type2')) {
+                        $(this).attr('data-id', 'item_' + tree_menu_idx + '_' + $(this).index());
+                    } else {
+                        var depth_2_idx = $(this).index();
+                        $('.depth_3 > li', this).each(function () {
+                            $(this).attr('data-id', 'item_' + tree_menu_idx + '_' + depth_2_idx + '_' + $(this).index());
+                        })
+                    }
+                })
+            })
+
+            // 검색 조건 추가 버튼 클릭
+            $(document).on('click', '.btn_filter_add', function () {
+                var item_id = $(this).closest('li').attr('data-id');
+                var txt = $('span', this).text();
+                var add_btn;
+                var age = 0;
+
+                if ($(this).hasClass('ipt_add')) {
+                    if (!$(this).closest('li').find('.ipt_writing').val()) {
+                        alert('우리아이 개월수 를 입력해주세요.');
+                        return;
+                    }
+                    age = $(this).closest('li').find('.ipt_writing').val();
+                    txt = age + ' 개월';
+                    $(this).data("lectureAge", age);
+                }
+
+                if (!$(this).hasClass('on') && $('#' + item_id).length == 0) {
+                    // 최대 10개
+                    if ($('.footer_top_scroll button').length >= 10) {
+                        isFull = true;
+                        alert("검색조건은 10개까지 선택하실 수 있습니다.");
+                        return;
+                    }
+                    if (!$(this).hasClass('btn_tree_dpt2_type2')) $(this).addClass('on');
+                    add_btn = "<button type='button' id='" + item_id + "' class='btn_select_item sub_dept3_item'><span>" + txt + "</span></button>";
+                    $('.footer_top_scroll').append($(add_btn).data($(this).data()));
+                } else {
+                    if (!$(this).hasClass('btn_tree_dpt2_type2')) $(this).removeClass('on');
+                    $('#' + item_id).remove();
+                }
+
+                // 최대 10개: 추가 시점에 대한 처리 때문에..
+                isFull = false;
+                //console.log($(this).data());
+            });
+            // 검색 조건 삭제
+            $(document).on('click', '.btn_select_item', function () {
+                $('.btn_filter_add', '.newHome_search_wrap .search_body .tree_wrap *[data-id="' + $(this).attr('id') + '"]').removeClass('on');
+                $(this).remove();
+            });
+            // 검색 초기화
+            $(document).on('click', '.newHome_search_wrap footer .btn_reload', function () {
+                $('.newHome_search_wrap .footer_top_scroll .btn_select_item').each(function () {
+                    $('.btn_filter_add', '.newHome_search_wrap .search_body .tree_wrap *[data-id="' + $(this).attr('id') + '"]').removeClass('on');
+                    $(this).remove();
+                });
+                $(".myStore__btn").removeClass("myStore__btn--check");
+            });
+
+            // 트리메뉴 뎁스1 클릭
+            $(document).on('click', '.menu_depth_1_wrap .btn_depth_1', function () {
+                var depth_3 = $('.tree_menu.on .depth_3');
+                depth_3.slideUp(0);
+                $('.newHome_search_wrap .search_body .tree_menu').removeClass('on');
+                $('.menu_depth_1_wrap > ul > li').removeClass('on');
+                $('.btn_tree_dpt2:not(.btn_filter_add)').removeClass('on');
+                $(this).closest('li').addClass('on');
+                $('.newHome_search_wrap .search_body .tree_menu').eq($(this).closest('li').index()).addClass('on');
+            })
+
+            // 트리메뉴 뎁스2 클릭
+            function tree_menu() {
+                $(document).on('click', '.tree_menu.on .btn_tree_dpt2:not(".btn_tree_dpt2_type2")', function (e) {
+                    var temp_el = $(this).next('ul');
+                    var depth_3 = $('.tree_menu.on .depth_3');
+
+                    depth_3.slideUp(300);
+
+                    if (temp_el.is(':hidden')) {
+                        $('.tree_menu.on .btn_tree_dpt2:not(.btn_tree_dpt2_type2)').removeClass('on');
+                        $(this).addClass('on')
+                        temp_el.slideDown(300);
+                        $(this).find('em > span').html('하위폴더 열림');
+                    } else {
+                        $('.tree_menu.on .btn_tree_dpt2:not(.btn_tree_dpt2_type2)').removeClass('on');
+                        temp_el.slideUp(300, function () { });
+                        $(this).find('em > span').html('하위폴더 닫힘');
+                    }
+                    return false;
+                });
+                $(document).on('click', '.tree_menu.on .btn_tree_dpt2_type2', function () {
+                    if (!$(this).hasClass('on')) {
+                        // 최대 10개
+                        if (isFull) return;
+                        $(this).addClass('on');
+                    } else {
+                        $(this).removeClass('on');
+                    }
+                })
+            }
+            if ($('.tree_menu.on').is(':visible')) tree_menu();
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            if ("D" != "N") {
+                if ("" != null && "" != "") {
+                    $(".myStore__btn").trigger("click");
+                }
+            }
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            var initModel = JSON.parse('[]');
+            var arrInit = Object.keys(initModel).map(function (idx) { return initModel[idx].Id; });
+
+            // 데이터 모델 있는 경우 초기 선택 처리
+            $("div.tree_wrap button.btn_filter_add").each(function () {
+                var _this = $(this);
+                var id = _this.parent("li").data("id");
+                if (arrInit.includes(id)) {
+                    _this.click();
+                    if (!_this.hasClass('on')) _this.addClass("on");
+                }
+
+            });
+        });
+    </script>
+
+    <script>
+        // 2024-02-14 나의지점 추가
+        var store = "";
+        var storeDate;
+        $("#myStoreText").text(store);
+        if (store == null || store == "") {
+            $(".myStore__btn").addClass("myStore__btn--link");
+        }
+
+        //else {
+        //    $("#myStoreText").text(store);
+        //    $(".myStore__btn").addClass("myStore__btn--check");
+
+        //    storeDate = "<button type='button' id='item_1_0_1' class='btn_select_item sub_dept3_item'><span>" +
+        //        store + "</span></button>";
+        //    $('.footer_top_scroll').append($(storeDate).data($(this).data()));
+
+
+        //    //add_btn = "<button type='button' id='" + item_id + "' class='btn_select_item sub_dept3_item'><span>" + txt + "</span></button>";
+        //    //$('.footer_top_scroll').append($(storeDate).data($(this).data()));
+
+        //}
+
+        $(".myStore__btn").click(function () {
+
+            if ($(this).hasClass("myStore__btn--check")) {
+                $(".myStore__btn").removeClass("myStore__btn--check");
+                $("#item_1_0_1").remove();
+            } else if ($(this).hasClass("myStore__btn--check") == false && $(this).hasClass(
+                    "myStore__btn--link") == false) {
+                $(".myStore__btn").addClass("myStore__btn--check");
+
+                storeDate =
+                    "<button type='button' id='item_1_0_1' class='btn_select_item sub_dept3_item'><span>" +
+                    "나의지점 " + store + "</span></button>";
+                $('.footer_top_scroll').append($(storeDate).data($(this).data()));
+            } else if ($(this).hasClass("myStore__btn--link")) {
+                $(location).attr("href", "/Store/FindStore?reqGoUrlSearch=/Lecture/Search");
+            }
+        });
+
+        $(document).on("click", "#item_1_0_1", function () {
+            $(".myStore__btn").removeClass("myStore__btn--check");
+        });
+
+    </script>
+
+
+
+
+
+</body>
+</html>
