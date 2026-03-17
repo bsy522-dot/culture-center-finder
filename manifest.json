@@ -1,0 +1,14 @@
+{
+  "name": "문화센터 강좌 파인더",
+  "short_name": "문센파인더",
+  "description": "내 주변 문화센터 강좌를 한눈에 비교하세요",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#080B10",
+  "theme_color": "#7EC8E3",
+  "orientation": "any",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}
