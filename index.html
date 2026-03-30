@@ -4982,7 +4982,7 @@ function App(){
   const [data,setData]=useState(()=>load(LSK,DEFAULT_DATA.map(r=>[...r])));
   const [fav,setFav]=useState(()=>new Set(load(LSF,[])));
   const [memos,setMemos]=useState(()=>load(LSM,{}));
-  const [settings,setSettings]=useState(()=>load(LSS,{birthYear:2020,address:"서초역",maxMin:60,transport:"public"}));
+  const [settings,setSettings]=useState(()=>load(LSS,{birthYear:2018,address:"강남역",maxMin:60,transport:"public"}));
   const [gBy,setGBy]=useState("program");
   const [fGrp,setFGrp]=useState("전체");
   const [fCat,setFCat]=useState("전체");
