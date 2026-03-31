@@ -236,15 +236,10 @@ function App(){
   const loadRegion=(region)=>{
     setLoading(true);
     const url = region==="전국" ? "data/all.json" : `data/regions/${encodeURIComponent(region)}.json`;
-    const cacheKey = `cc-region-${region}`;
-    const cached = load(cacheKey,[]);
-    if(cached&&cached.length>0){
-      setData(cached);setAllData(cached);setLoading(false);return;
-    }
-    fetch(url)
+    fetch(url+"?t="+Date.now())
       .then(r=>r.json())
-      .then(d=>{setData(d);setAllData(d);save(cacheKey,d);setLoading(false);})
-      .catch(e=>{console.error("Failed to load:",e);setLoading(false);});
+      .then(d=>{setData(d);setAllData(d);setLoading(false);showT(`📍 ${region} ${d.length.toLocaleString()}개 로드`);})
+      .catch(e=>{console.error("Failed to load:",e);setLoading(false);showT("로드 실패");});
   };
 
   useEffect(()=>{
