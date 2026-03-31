@@ -553,8 +553,7 @@ function App(){
             <div style={{marginLeft:"auto",display:"flex",gap:4}}>
               {/*<button className="eb" onClick={shareURL}>JSON 공유</button>*/}
               <label className="eb" style={{cursor:"pointer"}}>JSON 불러오기<input type="file" accept=".json" onChange={importJSON} style={{display:"none"}}/></label>
-              <button className="eb" onClick={exportCSV}>CSV 내보내기</button>
-              <label className="eb" style={{cursor:"pointer"}}>CSV 가져오기<input type="file" accept=".csv" onChange={importCSV} style={{display:"none"}}/></label>
+              {/*CSV/JSON 버튼 제거*/}
               <button className="eb" onClick={resetData} style={{color:"rgba(239,68,68,0.6)"}}>초기화</button>
             </div>
           </div>
@@ -635,7 +634,7 @@ function App(){
 
           <div style={{marginTop:14,padding:"10px 12px",borderRadius:8,background:"rgba(255,255,255,0.02)",border:"1px solid rgba(255,255,255,0.04)",fontSize:9,color:"rgba(255,255,255,0.2)",lineHeight:1.8}}>
             <b>사용법:</b> 헤더에서 출생년도/지역/출발지/교통수단 설정 → 자동 필터링 · 종목 대분류 클릭 → 세부 종목 선택 · 헤더 클릭 = 정렬 · ⭐ 즐겨찾기 · 📍 카카오맵 길찾기<br/>
-            <b>업데이트:</b> 각 문센 사이트에서 새 강좌 확인 후 CSV/JSON 가져오기 또는 + 추가 · JSON 공유로 다른 기기 동기화<br/>
+            <b>데이터:</b> 홈플러스·롯데마트·이마트 전국 문화센터 강좌 자동 수집<br/>
             <b>법적 고지:</b> 본 서비스는 각 문화센터의 공개된 강좌 정보를 개인 편의를 위해 정리한 것으로, 공식 서비스가 아닙니다.
             강좌 정보(시간/수강료/접수상태 등)는 실제와 다를 수 있으며, 정확한 정보는 반드시 각 문화센터 공식 사이트 또는 전화로 확인하시기 바랍니다.
             문화센터명, 강좌명 등의 상표권은 각 사에 귀속되며, 본 서비스는 비영리 정보 제공 목적입니다.
