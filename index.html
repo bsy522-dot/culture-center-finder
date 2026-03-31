@@ -208,6 +208,8 @@ function App(){
   const [fTime,setFTime]=useState("신규/모집중"); // 전체, 신규강좌, 모집중, 지난강좌
   const [favOnly,setFavOnly]=useState(false);
   const [q,setQ]=useState("");
+  const [addrInput,setAddrInput]=useState(settings.address||"");
+  const applyAddr=()=>{setSettings({...settings,address:addrInput.trim()});showT(addrInput.trim()?`📍 ${addrInput.trim()} 기준 검색`:"주소 초기화");};
   const [sCol,setSCol]=useState(null);
   const [sAsc,setSAsc]=useState(true);
   const [modal,setModal]=useState(null); // null | 'add' | 'edit' | 'settings' | 'memo' | 'delete' | 'share'
@@ -440,11 +442,14 @@ function App(){
               <div>
                 <h1 style={{fontSize:17,fontWeight:800,color:"#fff",letterSpacing:-0.5}}>문화센터 강좌 파인더</h1>
                 <div style={{fontSize:10.5,color:"#7EC8E3",marginTop:3,display:"flex",alignItems:"center",gap:0,flexWrap:"wrap",lineHeight:"24px"}}>
-                  <input value={settings.address} onChange={e=>setSettings({...settings,address:e.target.value})}
-                    placeholder="주소 입력"
-                    style={{background:"rgba(126,200,227,0.12)",border:"1px solid rgba(126,200,227,0.25)",borderRadius:5,color:"#7EC8E3",fontWeight:700,fontSize:11,padding:"1px 6px",width:Math.max(60,(settings.address||"주소 입력").length*11),outline:"none",fontFamily:"inherit",textAlign:"center"}}
-                    title="출발지 입력 (미입력시 이동시간 필터 비활성화)"/>
-                  <span style={{margin:"0 2px"}}> 에서</span>
+                  <input value={addrInput} onChange={e=>setAddrInput(e.target.value)}
+                    onKeyDown={e=>{if(e.key==='Enter')applyAddr();}}
+                    placeholder="출발지 입력"
+                    style={{background:"rgba(126,200,227,0.12)",border:"1px solid rgba(126,200,227,0.25)",borderRadius:5,color:"#7EC8E3",fontWeight:700,fontSize:11,padding:"1px 6px",width:Math.max(70,(addrInput||"출발지 입력").length*11),outline:"none",fontFamily:"inherit",textAlign:"center"}}/>
+                  <button onClick={applyAddr}
+                    style={{background:"linear-gradient(135deg,#7EC8E3,#3AAFA9)",border:"none",borderRadius:5,color:"#0A1628",fontWeight:800,fontSize:10,padding:"2px 8px",cursor:"pointer",fontFamily:"inherit",margin:"0 2px"}}>
+                    🔍 검색
+                  </button>
                   <button onClick={()=>setSettings({...settings,transport:settings.transport==="public"?"car":"public"})}
                     style={{background:settings.transport==="car"?"rgba(149,213,178,0.15)":"rgba(126,200,227,0.15)",border:"1px solid "+(settings.transport==="car"?"rgba(149,213,178,0.3)":"rgba(126,200,227,0.3)"),borderRadius:5,color:settings.transport==="car"?"#95D5B2":"#7EC8E3",fontWeight:700,fontSize:11,padding:"1px 8px",cursor:"pointer",fontFamily:"inherit",margin:"0 1px"}}>
                     {settings.transport==="car"?"🚗 차량":"🚌 대중교통"}
@@ -471,7 +476,7 @@ function App(){
               {[["table","목록"],["stats","통계"]].map(([v,l])=>(
                 <button key={v} className={`tb ${tab===v?"a":""}`} onClick={()=>setTab(v)}>{l}</button>
               ))}
-              <button onClick={openAdd} style={{background:"linear-gradient(135deg,#7EC8E3,#3AAFA9)",color:"#0A1628",border:"none",borderRadius:8,padding:"5px 14px",fontSize:11,fontWeight:700,cursor:"pointer"}}>+ 추가</button>
+              {/* + 추가 버튼 제거 */}
             </div>
           </div>
         </div>
