@@ -2,6 +2,16 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<script>
+// 이전 서비스워커 캐시 + localStorage 강제 정리 (1회성)
+if(!sessionStorage.getItem('_cleaned')){
+  sessionStorage.setItem('_cleaned','1');
+  if('caches' in window)caches.keys().then(k=>k.forEach(n=>caches.delete(n)));
+  try{for(let i=localStorage.length-1;i>=0;i--){const k=localStorage.key(i);if(k&&(k.includes('cc-data')||k.includes('cc-region')))localStorage.removeItem(k);}}catch(e){}
+  if('serviceWorker' in navigator)navigator.serviceWorker.getRegistrations().then(r=>r.forEach(w=>w.unregister()));
+  setTimeout(()=>location.reload(),500);
+}
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>문화센터 강좌 파인더</title>
 <link rel="manifest" href="manifest.json">
@@ -574,12 +584,7 @@ function App(){
           <div style={{display:"flex",gap:3,flexWrap:"wrap",marginBottom:8}}>
             <span style={{fontSize:9.5,color:"rgba(255,255,255,0.25)",lineHeight:"22px"}}>요일:</span>
             {["전체",...DAYS].map(d=>(<button key={d} onClick={()=>setFDay(d)} style={{background:fDay===d?"rgba(126,200,227,0.12)":"transparent",color:fDay===d?"#7EC8E3":"rgba(255,255,255,0.3)",border:`1px solid ${fDay===d?"rgba(126,200,227,0.2)":"rgba(255,255,255,0.05)"}`,borderRadius:10,padding:"2px 8px",fontSize:9.5,cursor:"pointer",fontWeight:fDay===d?700:400}}>{d}</button>))}
-            <div style={{marginLeft:"auto",display:"flex",gap:4}}>
-              {/*<button className="eb" onClick={shareURL}>JSON 공유</button>*/}
-              <label className="eb" style={{cursor:"pointer"}}>JSON 불러오기<input type="file" accept=".json" onChange={importJSON} style={{display:"none"}}/></label>
-              {/*CSV/JSON 버튼 제거*/}
-              <button className="eb" onClick={resetData} style={{color:"rgba(239,68,68,0.6)"}}>초기화</button>
-            </div>
+            {/* 개발용 버튼 제거됨 */}
           </div>
 
           {/* Table */}
@@ -609,7 +614,7 @@ function App(){
                       <TH col={13} w="72px">시작일</TH>
                       <TH col={14} w="32px">회차</TH>
                       <TH col={10} w="55px">상태</TH>
-                      <th style={{padding:"6px 4px",borderBottom:"2px solid #1E3050",position:"sticky",top:0,background:"#0C1525",zIndex:2,width:70,textAlign:"center",color:"#8BA4C4",fontWeight:600,fontSize:9.5}}>관리</th>
+                      <th style={{padding:"6px 4px",borderBottom:"2px solid #1E3050",position:"sticky",top:0,background:"#0C1525",zIndex:2,width:40,textAlign:"center",color:"#8BA4C4",fontWeight:600,fontSize:9.5}}>링크</th>
                     </tr></thead>
                     <tbody>
                       {items.map(({r,i:gi})=>{
@@ -638,9 +643,6 @@ function App(){
                             <td style={{padding:"4px 6px",textAlign:"center",fontSize:9,color:"rgba(255,255,255,0.4)"}}>{r[14]?`${r[14]}회`:"-"}</td>
                             <td style={{padding:"4px 6px",textAlign:"center"}}><span style={{color:sc,fontWeight:700,fontSize:9}}>{r[10]}</span></td>
                             <td style={{padding:"4px 4px",textAlign:"center",whiteSpace:"nowrap"}}>
-                              <button onClick={()=>openEdit(gi)} style={{background:"none",border:"none",cursor:"pointer",fontSize:10,padding:"2px 3px"}} title="수정">✏️</button>
-                              <button onClick={()=>openMemo(gi)} style={{background:"none",border:"none",cursor:"pointer",fontSize:10,padding:"2px 3px"}} title="메모">📝</button>
-                              <button onClick={()=>{setDelIdx(gi);setModal('delete');}} style={{background:"none",border:"none",cursor:"pointer",fontSize:10,padding:"2px 3px"}} title="삭제">🗑️</button>
                               {r[12]&&<a href={r[12]} target="_blank" rel="noopener noreferrer" style={{fontSize:10,padding:"2px 3px"}} title="홈페이지">🔗</a>}
                               {r[11]&&<a href={"tel:"+r[11]} style={{fontSize:10,padding:"2px 3px"}} title={r[11]}>📞</a>}
                             </td>
