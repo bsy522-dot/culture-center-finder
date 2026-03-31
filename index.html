@@ -460,7 +460,7 @@ function App(){
                     style={{background:"rgba(232,160,191,0.12)",border:"1px solid rgba(232,160,191,0.25)",borderRadius:5,color:"#E8A0BF",fontWeight:700,fontSize:11,padding:"1px 4px",outline:"none",fontFamily:"inherit",cursor:"pointer"}}>
                     {[0,...Array.from({length:75},(_,i)=>2024-i)].map(y=><option key={y} value={y}>{y===0?"전체 (나이무관)":`${y}년생(만${new Date().getFullYear()-y}세)`}</option>)}
                   </select>
-                  <select value={settings.region||"서울"} onChange={e=>{setSettings({...settings,region:e.target.value});loadRegion(e.target.value);setShowCount(100);}}
+                  <select value={settings.region||"서울"} onChange={e=>{setSettings({...settings,region:e.target.value,address:""});setAddrInput("");loadRegion(e.target.value);setShowCount(100);}}
                     style={{background:"rgba(167,139,250,0.12)",border:"1px solid rgba(167,139,250,0.25)",borderRadius:5,color:"#A78BFA",fontWeight:700,fontSize:11,padding:"1px 4px",outline:"none",fontFamily:"inherit",cursor:"pointer",marginLeft:2}}>
                     {REGIONS.map(r=><option key={r} value={r}>{r}</option>)}
                   </select>
