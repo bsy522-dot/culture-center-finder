@@ -127,7 +127,7 @@ function App(){
   const [allData,setAllData]=useState([]);
   const [fav,setFav]=useState(()=>new Set(load(LSF,[])));
   const [memos,setMemos]=useState(()=>load(LSM,{}));
-  const [settings,setSettings]=useState(()=>load(LSS,{birthYear:0,address:"",maxMin:60,transport:"public",region:"전국"}));
+  const [settings,setSettings]=useState(()=>load(LSS,{birthYear:0,address:"",maxMin:60,transport:"public",region:"서울"}));
   const [gBy,setGBy]=useState("program");
   const [fGrp,setFGrp]=useState("전체");
   const [fCat,setFCat]=useState("전체");
@@ -153,22 +153,29 @@ function App(){
   const GROUPS=useMemo(()=>[...new Set(data.map(r=>r[3]))].sort(),[data]);
   const DAYS=["월","화","수","목","금","토","일"];
 
-  useEffect(()=>{if(data.length>0)save(LSK,data);},[data]);
+  // 지역별 캐시 (전체 데이터는 localStorage에 저장하지 않음 - 용량 초과 방지)
   useEffect(()=>{save(LSF,[...fav]);},[fav]);
   useEffect(()=>{save(LSM,memos);},[memos]);
   useEffect(()=>{save(LSS,settings);},[settings]);
 
-  // Load data from JSON
-  useEffect(()=>{
-    const stored=load(LSK,[]);
-    if(stored&&stored.length>0){
-      setData(stored);setAllData(stored);setLoading(false);return;
-    }
+  // Load data by region (lazy loading)
+  const loadRegion=(region)=>{
     setLoading(true);
-    fetch("data/all.json")
+    const url = region==="전국" ? "data/all.json" : `data/regions/${encodeURIComponent(region)}.json`;
+    const cacheKey = `cc-region-${region}`;
+    const cached = load(cacheKey,[]);
+    if(cached&&cached.length>0){
+      setData(cached);setAllData(cached);setLoading(false);return;
+    }
+    fetch(url)
       .then(r=>r.json())
-      .then(d=>{setData(d);setAllData(d);save(LSK,d);setLoading(false);})
-      .catch(e=>{console.error("Failed to load data:",e);setLoading(false);});
+      .then(d=>{setData(d);setAllData(d);save(cacheKey,d);setLoading(false);})
+      .catch(e=>{console.error("Failed to load:",e);setLoading(false);});
+  };
+
+  useEffect(()=>{
+    const region = settings.region || "서울";
+    loadRegion(region);
   },[]);
 
   const showT=(m)=>{setToast(m);if(tt.current)clearTimeout(tt.current);tt.current=setTimeout(()=>setToast(null),2500);};
@@ -182,8 +189,8 @@ function App(){
     let f=data.map((r,i)=>({r,i}));
     const getTime=(r)=>settings.transport==="car"?(r[16]||Math.round(r[2]*0.65)):r[2];
     f=f.filter(({r})=>(fCat==="전체"||r[0]===fCat)&&(fGrp==="전체"||r[3]===fGrp)&&(settings.address?getTime(r)<=settings.maxMin:true));
-    // Region filter
-    if(settings.region&&settings.region!=="전국")f=f.filter(({r})=>getRegion(r[15])===settings.region);
+    // Region filter (지역별 JSON 로드 시 이미 필터됨, 전국일 때만 적용)
+    if(settings.region&&settings.region!=="전국"&&data.length>10000)f=f.filter(({r})=>getRegion(r[15])===settings.region);
     if(fStat!=="전체")f=f.filter(({r})=>r[10]===fStat);
     if(fDay!=="전체")f=f.filter(({r})=>r[6]&&r[6].includes(fDay));
     // 시기 필터
@@ -298,7 +305,7 @@ function App(){
 
   const resetData=()=>{
     if(confirm("기본 데이터로 초기화?")){
-      if(allData.length>0){setData(allData.map(r=>[...r]));}else{fetch("data/all.json").then(r=>r.json()).then(d=>{setData(d);setAllData(d);save(LSK,d);});}setFav(new Set());setMemos({});showT("초기화 완료");
+      if(allData.length>0){setData(allData.map(r=>[...r]));}else{loadRegion(settings.region||"서울");}setFav(new Set());setMemos({});showT("초기화 완료");
     }
   };
 
@@ -379,7 +386,7 @@ function App(){
                     style={{background:"rgba(232,160,191,0.12)",border:"1px solid rgba(232,160,191,0.25)",borderRadius:5,color:"#E8A0BF",fontWeight:700,fontSize:11,padding:"1px 4px",outline:"none",fontFamily:"inherit",cursor:"pointer"}}>
                     {[0,...Array.from({length:75},(_,i)=>2024-i)].map(y=><option key={y} value={y}>{y===0?"전체 (나이무관)":`${y}년생(만${new Date().getFullYear()-y}세)`}</option>)}
                   </select>
-                  <select value={settings.region||"전국"} onChange={e=>setSettings({...settings,region:e.target.value})}
+                  <select value={settings.region||"서울"} onChange={e=>{setSettings({...settings,region:e.target.value});loadRegion(e.target.value);}}
                     style={{background:"rgba(167,139,250,0.12)",border:"1px solid rgba(167,139,250,0.25)",borderRadius:5,color:"#A78BFA",fontWeight:700,fontSize:11,padding:"1px 4px",outline:"none",fontFamily:"inherit",cursor:"pointer",marginLeft:2}}>
                     {REGIONS.map(r=><option key={r} value={r}>{r}</option>)}
                   </select>
