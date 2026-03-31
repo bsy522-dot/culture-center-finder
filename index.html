@@ -210,6 +210,7 @@ function App(){
   const [q,setQ]=useState("");
   const [addrInput,setAddrInput]=useState(settings.address||"");
   const applyAddr=()=>{setSettings({...settings,address:addrInput.trim()});showT(addrInput.trim()?`📍 ${addrInput.trim()} 기준 검색`:"주소 초기화");};
+  const [showCount,setShowCount]=useState(100);
   const [sCol,setSCol]=useState(null);
   const [sAsc,setSAsc]=useState(true);
   const [modal,setModal]=useState(null); // null | 'add' | 'edit' | 'settings' | 'memo' | 'delete' | 'share'
@@ -459,7 +460,7 @@ function App(){
                     style={{background:"rgba(232,160,191,0.12)",border:"1px solid rgba(232,160,191,0.25)",borderRadius:5,color:"#E8A0BF",fontWeight:700,fontSize:11,padding:"1px 4px",outline:"none",fontFamily:"inherit",cursor:"pointer"}}>
                     {[0,...Array.from({length:75},(_,i)=>2024-i)].map(y=><option key={y} value={y}>{y===0?"전체 (나이무관)":`${y}년생(만${new Date().getFullYear()-y}세)`}</option>)}
                   </select>
-                  <select value={settings.region||"서울"} onChange={e=>{setSettings({...settings,region:e.target.value});loadRegion(e.target.value);}}
+                  <select value={settings.region||"서울"} onChange={e=>{setSettings({...settings,region:e.target.value});loadRegion(e.target.value);setShowCount(100);}}
                     style={{background:"rgba(167,139,250,0.12)",border:"1px solid rgba(167,139,250,0.25)",borderRadius:5,color:"#A78BFA",fontWeight:700,fontSize:11,padding:"1px 4px",outline:"none",fontFamily:"inherit",cursor:"pointer",marginLeft:2}}>
                     {REGIONS.map(r=><option key={r} value={r}>{r}</option>)}
                   </select>
@@ -617,7 +618,7 @@ function App(){
                       <th style={{padding:"6px 4px",borderBottom:"2px solid #1E3050",position:"sticky",top:0,background:"#0C1525",zIndex:2,width:40,textAlign:"center",color:"#8BA4C4",fontWeight:600,fontSize:9.5}}>링크</th>
                     </tr></thead>
                     <tbody>
-                      {items.map(({r,i:gi})=>{
+                      {items.slice(0,showCount).map(({r,i:gi})=>{
                         const sc=SC[r[10]]||"#94A3B8";
                         const iF=fav.has(gi);
                         const hM=!!memos[gi];
@@ -657,6 +658,14 @@ function App(){
           </div>
 
           {!filtered.length&&<div style={{textAlign:"center",padding:40,color:"rgba(255,255,255,0.2)",fontSize:12}}>조건에 맞는 강좌가 없습니다.</div>}
+          {filtered.length>showCount&&(
+            <div style={{textAlign:"center",padding:12}}>
+              <button onClick={()=>setShowCount(s=>s+100)}
+                style={{background:"linear-gradient(135deg,#7EC8E3,#3AAFA9)",border:"none",borderRadius:8,color:"#0A1628",fontWeight:800,fontSize:12,padding:"8px 24px",cursor:"pointer"}}>
+                더보기 ({showCount}/{filtered.length}개)
+              </button>
+            </div>
+          )}
 
           <div style={{marginTop:14,padding:"10px 12px",borderRadius:8,background:"rgba(255,255,255,0.02)",border:"1px solid rgba(255,255,255,0.04)",fontSize:9,color:"rgba(255,255,255,0.2)",lineHeight:1.8}}>
             <b>사용법:</b> 헤더에서 출생년도/지역/출발지/교통수단 설정 → 자동 필터링 · 종목 대분류 클릭 → 세부 종목 선택 · 헤더 클릭 = 정렬 · ⭐ 즐겨찾기 · 📍 카카오맵 길찾기<br/>
