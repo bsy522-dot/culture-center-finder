@@ -64,40 +64,63 @@ const {useState,useMemo,useEffect,useRef} = React;
 const DEFAULT_DATA = [];
 const REGIONS=["전국","서울","경기","인천","부산","대구","대전","광주","울산","세종","강원","충북","충남","전북","전남","경북","경남","제주"];
 
-// 서초역 기준 대략 대중교통 이동시간(분) - 주소에서 구/시 추출하여 매핑
-const TRAVEL_MAP={
-  // 서울
-  "서초":25,"강남":30,"방배":28,"반포":27,"잠원":28,
-  "송파":40,"강동":50,"관악":40,"동작":35,"영등포":45,
-  "마포":50,"용산":40,"종로":55,"중구":45,"성동":50,
-  "광진":50,"동대문":55,"성북":60,"강북":65,"도봉":70,
-  "노원":70,"중랑":60,"서대문":55,"은평":65,"양천":50,
-  "구로":50,"금천":45,"강서":55,
-  // 경기
-  "과천":35,"성남":45,"분당":50,"수지":60,"용인":65,
-  "광명":50,"안양":50,"군포":55,"의왕":55,"수원":65,
-  "화성":70,"평택":90,"하남":55,"구리":60,"남양주":70,
-  "의정부":75,"고양":65,"파주":80,"김포":70,"부천":55,
-  "시흥":60,"안산":65,"광주":60,"이천":80,"여주":100,
-  "양평":90,"가평":100,"포천":90,"동두천":85,"연천":100,
-  "별내":65,"광교":70,"판교":50,"위례":45,"세종":140,
-  // 인천
-  "인천":80,"부평":70,"계양":75,"남동":75,"연수":70,
-  // 기타 광역시
-  "부산":320,"대구":260,"대전":140,"광주":260,"울산":300,
-  "강원":200,"충북":170,"충남":150,"전북":220,"전남":270,"경북":240,"경남":280,"제주":380
+// 지역별 위치 좌표 (대략 위도,경도) — 직선거리 기반 이동시간 추정
+const AREA_POS={
+  // 서울 구
+  "서초":[37.49,127.02],"강남":[37.50,127.05],"방배":[37.48,126.99],"반포":[37.50,126.99],"잠원":[37.51,127.01],
+  "송파":[37.51,127.11],"강동":[37.53,127.13],"관악":[37.48,126.95],"동작":[37.50,126.95],"영등포":[37.52,126.90],
+  "마포":[37.55,126.91],"용산":[37.53,126.97],"종로":[37.57,126.98],"중구":[37.56,127.00],"성동":[37.56,127.04],
+  "광진":[37.54,127.08],"동대문":[37.57,127.04],"성북":[37.59,127.02],"강북":[37.64,127.01],"도봉":[37.67,127.03],
+  "노원":[37.65,127.06],"중랑":[37.60,127.09],"서대문":[37.58,126.94],"은평":[37.60,126.93],"양천":[37.52,126.87],
+  "구로":[37.50,126.89],"금천":[37.46,126.90],"강서":[37.55,126.85],
+  // 경기/인천
+  "과천":[37.43,127.00],"성남":[37.42,127.13],"분당":[37.38,127.12],"수지":[37.32,127.08],"용인":[37.24,127.18],
+  "광명":[37.47,126.87],"안양":[37.39,126.92],"군포":[37.36,126.93],"의왕":[37.34,126.97],"수원":[37.26,127.03],
+  "화성":[37.20,126.83],"평택":[36.99,127.09],"하남":[37.54,127.21],"구리":[37.59,127.13],"남양주":[37.63,127.22],
+  "의정부":[37.74,127.05],"고양":[37.66,126.83],"일산":[37.67,126.77],"파주":[37.76,126.78],"김포":[37.61,126.72],
+  "부천":[37.50,126.76],"시흥":[37.38,126.80],"안산":[37.32,126.83],"이천":[37.28,127.44],"여주":[37.30,127.64],
+  "양평":[37.49,127.49],"가평":[37.83,127.51],"포천":[37.89,127.20],"동두천":[37.90,127.06],"연천":[38.10,127.08],
+  "별내":[37.64,127.11],"광교":[37.29,127.05],"판교":[37.39,127.10],"위례":[37.48,127.14],
+  "인천":[37.45,126.70],"부평":[37.51,126.72],"계양":[37.56,126.74],"남동":[37.45,126.73],"연수":[37.41,126.68],
+  // 광역시/도
+  "세종":[36.48,127.26],"대전":[36.35,127.38],"대구":[35.87,128.60],"부산":[35.18,129.08],
+  "광주":[35.16,126.85],"울산":[35.54,129.31],"강원":[37.88,127.73],"춘천":[37.88,127.73],
+  "충북":[36.64,127.49],"청주":[36.64,127.49],"충남":[36.66,126.67],"천안":[36.81,127.11],
+  "전북":[35.82,127.15],"전주":[35.82,127.15],"전남":[34.82,126.46],"목포":[34.81,126.39],
+  "경북":[36.04,128.51],"포항":[36.02,129.37],"경남":[35.23,128.68],"창원":[35.23,128.68],
+  "제주":[33.50,126.53]
 };
-function estimateTravel(addr,center){
-  if(!addr&&!center)return 999;
-  const s=(addr||"")+" "+(center||"");
-  for(const[key,min] of Object.entries(TRAVEL_MAP)){
-    if(s.includes(key))return min;
+function estimateTravel(destAddr,destCenter,fromAddr){
+  if(!destAddr&&!destCenter)return 999;
+  // 출발지 좌표
+  let fromPos=null;
+  if(fromAddr){
+    for(const[key,pos] of Object.entries(AREA_POS)){
+      if(fromAddr.includes(key)){fromPos=pos;break;}
+    }
   }
-  // 시/도 레벨 fallback
-  for(const r of ["서울","경기","인천","부산","대구","대전","광주","울산","강원","충북","충남","전북","전남","경북","경남","제주"]){
-    if(s.includes(r))return TRAVEL_MAP[r]||999;
+  if(!fromPos)fromPos=AREA_POS["서초"]; // 기본 서초
+
+  // 도착지 좌표
+  let toPos=null;
+  const ds=(destAddr||"")+" "+(destCenter||"");
+  for(const[key,pos] of Object.entries(AREA_POS)){
+    if(ds.includes(key)){toPos=pos;break;}
   }
-  return 999;
+  if(!toPos){
+    for(const r of ["서울","경기","인천","부산","대구","대전","광주","울산","강원","충북","충남","전북","전남","경북","경남","제주"]){
+      if(ds.includes(r)&&AREA_POS[r]){toPos=AREA_POS[r];break;}
+    }
+  }
+  if(!toPos)return 999;
+
+  // 직선거리(km) → 대중교통 이동시간(분) 추정
+  const dLat=(fromPos[0]-toPos[0])*111;
+  const dLng=(fromPos[1]-toPos[1])*88;
+  const distKm=Math.sqrt(dLat*dLat+dLng*dLng);
+  // 대중교통: ~25km/h 평균 + 대기/환승 20분 기본
+  const minutes=Math.round(distKm/25*60+20);
+  return Math.max(20, minutes); // 최소 20분
 }
 function getRegion(addr){
   if(!addr)return"";
@@ -226,7 +249,7 @@ function App(){
   const filtered=useMemo(()=>{
     const s=q.toLowerCase();
     let f=data.map((r,i)=>({r,i}));
-    const getTime=(r)=>r[2]>0?r[2]:estimateTravel(r[15],r[1]);
+    const getTime=(r)=>r[2]>0?r[2]:estimateTravel(r[15],r[1],settings.address);
     f=f.filter(({r})=>(fCat==="전체"||r[0]===fCat)&&(fGrp==="전체"||r[3]===fGrp)&&(settings.address?getTime(r)<=settings.maxMin:true));
     // Region filter (지역별 JSON 로드 시 이미 필터됨, 전국일 때만 적용)
     if(settings.region&&settings.region!=="전국"&&data.length>10000)f=f.filter(({r})=>getRegion(r[15])===settings.region);
@@ -369,7 +392,7 @@ function App(){
     reader.readAsText(file);e.target.value="";
   };
 
-  const getTimeFor=(r)=>r[2]>0?r[2]:estimateTravel(r[15],r[1]);
+  const getTimeFor=(r)=>r[2]>0?r[2]:estimateTravel(r[15],r[1],settings.address);
   const centers=[...new Set(data.filter(r=>settings.address?getTimeFor(r)<=settings.maxMin:true).map(r=>r[1]))];
 
   const mapLink=(addr)=>{
@@ -600,7 +623,7 @@ function App(){
                               {r[1]}
                               {r[15]&&<a href={mapLink(r[15])} target="_blank" rel="noopener noreferrer" style={{marginLeft:3,fontSize:8,color:"#60A5FA"}} title={r[15]}>📍</a>}
                             </td>
-                            <td style={{padding:"4px 6px",textAlign:"center",color:"#FFB347",fontWeight:700,fontSize:9.5}}>{settings.address?(r[2]>0?r[2]:estimateTravel(r[15],r[1]))+"분":"-"}</td>
+                            <td style={{padding:"4px 6px",textAlign:"center",color:"#FFB347",fontWeight:700,fontSize:9.5}}>{settings.address?(r[2]>0?r[2]:estimateTravel(r[15],r[1],settings.address))+"분":"-"}</td>
                             {gBy!=="program"&&<td style={{padding:"4px 6px"}}><span style={{background:"rgba(251,191,36,0.08)",color:"#FBBF24",padding:"1px 5px",borderRadius:3,fontSize:9}}>{GI[r[3]]||""}{r[3]}</span></td>}
                             <td style={{padding:"4px 6px",color:"#E0E0E0",fontWeight:500,fontSize:10}}>
                               {r[4]}
