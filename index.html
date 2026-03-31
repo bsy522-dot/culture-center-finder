@@ -102,10 +102,13 @@ const GG={
 };
 const FIELDS=["분류","센터","이동(분)","종목","강좌명","대상","요일","시간","수강료","강사","상태","전화","홈페이지","시작일","회차","주소","차량(분)"];
 
-const LSK="cc-data-v9",LSF="cc-fav",LSM="cc-memo",LSS="cc-settings-v2";
+const LSK="cc-data-v10",LSF="cc-fav",LSM="cc-memo",LSS="cc-settings-v3";
 
-function load(k,d){try{const s=localStorage.getItem(k);if(s){const p=JSON.parse(s);if(Array.isArray(d)?Array.isArray(p)&&p.length>0:p)return p;}}catch(e){}return d;}
-function save(k,v){localStorage.setItem(k,JSON.stringify(v));}
+// 이전 대용량 캐시 삭제
+try{localStorage.removeItem("cc-data-v9");localStorage.removeItem("cc-settings-v2");localStorage.removeItem("cc-data-v8");}catch(e){}
+
+function load(k,d){try{const s=localStorage.getItem(k);if(!s)return d;if(s.length>5000000)return d;const p=JSON.parse(s);if(Array.isArray(d)?Array.isArray(p)&&p.length>0:p)return p;}catch(e){}return d;}
+function save(k,v){try{const s=JSON.stringify(v);if(s.length<5000000)localStorage.setItem(k,s);}catch(e){}}
 
 function parseAge(s){
   if(!s)return null; // 연령 정보 없음
@@ -122,7 +125,7 @@ function parseAge(s){
 }
 
 function App(){
-  const [data,setData]=useState(()=>load(LSK,[]));
+  const [data,setData]=useState([]);
   const [loading,setLoading]=useState(true);
   const [allData,setAllData]=useState([]);
   const [fav,setFav]=useState(()=>new Set(load(LSF,[])));
