@@ -285,6 +285,7 @@ function App(){
     if(sCol!==null){
       f=[...f].sort((a,b)=>{
         let va=a.r[sCol],vb=b.r[sCol];
+        if(sCol===2){va=getTime(a.r);vb=getTime(b.r);}
         if(sCol===2||sCol===14)return sAsc?va-vb:vb-va;
         return sAsc?String(va).localeCompare(String(vb)):String(vb).localeCompare(String(va));
       });
