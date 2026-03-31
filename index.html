@@ -63,6 +63,42 @@ const {useState,useMemo,useEffect,useRef} = React;
 // Data loaded from external JSON file
 const DEFAULT_DATA = [];
 const REGIONS=["전국","서울","경기","인천","부산","대구","대전","광주","울산","세종","강원","충북","충남","전북","전남","경북","경남","제주"];
+
+// 서초역 기준 대략 대중교통 이동시간(분) - 주소에서 구/시 추출하여 매핑
+const TRAVEL_MAP={
+  // 서울
+  "서초":25,"강남":30,"방배":28,"반포":27,"잠원":28,
+  "송파":40,"강동":50,"관악":40,"동작":35,"영등포":45,
+  "마포":50,"용산":40,"종로":55,"중구":45,"성동":50,
+  "광진":50,"동대문":55,"성북":60,"강북":65,"도봉":70,
+  "노원":70,"중랑":60,"서대문":55,"은평":65,"양천":50,
+  "구로":50,"금천":45,"강서":55,
+  // 경기
+  "과천":35,"성남":45,"분당":50,"수지":60,"용인":65,
+  "광명":50,"안양":50,"군포":55,"의왕":55,"수원":65,
+  "화성":70,"평택":90,"하남":55,"구리":60,"남양주":70,
+  "의정부":75,"고양":65,"파주":80,"김포":70,"부천":55,
+  "시흥":60,"안산":65,"광주":60,"이천":80,"여주":100,
+  "양평":90,"가평":100,"포천":90,"동두천":85,"연천":100,
+  "별내":65,"광교":70,"판교":50,"위례":45,"세종":140,
+  // 인천
+  "인천":80,"부평":70,"계양":75,"남동":75,"연수":70,
+  // 기타 광역시
+  "부산":320,"대구":260,"대전":140,"광주":260,"울산":300,
+  "강원":200,"충북":170,"충남":150,"전북":220,"전남":270,"경북":240,"경남":280,"제주":380
+};
+function estimateTravel(addr,center){
+  if(!addr&&!center)return 999;
+  const s=(addr||"")+" "+(center||"");
+  for(const[key,min] of Object.entries(TRAVEL_MAP)){
+    if(s.includes(key))return min;
+  }
+  // 시/도 레벨 fallback
+  for(const r of ["서울","경기","인천","부산","대구","대전","광주","울산","강원","충북","충남","전북","전남","경북","경남","제주"]){
+    if(s.includes(r))return TRAVEL_MAP[r]||999;
+  }
+  return 999;
+}
 function getRegion(addr){
   if(!addr)return"";
   const p=addr.split(" ")[0];
@@ -190,7 +226,7 @@ function App(){
   const filtered=useMemo(()=>{
     const s=q.toLowerCase();
     let f=data.map((r,i)=>({r,i}));
-    const getTime=(r)=>settings.transport==="car"?(r[16]||Math.round(r[2]*0.65)):r[2];
+    const getTime=(r)=>r[2]>0?r[2]:estimateTravel(r[15],r[1]);
     f=f.filter(({r})=>(fCat==="전체"||r[0]===fCat)&&(fGrp==="전체"||r[3]===fGrp)&&(settings.address?getTime(r)<=settings.maxMin:true));
     // Region filter (지역별 JSON 로드 시 이미 필터됨, 전국일 때만 적용)
     if(settings.region&&settings.region!=="전국"&&data.length>10000)f=f.filter(({r})=>getRegion(r[15])===settings.region);
@@ -333,7 +369,7 @@ function App(){
     reader.readAsText(file);e.target.value="";
   };
 
-  const getTimeFor=(r)=>settings.transport==="car"?(r[16]||Math.round(r[2]*0.65)):r[2];
+  const getTimeFor=(r)=>r[2]>0?r[2]:estimateTravel(r[15],r[1]);
   const centers=[...new Set(data.filter(r=>settings.address?getTimeFor(r)<=settings.maxMin:true).map(r=>r[1]))];
 
   const mapLink=(addr)=>{
@@ -515,7 +551,7 @@ function App(){
             <span style={{fontSize:9.5,color:"rgba(255,255,255,0.25)",lineHeight:"22px"}}>요일:</span>
             {["전체",...DAYS].map(d=>(<button key={d} onClick={()=>setFDay(d)} style={{background:fDay===d?"rgba(126,200,227,0.12)":"transparent",color:fDay===d?"#7EC8E3":"rgba(255,255,255,0.3)",border:`1px solid ${fDay===d?"rgba(126,200,227,0.2)":"rgba(255,255,255,0.05)"}`,borderRadius:10,padding:"2px 8px",fontSize:9.5,cursor:"pointer",fontWeight:fDay===d?700:400}}>{d}</button>))}
             <div style={{marginLeft:"auto",display:"flex",gap:4}}>
-              <button className="eb" onClick={shareURL}>JSON 공유</button>
+              {/*<button className="eb" onClick={shareURL}>JSON 공유</button>*/}
               <label className="eb" style={{cursor:"pointer"}}>JSON 불러오기<input type="file" accept=".json" onChange={importJSON} style={{display:"none"}}/></label>
               <button className="eb" onClick={exportCSV}>CSV 내보내기</button>
               <label className="eb" style={{cursor:"pointer"}}>CSV 가져오기<input type="file" accept=".csv" onChange={importCSV} style={{display:"none"}}/></label>
@@ -565,7 +601,7 @@ function App(){
                               {r[1]}
                               {r[15]&&<a href={mapLink(r[15])} target="_blank" rel="noopener noreferrer" style={{marginLeft:3,fontSize:8,color:"#60A5FA"}} title={r[15]}>📍</a>}
                             </td>
-                            <td style={{padding:"4px 6px",textAlign:"center",color:"#FFB347",fontWeight:700,fontSize:9.5}}>{settings.address?(settings.transport==="car"?(r[16]||Math.round(r[2]*0.65)):r[2])+"분":"-"}</td>
+                            <td style={{padding:"4px 6px",textAlign:"center",color:"#FFB347",fontWeight:700,fontSize:9.5}}>{settings.address?(r[2]>0?r[2]:estimateTravel(r[15],r[1]))+"분":"-"}</td>
                             {gBy!=="program"&&<td style={{padding:"4px 6px"}}><span style={{background:"rgba(251,191,36,0.08)",color:"#FBBF24",padding:"1px 5px",borderRadius:3,fontSize:9}}>{GI[r[3]]||""}{r[3]}</span></td>}
                             <td style={{padding:"4px 6px",color:"#E0E0E0",fontWeight:500,fontSize:10}}>
                               {r[4]}
