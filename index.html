@@ -77,63 +77,44 @@ const {useState,useMemo,useEffect,useRef} = React;
 const DEFAULT_DATA = [];
 const REGIONS=["전국","서울","경기","인천","부산","대구","대전","광주","울산","세종","강원","충북","충남","전북","전남","경북","경남","제주"];
 
-// 지역별 위치 좌표 (대략 위도,경도) — 직선거리 기반 이동시간 추정
-const AREA_POS={
-  // 서울 구
-  "서초":[37.49,127.02],"강남":[37.50,127.05],"방배":[37.48,126.99],"반포":[37.50,126.99],"잠원":[37.51,127.01],
-  "송파":[37.51,127.11],"강동":[37.53,127.13],"관악":[37.48,126.95],"동작":[37.50,126.95],"영등포":[37.52,126.90],
-  "마포":[37.55,126.91],"용산":[37.53,126.97],"종로":[37.57,126.98],"중구":[37.56,127.00],"성동":[37.56,127.04],
-  "광진":[37.54,127.08],"동대문":[37.57,127.04],"성북":[37.59,127.02],"강북":[37.64,127.01],"도봉":[37.67,127.03],
-  "노원":[37.65,127.06],"중랑":[37.60,127.09],"서대문":[37.58,126.94],"은평":[37.60,126.93],"양천":[37.52,126.87],
-  "구로":[37.50,126.89],"금천":[37.46,126.90],"강서":[37.55,126.85],
-  // 경기/인천
-  "과천":[37.43,127.00],"성남":[37.42,127.13],"분당":[37.38,127.12],"수지":[37.32,127.08],"용인":[37.24,127.18],
-  "광명":[37.47,126.87],"안양":[37.39,126.92],"군포":[37.36,126.93],"의왕":[37.34,126.97],"수원":[37.26,127.03],
-  "화성":[37.20,126.83],"평택":[36.99,127.09],"하남":[37.54,127.21],"구리":[37.59,127.13],"남양주":[37.63,127.22],
-  "의정부":[37.74,127.05],"고양":[37.66,126.83],"일산":[37.67,126.77],"파주":[37.76,126.78],"김포":[37.61,126.72],
-  "부천":[37.50,126.76],"시흥":[37.38,126.80],"안산":[37.32,126.83],"이천":[37.28,127.44],"여주":[37.30,127.64],
-  "양평":[37.49,127.49],"가평":[37.83,127.51],"포천":[37.89,127.20],"동두천":[37.90,127.06],"연천":[38.10,127.08],
-  "별내":[37.64,127.11],"광교":[37.29,127.05],"판교":[37.39,127.10],"위례":[37.48,127.14],
-  "인천":[37.45,126.70],"부평":[37.51,126.72],"계양":[37.56,126.74],"남동":[37.45,126.73],"연수":[37.41,126.68],
-  // 광역시/도
-  "세종":[36.48,127.26],"대전":[36.35,127.38],"대구":[35.87,128.60],"부산":[35.18,129.08],
-  "광주":[35.16,126.85],"울산":[35.54,129.31],"강원":[37.88,127.73],"춘천":[37.88,127.73],
-  "충북":[36.64,127.49],"청주":[36.64,127.49],"충남":[36.66,126.67],"천안":[36.81,127.11],
-  "전북":[35.82,127.15],"전주":[35.82,127.15],"전남":[34.82,126.46],"목포":[34.81,126.39],
-  "경북":[36.04,128.51],"포항":[36.02,129.37],"경남":[35.23,128.68],"창원":[35.23,128.68],
-  "제주":[33.50,126.53]
-};
+// 센터 좌표 (center_coords.json에서 로드)
+let CENTER_COORDS={};
+let USER_POS=null; // [lat, lng] — Nominatim으로 검색한 사용자 위치
+
+// Haversine 거리 (km)
+function haversine(lat1,lon1,lat2,lon2){
+  const R=6371,toR=Math.PI/180;
+  const dLat=(lat2-lat1)*toR, dLon=(lon2-lon1)*toR;
+  const a=Math.sin(dLat/2)**2+Math.cos(lat1*toR)*Math.cos(lat2*toR)*Math.sin(dLon/2)**2;
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
+// 실제 좌표 기반 이동시간 추정
 function estimateTravel(destAddr,destCenter,fromAddr){
-  if(!destAddr&&!destCenter)return 999;
-  // 출발지 좌표
-  let fromPos=null;
-  if(fromAddr){
-    for(const[key,pos] of Object.entries(AREA_POS)){
-      if(fromAddr.includes(key)){fromPos=pos;break;}
-    }
+  if(!USER_POS) return 999;
+  const coord=CENTER_COORDS[destCenter];
+  if(!coord) return 999;
+  const distKm=haversine(USER_POS[0],USER_POS[1],coord[0],coord[1]);
+  // transport 모드에 따라 다르게 계산
+  const mode=window._transport||"public";
+  let minutes;
+  if(mode==="car"){
+    // 자동차: 직선거리 x 1.3(도로보정) / 40km/h + 주차 10분
+    minutes=Math.round(distKm*1.3/40*60+10);
+  } else {
+    // 대중교통: 직선거리 x 1.4(도로보정) / 20km/h + 환승대기 20분
+    minutes=Math.round(distKm*1.4/20*60+20);
   }
-  if(!fromPos)fromPos=AREA_POS["서초"]; // 기본 서초
+  return Math.max(5, minutes);
+}
 
-  // 도착지 좌표
-  let toPos=null;
-  const ds=(destAddr||"")+" "+(destCenter||"");
-  for(const[key,pos] of Object.entries(AREA_POS)){
-    if(ds.includes(key)){toPos=pos;break;}
-  }
-  if(!toPos){
-    for(const r of ["서울","경기","인천","부산","대구","대전","광주","울산","강원","충북","충남","전북","전남","경북","경남","제주"]){
-      if(ds.includes(r)&&AREA_POS[r]){toPos=AREA_POS[r];break;}
-    }
-  }
-  if(!toPos)return 999;
-
-  // 직선거리(km) → 대중교통 이동시간(분) 추정
-  const dLat=(fromPos[0]-toPos[0])*111;
-  const dLng=(fromPos[1]-toPos[1])*88;
-  const distKm=Math.sqrt(dLat*dLat+dLng*dLng);
-  // 대중교통: ~25km/h 평균 + 대기/환승 20분 기본
-  const minutes=Math.round(distKm/25*60+20);
-  return Math.max(20, minutes); // 최소 20분
+// Nominatim으로 주소/지명 → 좌표 변환
+async function geocodeAddress(query){
+  const url=`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&countrycodes=kr&format=json&limit=1`;
+  const r=await fetch(url,{headers:{'Accept':'application/json'}});
+  const d=await r.json();
+  if(d.length>0) return [parseFloat(d[0].lat),parseFloat(d[0].lon)];
+  return null;
 }
 function getRegion(addr){
   if(!addr)return"";
@@ -212,7 +193,20 @@ function App(){
   const [favOnly,setFavOnly]=useState(false);
   const [q,setQ]=useState("");
   const [addrInput,setAddrInput]=useState(settings.address||"");
-  const applyAddr=()=>{setSettings({...settings,address:addrInput.trim()});showT(addrInput.trim()?`📍 ${addrInput.trim()} 기준 검색`:"주소 초기화");};
+  const applyAddr=async()=>{
+    const addr=addrInput.trim();
+    if(!addr){USER_POS=null;setSettings({...settings,address:""});setSearchMsg("출발지를 입력하세요");return;}
+    setSearchMsg(`🔍 "${addr}" 검색중...`);
+    window._transport=settings.transport;
+    const pos=await geocodeAddress(addr);
+    if(pos){
+      USER_POS=pos;
+      setSettings({...settings,address:addr});
+      setSearchMsg(`📍 ${addr} (${pos[0].toFixed(3)}, ${pos[1].toFixed(3)}) 기준`);
+    } else {
+      setSearchMsg(`❌ "${addr}" 위치를 찾을 수 없습니다`);
+    }
+  };
   const [showCount,setShowCount]=useState(100);
   const [sCol,setSCol]=useState(null);
   const [sAsc,setSAsc]=useState(true);
@@ -236,18 +230,23 @@ function App(){
   useEffect(()=>{save(LSM,memos);},[memos]);
   useEffect(()=>{save(LSS,settings);},[settings]);
 
-  // Load all data once (이동시간은 출발지 기준이므로 전체 로드 필수)
+  const [searchMsg,setSearchMsg]=useState("");
+
+  // Load data + center coordinates
   const loadAll=()=>{
     setLoading(true);
-    fetch("data/all.json?t="+Date.now())
-      .then(r=>r.json())
-      .then(d=>{setData(d);setAllData(d);setLoading(false);showT(`📍 전체 ${d.length.toLocaleString()}개 로드`);})
-      .catch(e=>{console.error("Failed to load:",e);setLoading(false);showT("로드 실패");});
+    setSearchMsg("데이터 로딩중...");
+    Promise.all([
+      fetch("data/all.json?t="+Date.now()).then(r=>r.json()),
+      fetch("data/center_coords.json?t="+Date.now()).then(r=>r.json()).catch(()=>({}))
+    ]).then(([d,cc])=>{
+      CENTER_COORDS=cc;
+      setData(d);setAllData(d);setLoading(false);
+      setSearchMsg(`${d.length.toLocaleString()}개 강좌 · 출발지를 입력하세요`);
+    }).catch(e=>{console.error(e);setLoading(false);setSearchMsg("로드 실패");});
   };
 
-  useEffect(()=>{
-    loadAll();
-  },[]);
+  useEffect(()=>{loadAll();},[]);
 
   const showT=(m)=>{setToast(m);if(tt.current)clearTimeout(tt.current);tt.current=setTimeout(()=>setToast(null),2500);};
 
@@ -447,7 +446,7 @@ function App(){
                     style={{background:"linear-gradient(135deg,#7EC8E3,#3AAFA9)",border:"none",borderRadius:5,color:"#0A1628",fontWeight:800,fontSize:10,padding:"2px 8px",cursor:"pointer",fontFamily:"inherit",margin:"0 2px"}}>
                     🔍 검색
                   </button>
-                  <button onClick={()=>setSettings({...settings,transport:settings.transport==="public"?"car":"public"})}
+                  <button onClick={()=>{const t=settings.transport==="public"?"car":"public";window._transport=t;setSettings({...settings,transport:t});}}
                     style={{background:settings.transport==="car"?"rgba(149,213,178,0.15)":"rgba(126,200,227,0.15)",border:"1px solid "+(settings.transport==="car"?"rgba(149,213,178,0.3)":"rgba(126,200,227,0.3)"),borderRadius:5,color:settings.transport==="car"?"#95D5B2":"#7EC8E3",fontWeight:700,fontSize:11,padding:"1px 8px",cursor:"pointer",fontFamily:"inherit",margin:"0 1px"}}>
                     {settings.transport==="car"?"🚗 차량":"🚌 대중교통"}
                   </button>
@@ -467,6 +466,7 @@ function App(){
                   </select>
                   {favOnly&&<span style={{color:"#FBBF24",marginLeft:4}}> · 즐겨찾기</span>}
                 </div>
+                {searchMsg&&<div style={{fontSize:10,color:"#94A3B8",marginTop:2}}>{searchMsg}</div>}
               </div>
             </div>
             <div style={{display:"flex",gap:6,alignItems:"center",flexWrap:"wrap"}}>
