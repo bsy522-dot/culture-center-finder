@@ -259,7 +259,7 @@ function App(){
   const [fCat,setFCat]=useState("전체");
   const [fStat,setFStat]=useState("전체");
   const [fDay,setFDay]=useState("전체");
-  const [fTime,setFTime]=useState("신규/모집중"); // 전체, 신규강좌, 모집중, 지난강좌
+  const [fTime,setFTime]=useState("전체"); // 지난강좌 데이터 제거됨
   const [favOnly,setFavOnly]=useState(false);
   const [q,setQ]=useState("");
   const [addrInput,setAddrInput]=useState(settings.address||"");
@@ -611,7 +611,7 @@ function App(){
             <span style={{fontSize:9.5,color:"rgba(255,255,255,0.25)",lineHeight:"22px"}}>센터:</span>
             {["전체",...CATS].map(c=>(<button key={c} onClick={()=>setFCat(c)} style={{background:fCat===c?"rgba(232,160,191,0.12)":"transparent",color:fCat===c?"#E8A0BF":"rgba(255,255,255,0.3)",border:`1px solid ${fCat===c?"rgba(232,160,191,0.2)":"rgba(255,255,255,0.05)"}`,borderRadius:10,padding:"2px 8px",fontSize:9.5,cursor:"pointer",fontWeight:fCat===c?700:400}}>{c}</button>))}
             <span style={{fontSize:9.5,color:"rgba(255,255,255,0.25)",lineHeight:"22px",marginLeft:8}}>시기:</span>
-            {["신규/모집중","신규강좌","모집중","지난강좌","전체"].map(t=>{
+            {["전체","접수중","접수예정"].map(t=>{
               const tc={"신규/모집중":"#34D399","신규강좌":"#60A5FA","모집중":"#FBBF24","지난강좌":"#94A3B8","전체":"#7EC8E3"};
               const c=tc[t]||"#7EC8E3";
               return <button key={t} onClick={()=>setFTime(t)} style={{background:fTime===t?c+"18":"transparent",color:fTime===t?c:"rgba(255,255,255,0.3)",border:`1px solid ${fTime===t?c+"33":"rgba(255,255,255,0.05)"}`,borderRadius:10,padding:"2px 8px",fontSize:9.5,cursor:"pointer",fontWeight:fTime===t?700:400}}>{t}</button>;
