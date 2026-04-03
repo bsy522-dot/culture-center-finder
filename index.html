@@ -144,11 +144,44 @@ function estimateTravel(destAddr,destCenter,fromAddr){
   return Math.round(window._transport==="car"?dist/40*60+10:dist/20*60+20);
 }
 
-// Nominatim 지오코딩 (SmartGolf 동일)
+// 주요 지명 → 좌표 즉시 매핑 (Nominatim 실패 대비)
+const QUICK_GEO={
+  "서울":{lat:37.55,lng:126.98},"강남":{lat:37.50,lng:127.05},"서초":{lat:37.49,lng:127.02},"송파":{lat:37.51,lng:127.11},
+  "강동":{lat:37.53,lng:127.13},"마포":{lat:37.55,lng:126.91},"영등포":{lat:37.52,lng:126.90},"용산":{lat:37.53,lng:126.97},
+  "종로":{lat:37.57,lng:126.98},"성동":{lat:37.56,lng:127.04},"광진":{lat:37.54,lng:127.08},"노원":{lat:37.65,lng:127.06},
+  "은평":{lat:37.60,lng:126.93},"강서":{lat:37.55,lng:126.85},"구로":{lat:37.50,lng:126.89},"관악":{lat:37.48,lng:126.95},
+  "동작":{lat:37.50,lng:126.95},"강북":{lat:37.64,lng:127.01},"도봉":{lat:37.67,lng:127.03},"중랑":{lat:37.60,lng:127.09},
+  "서대문":{lat:37.58,lng:126.94},"양천":{lat:37.52,lng:126.87},"금천":{lat:37.46,lng:126.90},
+  "일산":{lat:37.67,lng:126.77},"고양":{lat:37.66,lng:126.83},"파주":{lat:37.76,lng:126.78},"김포":{lat:37.61,lng:126.72},
+  "부천":{lat:37.50,lng:126.76},"인천":{lat:37.45,lng:126.70},"수원":{lat:37.26,lng:127.03},"성남":{lat:37.42,lng:127.13},
+  "분당":{lat:37.38,lng:127.12},"용인":{lat:37.24,lng:127.18},"화성":{lat:37.20,lng:126.83},"동탄":{lat:37.20,lng:127.07},
+  "안양":{lat:37.39,lng:126.92},"광명":{lat:37.47,lng:126.87},"안산":{lat:37.32,lng:126.83},"시흥":{lat:37.38,lng:126.80},
+  "하남":{lat:37.54,lng:127.21},"구리":{lat:37.59,lng:127.13},"남양주":{lat:37.63,lng:127.22},"의정부":{lat:37.74,lng:127.05},
+  "평택":{lat:36.99,lng:127.09},"이천":{lat:37.28,lng:127.44},"양주":{lat:37.78,lng:127.05},
+  "부산":{lat:35.18,lng:129.08},"대구":{lat:35.87,lng:128.60},"대전":{lat:36.35,lng:127.38},"광주":{lat:35.16,lng:126.85},
+  "울산":{lat:35.54,lng:129.31},"세종":{lat:36.48,lng:127.26},"춘천":{lat:37.88,lng:127.73},"청주":{lat:36.64,lng:127.49},
+  "천안":{lat:36.81,lng:127.11},"전주":{lat:35.82,lng:127.15},"목포":{lat:34.81,lng:126.39},"순천":{lat:34.95,lng:127.49},
+  "여수":{lat:34.76,lng:127.66},"포항":{lat:36.02,lng:129.37},"창원":{lat:35.23,lng:128.68},"김해":{lat:35.23,lng:128.88},
+  "거제":{lat:34.88,lng:128.62},"제주":{lat:33.50,lng:126.53},"서귀포":{lat:33.25,lng:126.56},
+  "서초역":{lat:37.49,lng:127.01},"강남역":{lat:37.50,lng:127.03},"잠실역":{lat:37.51,lng:127.10},
+  "홍대":{lat:37.56,lng:126.92},"신촌":{lat:37.56,lng:126.94},"판교":{lat:37.39,lng:127.10},"위례":{lat:37.48,lng:127.14},
+};
+
+// 지오코딩: 빠른 매칭 우선, 없으면 Nominatim
 async function geocodeAddress(query){
-  const r=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query+' 대한민국')}&format=json&limit=1`);
-  const d=await r.json();
-  if(d.length>0) return {lat:+d[0].lat,lng:+d[0].lon};
+  // 1. 즉시 매칭
+  for(const[key,pos] of Object.entries(QUICK_GEO)){
+    if(query.includes(key)) return pos;
+  }
+  // 2. Nominatim (5초 타임아웃)
+  try{
+    const ctrl=new AbortController();
+    const timer=setTimeout(()=>ctrl.abort(),5000);
+    const r=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query+' 대한민국')}&format=json&limit=1`,{signal:ctrl.signal});
+    clearTimeout(timer);
+    const d=await r.json();
+    if(d.length>0) return {lat:+d[0].lat,lng:+d[0].lon};
+  }catch(e){console.log('Nominatim failed:',e);}
   return null;
 }
 function getRegion(addr){
