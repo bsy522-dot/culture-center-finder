@@ -266,6 +266,10 @@ function App(){
     if(!addr){USER_POS=null;TRAVEL_CACHE={};setSettings({...settings,address:""});setSearchMsg("출발지를 입력하세요");return;}
     setSearchMsg(`🔍 "${addr}" 위치 검색중...`);
     window._transport=settings.transport;
+    // 검색 시작 시 이전 결과 초기화
+    TRAVEL_CACHE={};
+    USER_POS=null;
+    setTravelVer(v=>v+1); // 이전 결과 즉시 숨김
     const pos=await geocodeAddress(addr);
     if(!pos){setSearchMsg(`❌ "${addr}" 위치를 찾을 수 없습니다`);return;}
     USER_POS=pos;
@@ -273,6 +277,7 @@ function App(){
     await calcOSRM(pos,CENTER_COORDS,(pct)=>{
       setSearchMsg(`📍 ${addr} — 이동시간 계산중... ${pct}%`);
     });
+    setTravelVer(v=>v+1); // OSRM 완료 → 필터 재계산 트리거
     setSettings({...settings,address:addr});
     setSearchMsg(`📍 ${addr} 기준 · ${settings.transport==="car"?"🚗 차량":"🚌 대중교통"} · ${settings.maxMin}분 이내`);
   };
@@ -300,6 +305,7 @@ function App(){
   useEffect(()=>{save(LSS,settings);},[settings]);
 
   const [searchMsg,setSearchMsg]=useState("");
+  const [travelVer,setTravelVer]=useState(0); // OSRM 완료 후 증가 → useMemo 재계산 트리거
 
   // Load data + center coordinates
   const loadAll=()=>{
@@ -367,7 +373,7 @@ function App(){
       });
     }
     return f;
-  },[data,fCat,fGrp,fStat,fDay,fTime,favOnly,q,settings,sCol,sAsc,fav,childAge]);
+  },[data,fCat,fGrp,fStat,fDay,fTime,favOnly,q,settings,sCol,sAsc,fav,childAge,travelVer]);
 
   const grouped=useMemo(()=>{
     if(gBy==="none")return{"전체":filtered};
