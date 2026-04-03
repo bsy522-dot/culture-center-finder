@@ -626,7 +626,7 @@ function App(){
                 if(!active.length)return null;
                 const isOpen=openGrp===gl;
                 const hasActive=active.some(g=>fGrp===g);
-                return <button key={gl} onClick={()=>setOpenGrp(isOpen?null:gl)}
+                return <button key={gl} onClick={()=>{setOpenGrp(isOpen?null:gl);if(!isOpen)setFGrp("전체");}}
                   style={{background:hasActive?"rgba(251,191,36,0.15)":isOpen?"rgba(126,200,227,0.1)":"transparent",
                     color:hasActive?"#FBBF24":isOpen?"#7EC8E3":"rgba(255,255,255,0.4)",
                     border:`1px solid ${hasActive?"rgba(251,191,36,0.25)":isOpen?"rgba(126,200,227,0.25)":"rgba(255,255,255,0.06)"}`,
