@@ -201,7 +201,8 @@ const GI={
   "발레":"🩰","K-POP댄스":"🎤","밸리댄스":"💃","힙합댄스":"🕺","현대무용":"🩰","댄스(기타)":"💃",
   "피아노":"🎹","바이올린":"🎻","첼로":"🎻","드럼":"🥁","관악기":"🎷","기타(악기)":"🎸",
   "우쿨렐레":"🪕","국악기":"🪘","악기(기타)":"🎼","악기":"🎼",
-  "미술(종합)":"🎨","회화":"🖌️","공예/만들기":"🏺","캘리그라피":"✍️","미술":"🎨",
+  "미술(종합)":"🎨","회화":"🖌️","캘리그라피":"✍️","미술":"🎨",
+  "섬유/뜨개":"🧶","종이접기":"📄","도자기/목공":"🏺","악세서리":"💍","공예(기타)":"🎁",
   "보컬/노래":"🎤","뮤지컬":"🎭","음악놀이":"🎵",
   "요리":"🍳","베이킹/디저트":"🧁",
   "과학":"🔬","수학":"🔢","코딩/로봇":"🤖","바둑":"♟️","블록/레고":"🧱",
@@ -213,7 +214,7 @@ const GG={
   "⚽ 체육/스포츠":["수영","태권도","축구","농구","펜싱","골프","인라인","줄넘기","체조","요가/필라테스","라켓스포츠","체육(종합)","체육","종합체육"],
   "💃 무용/댄스":["발레","K-POP댄스","밸리댄스","한국무용","힙합댄스","현대무용","댄스(기타)"],
   "🎹 악기":["피아노","바이올린","첼로","드럼","관악기","기타(악기)","우쿨렐레","국악기","악기(기타)","악기"],
-  "🎨 미술/공예":["미술(종합)","미술","회화","공예/만들기","캘리그라피"],
+  "🎨 미술/공예":["미술(종합)","미술","회화","캘리그라피","섬유/뜨개","종이접기","도자기/목공","악세서리","공예(기타)"],
   "🎵 음악/공연":["보컬/노래","뮤지컬","음악놀이"],
   "🍳 요리":["요리","베이킹/디저트"],
   "🔬 사고력/교육":["과학","수학","코딩/로봇","바둑","블록/레고","교구놀이","영재교육"],
@@ -254,6 +255,7 @@ function App(){
   const [settings,setSettings]=useState(()=>load(LSS,{birthYear:0,address:"",maxMin:60,transport:"public",region:"전국"}));
   const [gBy,setGBy]=useState("program");
   const [fGrp,setFGrp]=useState("전체");
+  const [fGrpCat,setFGrpCat]=useState(null); // 선택된 대분류 (예: "⚽ 체육/스포츠")
   const [fCat,setFCat]=useState("전체");
   const [fStat,setFStat]=useState("전체");
   const [fDay,setFDay]=useState("전체");
@@ -333,7 +335,9 @@ function App(){
     const s=q.toLowerCase();
     let f=data.map((r,i)=>({r,i}));
     const getTime=(r)=>r[2]>0?r[2]:estimateTravel(r[15],r[1],settings.address);
-    f=f.filter(({r})=>(fCat==="전체"||r[0]===fCat)&&(fGrp==="전체"||r[3]===fGrp)&&(settings.address?getTime(r)<=settings.maxMin:true));
+    // 대분류 필터: fGrpCat이 있으면 해당 그룹의 종목만
+    const grpItems=fGrpCat?GG[fGrpCat]||[]:null;
+    f=f.filter(({r})=>(fCat==="전체"||r[0]===fCat)&&(fGrp!=="전체"?r[3]===fGrp:grpItems?grpItems.includes(r[3]):true)&&(settings.address?getTime(r)<=settings.maxMin:true));
     // 지역 필터 제거 — 이동시간으로 자동 제한
     if(fStat!=="전체")f=f.filter(({r})=>r[10]===fStat);
     if(fDay!=="전체")f=f.filter(({r})=>r[6]&&r[6].includes(fDay));
@@ -373,7 +377,7 @@ function App(){
       });
     }
     return f;
-  },[data,fCat,fGrp,fStat,fDay,fTime,favOnly,q,settings,sCol,sAsc,fav,childAge,travelVer]);
+  },[data,fCat,fGrp,fGrpCat,fStat,fDay,fTime,favOnly,q,settings,sCol,sAsc,fav,childAge,travelVer]);
 
   const grouped=useMemo(()=>{
     if(gBy==="none")return{"전체":filtered};
@@ -620,13 +624,13 @@ function App(){
           <div style={{marginBottom:4}}>
             <div style={{display:"flex",gap:3,flexWrap:"wrap",alignItems:"center",marginBottom:openGrp?4:0}}>
               <span style={{fontSize:9.5,color:"rgba(255,255,255,0.25)",lineHeight:"24px"}}>종목:</span>
-              <button onClick={()=>{setFGrp("전체");setOpenGrp(null);}} style={{background:fGrp==="전체"?"rgba(251,191,36,0.12)":"transparent",color:fGrp==="전체"?"#FBBF24":"rgba(255,255,255,0.3)",border:`1px solid ${fGrp==="전체"?"rgba(251,191,36,0.15)":"rgba(255,255,255,0.05)"}`,borderRadius:10,padding:"2px 8px",fontSize:9.5,cursor:"pointer",fontWeight:fGrp==="전체"?700:400}}>전체</button>
+              <button onClick={()=>{setFGrp("전체");setFGrpCat(null);setOpenGrp(null);}} style={{background:fGrp==="전체"&&!fGrpCat?"rgba(251,191,36,0.12)":"transparent",color:fGrp==="전체"&&!fGrpCat?"#FBBF24":"rgba(255,255,255,0.3)",border:`1px solid ${fGrp==="전체"&&!fGrpCat?"rgba(251,191,36,0.15)":"rgba(255,255,255,0.05)"}`,borderRadius:10,padding:"2px 8px",fontSize:9.5,cursor:"pointer",fontWeight:fGrp==="전체"&&!fGrpCat?700:400}}>전체</button>
               {Object.entries(GG).map(([gl,items])=>{
                 const active=items.filter(g=>GROUPS.includes(g));
                 if(!active.length)return null;
                 const isOpen=openGrp===gl;
                 const hasActive=active.some(g=>fGrp===g);
-                return <button key={gl} onClick={()=>{setOpenGrp(isOpen?null:gl);if(!isOpen)setFGrp("전체");}}
+                return <button key={gl} onClick={()=>{setOpenGrp(isOpen?null:gl);if(!isOpen){setFGrp("전체");setFGrpCat(gl);}else{setFGrpCat(null);}}}
                   style={{background:hasActive?"rgba(251,191,36,0.15)":isOpen?"rgba(126,200,227,0.1)":"transparent",
                     color:hasActive?"#FBBF24":isOpen?"#7EC8E3":"rgba(255,255,255,0.4)",
                     border:`1px solid ${hasActive?"rgba(251,191,36,0.25)":isOpen?"rgba(126,200,227,0.25)":"rgba(255,255,255,0.06)"}`,
