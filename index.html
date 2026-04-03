@@ -202,7 +202,7 @@ function App(){
   const [allData,setAllData]=useState([]);
   const [fav,setFav]=useState(()=>new Set(load(LSF,[])));
   const [memos,setMemos]=useState(()=>load(LSM,{}));
-  const [settings,setSettings]=useState(()=>load(LSS,{birthYear:0,address:"",maxMin:60,transport:"public",region:"서울"}));
+  const [settings,setSettings]=useState(()=>load(LSS,{birthYear:0,address:"",maxMin:60,transport:"public",region:"전국"}));
   const [gBy,setGBy]=useState("program");
   const [fGrp,setFGrp]=useState("전체");
   const [fCat,setFCat]=useState("전체");
@@ -236,19 +236,17 @@ function App(){
   useEffect(()=>{save(LSM,memos);},[memos]);
   useEffect(()=>{save(LSS,settings);},[settings]);
 
-  // Load data by region (lazy loading)
-  const loadRegion=(region)=>{
+  // Load all data once (이동시간은 출발지 기준이므로 전체 로드 필수)
+  const loadAll=()=>{
     setLoading(true);
-    const url = region==="전국" ? "data/all.json" : `data/regions/${encodeURIComponent(region)}.json`;
-    fetch(url+"?t="+Date.now())
+    fetch("data/all.json?t="+Date.now())
       .then(r=>r.json())
-      .then(d=>{setData(d);setAllData(d);setLoading(false);showT(`📍 ${region} ${d.length.toLocaleString()}개 로드`);})
+      .then(d=>{setData(d);setAllData(d);setLoading(false);showT(`📍 전체 ${d.length.toLocaleString()}개 로드`);})
       .catch(e=>{console.error("Failed to load:",e);setLoading(false);showT("로드 실패");});
   };
 
   useEffect(()=>{
-    const region = settings.region || "서울";
-    loadRegion(region);
+    loadAll();
   },[]);
 
   const showT=(m)=>{setToast(m);if(tt.current)clearTimeout(tt.current);tt.current=setTimeout(()=>setToast(null),2500);};
@@ -379,7 +377,7 @@ function App(){
 
   const resetData=()=>{
     if(confirm("기본 데이터로 초기화?")){
-      if(allData.length>0){setData(allData.map(r=>[...r]));}else{loadRegion(settings.region||"서울");}setFav(new Set());setMemos({});showT("초기화 완료");
+      if(allData.length>0){setData(allData.map(r=>[...r]));}else{loadAll();}setFav(new Set());setMemos({});showT("초기화 완료");
     }
   };
 
@@ -463,7 +461,7 @@ function App(){
                     style={{background:"rgba(232,160,191,0.12)",border:"1px solid rgba(232,160,191,0.25)",borderRadius:5,color:"#E8A0BF",fontWeight:700,fontSize:11,padding:"1px 4px",outline:"none",fontFamily:"inherit",cursor:"pointer"}}>
                     {[0,...Array.from({length:75},(_,i)=>2024-i)].map(y=><option key={y} value={y}>{y===0?"전체 (나이무관)":`${y}년생(만${new Date().getFullYear()-y}세)`}</option>)}
                   </select>
-                  <select value={settings.region||"서울"} onChange={e=>{setSettings({...settings,region:e.target.value,address:""});setAddrInput("");loadRegion(e.target.value);setShowCount(100);}}
+                  <select value={settings.region||"전국"} onChange={e=>{setSettings({...settings,region:e.target.value,address:""});setAddrInput("");setShowCount(100);}}
                     style={{background:"rgba(167,139,250,0.12)",border:"1px solid rgba(167,139,250,0.25)",borderRadius:5,color:"#A78BFA",fontWeight:700,fontSize:11,padding:"1px 4px",outline:"none",fontFamily:"inherit",cursor:"pointer",marginLeft:2}}>
                     {REGIONS.map(r=><option key={r} value={r}>{r}</option>)}
                   </select>
