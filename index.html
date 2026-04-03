@@ -611,7 +611,7 @@ function App(){
             <span style={{fontSize:9.5,color:"rgba(255,255,255,0.25)",lineHeight:"22px"}}>센터:</span>
             {["전체",...CATS].map(c=>(<button key={c} onClick={()=>setFCat(c)} style={{background:fCat===c?"rgba(232,160,191,0.12)":"transparent",color:fCat===c?"#E8A0BF":"rgba(255,255,255,0.3)",border:`1px solid ${fCat===c?"rgba(232,160,191,0.2)":"rgba(255,255,255,0.05)"}`,borderRadius:10,padding:"2px 8px",fontSize:9.5,cursor:"pointer",fontWeight:fCat===c?700:400}}>{c}</button>))}
             <span style={{fontSize:9.5,color:"rgba(255,255,255,0.25)",lineHeight:"22px",marginLeft:8}}>시기:</span>
-            {["전체","접수중","접수예정"].map(t=>{
+            {["전체","접수중","대기접수","마감임박","접수예정"].map(t=>{
               const tc={"신규/모집중":"#34D399","신규강좌":"#60A5FA","모집중":"#FBBF24","지난강좌":"#94A3B8","전체":"#7EC8E3"};
               const c=tc[t]||"#7EC8E3";
               return <button key={t} onClick={()=>setFTime(t)} style={{background:fTime===t?c+"18":"transparent",color:fTime===t?c:"rgba(255,255,255,0.3)",border:`1px solid ${fTime===t?c+"33":"rgba(255,255,255,0.05)"}`,borderRadius:10,padding:"2px 8px",fontSize:9.5,cursor:"pointer",fontWeight:fTime===t?700:400}}>{t}</button>;
@@ -678,19 +678,16 @@ function App(){
                   <table style={{width:"100%",borderCollapse:"collapse",fontSize:10}}>
                     <thead><tr>
                       <th style={{padding:"6px 4px",borderBottom:"2px solid #1E3050",position:"sticky",top:0,background:"#0C1525",zIndex:2,width:24}}/>
-                      <TH col={0} w="50px">분류</TH>
-                      <TH col={1} w="130px">센터</TH>
-                      <TH col={2} w="38px">이동</TH>
-                      {gBy!=="program"&&<TH col={3} w="60px">종목</TH>}
+                      <TH col={1} w="90px">센터</TH>
+                      <TH col={2} w="34px">이동</TH>
+                      {gBy!=="program"&&<TH col={3} w="50px">종목</TH>}
                       <TH col={4}>강좌명</TH>
-                      <TH col={5} w="52px">대상</TH>
-                      <TH col={6} w="55px">요일</TH>
-                      <TH col={7} w="78px">시간</TH>
-                      <TH col={8} w="100px">수강료</TH>
-                      <TH col={13} w="72px">시작일</TH>
-                      <TH col={14} w="32px">회차</TH>
-                      <TH col={10} w="55px">상태</TH>
-                      <th style={{padding:"6px 4px",borderBottom:"2px solid #1E3050",position:"sticky",top:0,background:"#0C1525",zIndex:2,width:40,textAlign:"center",color:"#8BA4C4",fontWeight:600,fontSize:9.5}}>링크</th>
+                      <TH col={5} w="42px">대상</TH>
+                      <TH col={6} w="38px">요일</TH>
+                      <TH col={7} w="68px">시간</TH>
+                      <TH col={8} w="72px">수강료</TH>
+                      <TH col={10} w="48px">상태</TH>
+                      <th style={{padding:"6px 4px",borderBottom:"2px solid #1E3050",position:"sticky",top:0,background:"#0C1525",zIndex:2,width:28,textAlign:"center",color:"#8BA4C4",fontWeight:600,fontSize:9.5}}>📍</th>
                     </tr></thead>
                     <tbody>
                       {items.slice(0,showCount).map(({r,i:gi})=>{
@@ -699,28 +696,25 @@ function App(){
                         const hM=!!memos[gi];
                         return(
                           <tr key={gi} style={{borderBottom:"1px solid rgba(255,255,255,0.025)"}}>
-                            <td style={{padding:"4px 2px",textAlign:"center",cursor:"pointer",fontSize:12}} onClick={()=>toggleFav(gi)}>{iF?"⭐":"☆"}</td>
-                            <td style={{padding:"4px 6px"}}><span style={{fontSize:9.5,fontWeight:600}}>{r[0]==="백화점"?"🏬":r[0]==="대형마트"?"🛒":"🏛️"}</span></td>
-                            <td style={{padding:"4px 6px",color:"#fff",fontWeight:600,fontSize:10}}>
-                              {r[1]}
-                              {r[15]&&<a href={mapLink(r[15])} target="_blank" rel="noopener noreferrer" style={{marginLeft:3,fontSize:8,color:"#60A5FA"}} title={r[15]}>📍</a>}
+                            <td style={{padding:"5px 2px",textAlign:"center",cursor:"pointer",fontSize:12}} onClick={()=>toggleFav(gi)}>{iF?"⭐":"☆"}</td>
+                            <td style={{padding:"5px 4px",color:"#aaa",fontSize:9.5,lineHeight:"13px"}}>
+                              <span style={{fontWeight:600,color:"#ccc"}}>{r[1].replace(/홈플러스 |이마트 |롯데마트 |롯데쇼핑 /,'')}</span>
+                              <br/><span style={{fontSize:8,color:"#666"}}>{r[0]==="백화점"?"🏬":r[0]==="대형마트"?"🛒":"🏛️"} {r[1].split(' ')[0]}</span>
                             </td>
-                            <td style={{padding:"4px 6px",textAlign:"center",color:"#FFB347",fontWeight:700,fontSize:9.5}}>{settings.address?(r[2]>0?r[2]:estimateTravel(r[15],r[1],settings.address))+"분":"-"}</td>
-                            {gBy!=="program"&&<td style={{padding:"4px 6px"}}><span style={{background:"rgba(251,191,36,0.08)",color:"#FBBF24",padding:"1px 5px",borderRadius:3,fontSize:9}}>{GI[r[3]]||""}{r[3]}</span></td>}
-                            <td style={{padding:"4px 6px",color:"#E0E0E0",fontWeight:500,fontSize:10}}>
+                            <td style={{padding:"5px 3px",textAlign:"center",color:"#FFB347",fontWeight:700,fontSize:10}}>{settings.address?(r[2]>0?r[2]:estimateTravel(r[15],r[1],settings.address))+"분":"-"}</td>
+                            {gBy!=="program"&&<td style={{padding:"5px 4px"}}><span style={{background:"rgba(251,191,36,0.08)",color:"#FBBF24",padding:"1px 4px",borderRadius:3,fontSize:8.5}}>{GI[r[3]]||""}{r[3]}</span></td>}
+                            <td style={{padding:"5px 4px",color:"#E0E0E0",fontWeight:500,fontSize:11,lineHeight:"15px"}}>
                               {r[4]}
                               {hM&&<span style={{marginLeft:4,fontSize:8,color:"#FBBF24"}} title={memos[gi]}>📝</span>}
                             </td>
-                            <td style={{padding:"4px 6px",color:"#E8A0BF",fontSize:9.5,textAlign:"center"}}>{r[5]}</td>
-                            <td style={{padding:"4px 6px",color:"#7EC8E3",fontSize:9.5}}>{r[6]}</td>
-                            <td style={{padding:"4px 6px",color:"#FFB347",fontWeight:600,fontSize:9.5}}>{r[7]}</td>
-                            <td style={{padding:"4px 6px",color:"#95D5B2",fontSize:9.5}}>{r[8]}</td>
-                            <td style={{padding:"4px 6px",fontSize:9,color:r[13]&&r[13]>=TODAY?"#34D399":r[13]?"rgba(255,255,255,0.25)":"rgba(255,255,255,0.15)"}}>{r[13]?r[13].slice(5):"-"}{r[13]&&r[13]<TODAY?" (지남)":""}</td>
-                            <td style={{padding:"4px 6px",textAlign:"center",fontSize:9,color:"rgba(255,255,255,0.4)"}}>{r[14]?`${r[14]}회`:"-"}</td>
-                            <td style={{padding:"4px 6px",textAlign:"center"}}><span style={{color:sc,fontWeight:700,fontSize:9}}>{r[10]}</span></td>
-                            <td style={{padding:"4px 4px",textAlign:"center",whiteSpace:"nowrap"}}>
-                              {r[12]&&<a href={r[12]} target="_blank" rel="noopener noreferrer" style={{fontSize:10,padding:"2px 3px"}} title="홈페이지">🔗</a>}
-                              {r[11]&&<a href={"tel:"+r[11]} style={{fontSize:10,padding:"2px 3px"}} title={r[11]}>📞</a>}
+                            <td style={{padding:"5px 3px",color:"#E8A0BF",fontSize:9,textAlign:"center"}}>{r[5]}</td>
+                            <td style={{padding:"5px 3px",color:"#7EC8E3",fontSize:9,textAlign:"center"}}>{r[6]}</td>
+                            <td style={{padding:"5px 3px",color:"#FFB347",fontWeight:600,fontSize:9}}>{r[7]}</td>
+                            <td style={{padding:"5px 3px",color:"#95D5B2",fontSize:9}}>{r[8]}</td>
+                            <td style={{padding:"5px 3px",textAlign:"center"}}><span style={{color:sc,fontWeight:700,fontSize:8.5}}>{r[10]}</span></td>
+                            <td style={{padding:"5px 2px",textAlign:"center"}}>
+                              {r[12]&&<a href={r[12]} target="_blank" rel="noopener noreferrer" style={{fontSize:9}} title="상세">🔗</a>}
+                              {r[15]&&<a href={mapLink(r[15])} target="_blank" rel="noopener noreferrer" style={{fontSize:9,marginLeft:1}} title={r[15]}>📍</a>}
                             </td>
                           </tr>
                         );
