@@ -358,11 +358,11 @@ function App(){
       });
     }
     if(favOnly)f=f.filter(({i})=>fav.has(i));
-    // Filter by child age
+    // Filter by child age — 연령 정보 없는 항목은 숨김
     if(settings.birthYear && settings.birthYear>0){
       f=f.filter(({r})=>{
         const range=parseAge(r[5]);
-        if(!range)return true;
+        if(!range)return false;
         const[lo,hi]=range;
         return childAge>=lo && childAge<=hi+1;
       });
