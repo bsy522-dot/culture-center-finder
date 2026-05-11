@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ccf-v2';
+const CACHE_NAME = 'ccf-v3';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -30,7 +30,17 @@ self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   if (url.origin !== location.origin) return;
 
-  if (DATA_ASSETS.some(a => url.pathname.endsWith(a.replace('./', '')))) {
+  if (url.pathname.endsWith('.html') || url.pathname.endsWith('/')) {
+    e.respondWith(
+      fetch(e.request).then(resp => {
+        if (resp.ok) {
+          const clone = resp.clone();
+          caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+        }
+        return resp;
+      }).catch(() => caches.match(e.request))
+    );
+  } else if (DATA_ASSETS.some(a => url.pathname.endsWith(a.replace('./', '')))) {
     e.respondWith(
       fetch(e.request).then(resp => {
         if (resp.ok) {

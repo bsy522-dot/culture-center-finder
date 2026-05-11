@@ -2,6 +2,83 @@
 
 ---
 
+## [AUTO] 2026-05-11 v3.0 지역필터+가격분석+무한스크롤+온보딩+접근성+통계강화+Footer
+
+### 1차: 벤치마킹 (클래스101 / 탈잉 대비)
+
+| 항목 | 클래스101/탈잉 | culture-center-finder v2.0 | 조치 |
+|------|---------------|---------------------------|------|
+| 지역 필터 | 세밀한 지역 드릴다운 | 없음 | 18개 지역 필터 추가 |
+| 가격 정렬/필터 | 가격순 정렬+범위 | 없음 | 가격 낮은순/높은순 정렬 |
+| 무한 스크롤 | 자연스러운 스크롤 | "더보기" 버튼 | IntersectionObserver |
+| 첫 방문 가이드 | 온보딩 투어 | 없음 | 5단계 가이드 추가 |
+| 강좌 공유 | SNS/링크 공유 | 없음 | Web Share API 연동 |
+| 스켈레톤 UI | 스플래시 로딩 | 스피너만 | 스플래시 + 진행률 |
+| 접근성 | ARIA/키보드 | 최소 | Skip, ARIA, landmarks |
+| 센터 Top10 | 추천 순위 | 없음 | 통계에 센터 TOP10 추가 |
+| 활성 필터 표시 | 필터 태그 칩 | 없음 | 활성 필터 + 전체초기화 |
+| Footer | 앱 정보/링크 | 없음 | 3컬럼 Footer 추가 |
+| 가격 분석 | 가격대별 통계 | 없음 | 5단계 가격대 분석 |
+| reduced-motion | 접근성 선언 | 없음 | prefers-reduced-motion |
+
+**총 12개 열위점 -> 전부 해결**
+
+### 2차: 개발팀 투입 내용
+
+#### 프론트엔드
+- 18개 지역 필터 필 UI (전국/서울/경기/.../제주)
+- 활성 필터 태그 표시 + 개별 제거 + 전체 초기화 버튼
+- 스플래시 로딩 스크린 (로고 펄스 + 프로그레스 바 + 퍼센트)
+- 무한 스크롤 (IntersectionObserver, 200px rootMargin)
+- 빈 결과 개선 UI (아이콘 + 안내 메시지)
+- 모든 결과 표시 완료 메시지
+- Footer 3컬럼 (앱소개/데이터소스/기능안내)
+- 가격 정렬 셀렉트 (기본/낮은순/높은순)
+- Skip-to-content 접근성 링크
+- prefers-reduced-motion 미디어 쿼리 (애니메이션 비활성화)
+- ARIA role/label 추가 (header=banner, main, nav, footer=contentinfo, toast=alert)
+- 온보딩 5단계 가이드 (출발지/필터/즐겨찾기/통계/PWA)
+- 온보딩 스텝 도트 인디케이터 + 이전/다음/건너뛰기
+- 사용법 가이드 재열기 버튼 (❓)
+- 강좌 공유 버튼 (Web Share API / clipboard fallback)
+
+#### 백엔드/로직
+- 지역 필터 로직 (주소 기반 매칭)
+- 가격 파싱 함수 parsePrice() (콤마 제거, 숫자 추출)
+- 가격순 정렬 로직 (컬럼 정렬과 독립)
+- 활성 필터 목록 함수 getActiveFilters()
+- 온보딩 완료 localStorage 저장 (cc-onboarded)
+- 스플래시 퍼센트 데이터 로딩 연동 (10→50→70→90→100)
+
+#### 통계 강화
+- 가격대별 분포 차트 (무료/~5만/5~10만/10~20만/20만~)
+- 지역별 분포 차트 (18개 지역)
+- 센터별 강좌 수 TOP 10 (메달 아이콘)
+- 종목별 TOP 15 (기존 전체 -> 상위 15)
+
+#### 인프라
+- sw.js v3 (Network-first HTML 추가, 캐시 ccf-v3)
+- manifest.json v3 (description 갱신, dir 추가, categories utilities 추가)
+
+### 3차: 품질 검증
+
+- JS 괄호 균형: () 0, [] 0, {} 0 — **PASS**
+- HTML 태그: header 1/1, main 1/1, footer 1/1, nav 1/1, table 3/3 — **PASS**
+- 외부 CDN 검사: 0건 (React/Babel unpkg만 유지) — **PASS**
+- 개인정보 검출: 0건 — **PASS**
+- 파일 크기: 1424줄 → 1764줄 (+340, +24%), 86KB → 107KB (+24%)
+- JS 함수 수: ~47개, 84,607자
+- prefers-reduced-motion: 지원 — **PASS**
+- ARIA landmarks: banner, main, contentinfo, navigation — **PASS**
+- 기존 기능 호환: 다크/라이트, 카드뷰/테이블뷰, OSRM, 즐겨찾기/메모, 비교 — **유지**
+
+### 4차: 배포
+
+- 커밋: [AUTO] 2026-05-11 culture-center-finder v3.0
+- 파일 변경: index.html, sw.js, manifest.json, AUTO_REPORT.md
+
+---
+
 ## [AUTO] 2026-05-07 v2.0 대규모 UX/UI 업그레이드
 
 ### 1차: 벤치마킹 (클래스101 / 탈잉 대비)
