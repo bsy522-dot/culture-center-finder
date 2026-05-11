@@ -181,6 +181,67 @@ tr:hover td{background:var(--card-hover)!important}
 @media(max-width:1024px){
   .card-grid{grid-template-columns:repeat(2,1fr)}
 }
+/* Skip to content */
+.skip-link{position:absolute;top:-40px;left:0;background:var(--accent);color:#0A1628;padding:8px 16px;z-index:1000;font-weight:700;font-size:12px;transition:top .2s;border-radius:0 0 8px 0}
+.skip-link:focus{top:0}
+
+/* Skeleton loading */
+.skeleton{background:linear-gradient(90deg,var(--card-bg) 25%,var(--card-hover) 50%,var(--card-bg) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:6px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* Region filter pills */
+.region-pills{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px;align-items:center}
+.region-pill{background:transparent;color:var(--filter-text);border:1px solid var(--filter-border);border-radius:14px;padding:3px 10px;font-size:10px;cursor:pointer;font-weight:500;transition:all .2s}
+.region-pill.active{background:rgba(96,165,250,0.12);color:#60A5FA;border-color:rgba(96,165,250,0.3);font-weight:700}
+.region-pill:hover{background:rgba(96,165,250,0.06)}
+
+/* Active filter tags */
+.active-filters{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px}
+.active-filter-tag{display:inline-flex;align-items:center;gap:3px;background:rgba(126,200,227,0.1);border:1px solid rgba(126,200,227,0.2);border-radius:12px;padding:2px 8px;font-size:9px;color:var(--accent);font-weight:600}
+.active-filter-tag .remove{cursor:pointer;font-size:11px;color:var(--text-muted);line-height:1}
+.active-filter-tag .remove:hover{color:#EF4444}
+
+/* Share button */
+.share-btn{background:none;border:1px solid var(--card-border);border-radius:6px;color:var(--text-muted);font-size:10px;padding:3px 8px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:3px}
+.share-btn:hover{background:var(--filter-active-bg);color:var(--accent);border-color:var(--accent)}
+
+/* Onboarding tour */
+.onboarding-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:500;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);animation:fadeIn .3s ease}
+.onboarding-card{background:var(--modal-bg);border:2px solid var(--accent);border-radius:16px;padding:28px 24px;max-width:440px;width:92%;text-align:center;animation:modalIn .3s ease}
+.onboarding-card h3{font-size:18px;color:var(--text-primary);margin-bottom:8px}
+.onboarding-card .icon{font-size:40px;margin-bottom:12px}
+.onboarding-card p{font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:20px}
+.onboarding-steps{display:flex;gap:6px;justify-content:center;margin-bottom:16px}
+.onboarding-dot{width:8px;height:8px;border-radius:50%;background:var(--card-border);transition:all .2s}
+.onboarding-dot.active{background:var(--accent);width:20px;border-radius:4px}
+.onboarding-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0A1628;border:none;border-radius:8px;padding:10px 28px;font-weight:700;font-size:13px;cursor:pointer;transition:transform .15s}
+.onboarding-btn:hover{transform:scale(1.03)}
+.onboarding-skip{background:none;border:none;color:var(--text-muted);font-size:11px;cursor:pointer;margin-top:10px;padding:4px 12px}
+
+/* Footer */
+.app-footer{background:var(--bg-secondary);border-top:1px solid var(--card-border);padding:20px 16px;margin-top:24px}
+.app-footer .footer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;margin:0 auto 16px;text-align:left}
+.app-footer .footer-col h4{font-size:11px;font-weight:700;color:var(--text-primary);margin-bottom:8px}
+.app-footer .footer-col p{font-size:10px;color:var(--text-muted);line-height:1.8}
+.app-footer .footer-bottom{font-size:9px;color:var(--text-faint);border-top:1px solid var(--card-border);padding-top:12px;text-align:center;max-width:900px;margin:0 auto}
+
+/* Splash loading */
+.splash-screen{position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,#080B10,#0C1525);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;transition:opacity .4s ease}
+.splash-screen.fade-out{opacity:0;pointer-events:none}
+.splash-logo{width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,#7EC8E3,#3AAFA9);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:#0A1628;margin-bottom:16px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.splash-bar{width:200px;height:3px;background:rgba(126,200,227,0.15);border-radius:2px;overflow:hidden;margin-top:12px}
+.splash-bar-fill{height:100%;background:linear-gradient(90deg,#7EC8E3,#3AAFA9);border-radius:2px;transition:width .3s ease}
+
+/* Price filter */
+.price-filter{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--text-muted)}
+.price-filter select{background:var(--input-bg);color:var(--text-primary);border:1px solid var(--input-border);border-radius:6px;padding:3px 6px;font-size:10px;outline:none;cursor:pointer;font-family:inherit}
+
+@media(prefers-reduced-motion:reduce){
+  .course-card,.onboarding-card,.splash-screen,.modal{animation:none!important}
+  *{transition-duration:0s!important}
+}
+
 @media(max-width:768px){
   .modal .row{grid-template-columns:1fr}
   .sg{grid-template-columns:repeat(2,1fr)!important}
@@ -192,6 +253,7 @@ tr:hover td{background:var(--card-hover)!important}
   .toast{bottom:70px}
   body{padding-bottom:60px}
   .stats-grid-2{grid-template-columns:1fr!important}
+  .app-footer .footer-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -425,6 +487,17 @@ function App(){
   const [bottomNavVisible,setBottomNavVisible]=useState(true);
   const lastScrollY=useRef(0);
 
+  // v3.0 new states
+  const [fRegion,setFRegion]=useState("전국");
+  const [priceSort,setPriceSort]=useState("none"); // "none","asc","desc"
+  const [showOnboarding,setShowOnboarding]=useState(()=>{
+    try{return !localStorage.getItem('cc-onboarded');}catch(e){return false;}
+  });
+  const [onboardStep,setOnboardStep]=useState(0);
+  const [splashDone,setSplashDone]=useState(false);
+  const [splashPct,setSplashPct]=useState(0);
+  const sentinelRef=useRef(null);
+
   // Apply theme
   useEffect(()=>{
     document.documentElement.setAttribute('data-theme',theme);
@@ -473,6 +546,62 @@ function App(){
     window.addEventListener('keydown',handler);
     return()=>window.removeEventListener('keydown',handler);
   },[modal,centerModal,showCompare,q]);
+
+  // IntersectionObserver for infinite scroll
+  useEffect(()=>{
+    if(!sentinelRef.current)return;
+    const obs=new IntersectionObserver((entries)=>{
+      if(entries[0].isIntersecting){setShowCount(s=>Math.min(s+100,filtered.length));}
+    },{rootMargin:'200px'});
+    obs.observe(sentinelRef.current);
+    return()=>obs.disconnect();
+  },[filtered.length]);
+
+  // Parse price from string to number
+  const parsePrice=(s)=>{
+    if(!s)return 0;
+    const m=s.replace(/,/g,'').match(/(\d+)/);
+    return m?parseInt(m[1]):0;
+  };
+
+  // Share a course
+  const shareCourse=(r)=>{
+    const text=`${r[4]} - ${r[1]}\n${r[3]} | ${r[6]} ${r[7]}\n${r[8]||'가격 미정'}`;
+    if(navigator.share){
+      navigator.share({title:r[4],text}).catch(()=>{});
+    } else {
+      navigator.clipboard.writeText(text).then(()=>showT("강좌 정보 복사됨")).catch(()=>{});
+    }
+  };
+
+  // Complete onboarding
+  const completeOnboarding=()=>{
+    setShowOnboarding(false);
+    try{localStorage.setItem('cc-onboarded','1');}catch(e){}
+  };
+
+  const ONBOARD_DATA=[
+    {icon:"🔍",title:"출발지 설정",desc:"상단에 출발지 주소를 입력하면 각 문화센터까지의 이동시간이 자동 계산됩니다. 차량/대중교통도 전환 가능합니다."},
+    {icon:"🎯",title:"필터로 찾기",desc:"종목, 요일, 상태, 지역, 가격 등 다양한 필터를 조합하여 원하는 강좌를 빠르게 찾으세요."},
+    {icon:"⭐",title:"즐겨찾기와 비교",desc:"관심 있는 강좌에 별표를 누르고, 체크박스로 최대 3개 강좌를 한눈에 비교할 수 있습니다."},
+    {icon:"📊",title:"통계 분석",desc:"통계 탭에서 시간대별, 요일별, 종목별, 가격별 분석을 확인하고 나에게 맞는 강좌를 발견하세요."},
+    {icon:"📱",title:"어디서든 사용",desc:"PWA로 설치하면 오프라인에서도 사용 가능합니다. 모바일에서는 하단 네비게이션으로 편리하게 이용하세요."}
+  ];
+
+  // Get active filters list for display
+  const getActiveFilters=()=>{
+    const tags=[];
+    if(fRegion!=="전국") tags.push({label:"지역: "+fRegion,clear:()=>setFRegion("전국")});
+    if(fCat!=="전체") tags.push({label:"센터: "+fCat,clear:()=>setFCat("전체")});
+    if(fGrp!=="전체") tags.push({label:"종목: "+fGrp,clear:()=>{setFGrp("전체");setFGrpCat(null);}});
+    if(fStat!=="전체") tags.push({label:"상태: "+fStat,clear:()=>setFStat("전체")});
+    if(fDay!=="전체") tags.push({label:"요일: "+fDay,clear:()=>setFDay("전체")});
+    if(fTime!=="전체") tags.push({label:"시기: "+fTime,clear:()=>setFTime("전체")});
+    if(q) tags.push({label:"검색: "+q,clear:()=>setQ("")});
+    if(favOnly) tags.push({label:"즐겨찾기만",clear:()=>setFavOnly(false)});
+    if(priceSort!=="none") tags.push({label:"가격: "+(priceSort==="asc"?"낮은순":"높은순"),clear:()=>setPriceSort("none")});
+    return tags;
+  };
 
   // Recent searches
   const addRecentSearch=(term)=>{
@@ -524,14 +653,18 @@ function App(){
   const [travelVer,setTravelVer]=useState(0);
 
   const loadAll=()=>{
-    setLoading(true);
+    setLoading(true);setSplashPct(10);
     setSearchMsg("데이터 로딩중...");
+    setSplashPct(20);
     Promise.all([
-      fetch("data/all.json?t="+Date.now()).then(r=>r.json()),
-      fetch("data/center_coords.json?t="+Date.now()).then(r=>r.json()).catch(()=>({}))
+      fetch("data/all.json?t="+Date.now()).then(r=>{setSplashPct(50);return r.json();}),
+      fetch("data/center_coords.json?t="+Date.now()).then(r=>{setSplashPct(70);return r.json();}).catch(()=>({}))
     ]).then(([d,cc])=>{
+      setSplashPct(90);
       CENTER_COORDS=cc;
-      setData(d);setAllData(d);setLoading(false);
+      setData(d);setAllData(d);
+      setSplashPct(100);
+      setTimeout(()=>{setSplashDone(true);setTimeout(()=>setLoading(false),400);},300);
       setSearchMsg(d.length.toLocaleString()+"개 강좌 - 출발지를 입력하세요");
     }).catch(e=>{console.error(e);setLoading(false);setSearchMsg("로드 실패");});
   };
@@ -575,8 +708,14 @@ function App(){
         return childAge>=lo && childAge<=hi+1;
       });
     }
+    if(fRegion!=="전국")f=f.filter(({r})=>{const addr=r[15]||r[1]||"";return addr.includes(fRegion);});
     if(s)f=f.filter(({r})=>r[1].toLowerCase().includes(s)||r[4].toLowerCase().includes(s)||r[3].toLowerCase().includes(s)||(r[15]||'').toLowerCase().includes(s));
-    if(sCol!==null){
+    if(priceSort!=="none"){
+      f=[...f].sort((a,b)=>{
+        const pa=parsePrice(a.r[8]),pb=parsePrice(b.r[8]);
+        return priceSort==="asc"?pa-pb:pb-pa;
+      });
+    } else if(sCol!==null){
       f=[...f].sort((a,b)=>{
         let va=a.r[sCol],vb=b.r[sCol];
         if(sCol===2){va=getTime(a.r);vb=getTime(b.r);}
@@ -585,7 +724,7 @@ function App(){
       });
     }
     return f;
-  },[data,fCat,fGrp,fGrpCat,fStat,fDay,fTime,favOnly,q,settings,sCol,sAsc,fav,childAge,travelVer]);
+  },[data,fCat,fGrp,fGrpCat,fStat,fDay,fTime,favOnly,q,settings,sCol,sAsc,fav,childAge,travelVer,fRegion,priceSort]);
 
   const grouped=useMemo(()=>{
     if(gBy==="none")return{"전체":filtered};
@@ -633,7 +772,35 @@ function App(){
       DNAMES.forEach(d=>{if(day.includes(d))dayPop[d]++;});
     });
 
-    return{total:data.length,ctrs:ctrs.size,conf,need:data.length-conf,cc,gc,srcDist,timeSlots,dayPop};
+    // Price analysis
+    const priceRanges={"무료":0,"~5만원":0,"5~10만원":0,"10~20만원":0,"20만원~":0,"미정":0};
+    data.forEach(r=>{
+      const p=r[8]||"";
+      const num=parseInt(p.replace(/,/g,'').match(/(\d+)/)?.[1]||"0");
+      if(!p||num===0)priceRanges["미정"]++;
+      else if(p.includes("무료")||num===0)priceRanges["무료"]++;
+      else if(num<=50000)priceRanges["~5만원"]++;
+      else if(num<=100000)priceRanges["5~10만원"]++;
+      else if(num<=200000)priceRanges["10~20만원"]++;
+      else priceRanges["20만원~"]++;
+    });
+
+    // Center top 10
+    const centerCount={};
+    data.forEach(r=>{centerCount[r[1]]=(centerCount[r[1]]||0)+1;});
+    const centerTop10=Object.entries(centerCount).sort((a,b)=>b[1]-a[1]).slice(0,10);
+
+    // Region distribution
+    const regionDist={};
+    REGIONS.filter(r=>r!=="전국").forEach(r=>regionDist[r]=0);
+    data.forEach(r=>{
+      const addr=r[15]||r[1]||"";
+      for(const reg of REGIONS){
+        if(reg!=="전국"&&addr.includes(reg)){regionDist[reg]++;break;}
+      }
+    });
+
+    return{total:data.length,ctrs:ctrs.size,conf,need:data.length-conf,cc,gc,srcDist,timeSlots,dayPop,priceRanges,centerTop10,regionDist};
   },[data]);
 
   const hSort=(c)=>{if(sCol===c){setSAsc(!sAsc)}else{setSCol(c);setSAsc(true)}};
@@ -805,7 +972,10 @@ function App(){
               <span style={{fontSize:10,color:"#95D5B2",fontWeight:600}}>{r[8]||"-"}</span>
               <span style={{fontSize:8.5,fontWeight:700,color:sc,background:sc+"18",padding:"2px 6px",borderRadius:4}}>{r[10]}</span>
             </div>
-            {settings.address&&<div style={{fontSize:9,color:"#FFB347",marginTop:6,fontWeight:600}}>{(r[2]>0?r[2]:estimateTravel(r[15],r[1],settings.address))+"분"}</div>}
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:6}}>
+              {settings.address&&<span style={{fontSize:9,color:"#FFB347",fontWeight:600}}>{(r[2]>0?r[2]:estimateTravel(r[15],r[1],settings.address))+"분"}</span>}
+              <button className="share-btn" onClick={(e)=>{e.stopPropagation();shareCourse(r);}} title="공유">{"📤"} 공유</button>
+            </div>
           </div>
         );
       })}
@@ -814,17 +984,22 @@ function App(){
 
   return(
     <div style={{background:"var(--bg)",minHeight:"100vh",color:"var(--text)",transition:"background .3s,color .3s"}}>
-      {/* Loading Indicator */}
+      {/* Accessibility: Skip to content */}
+      <a href="#main-content" className="skip-link">본문 바로가기</a>
+
+      {/* Splash Loading Screen */}
       {loading && (
-        <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(8,11,16,0.95)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",zIndex:999}}>
-          <div style={{width:48,height:48,border:"4px solid rgba(126,200,227,0.2)",borderTop:"4px solid #7EC8E3",borderRadius:"50%",animation:"spin 1s linear infinite"}}/>
-          <div style={{marginTop:16,color:"#7EC8E3",fontSize:14,fontWeight:600}}>강좌 데이터 로딩 중...</div>
-          <style>{"@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}"}</style>
+        <div className={"splash-screen"+(splashDone?" fade-out":"")}>
+          <div className="splash-logo">문</div>
+          <div style={{color:"#7EC8E3",fontSize:16,fontWeight:700}}>문화센터 강좌 파인더</div>
+          <div style={{color:"rgba(126,200,227,0.5)",fontSize:11,marginTop:4}}>95,000+ 강좌를 검색하세요</div>
+          <div className="splash-bar"><div className="splash-bar-fill" style={{width:splashPct+"%"}}/></div>
+          <div style={{color:"rgba(126,200,227,0.35)",fontSize:10,marginTop:8}}>데이터 로딩 중... {splashPct}%</div>
         </div>
       )}
 
       {/* Header */}
-      <div style={{background:"var(--header-bg)",borderBottom:"1px solid var(--header-border)",padding:"16px 16px 12px"}}>
+      <header role="banner" style={{background:"var(--header-bg)",borderBottom:"1px solid var(--header-border)",padding:"16px 16px 12px"}}>
         <div style={{maxWidth:1400,margin:"0 auto"}}>
           <div className="hf" style={{display:"flex",alignItems:"center",gap:10,justifyContent:"space-between"}}>
             <div style={{display:"flex",alignItems:"center",gap:10,flex:1,minWidth:0}}>
@@ -860,18 +1035,19 @@ function App(){
               </div>
             </div>
             <div style={{display:"flex",gap:6,alignItems:"center",flexWrap:"wrap"}}>
-              <button className="theme-toggle" onClick={toggleTheme} title={theme==='dark'?"라이트 모드":"다크 모드"}>
+              <button className="theme-toggle" onClick={toggleTheme} title={theme==='dark'?"라이트 모드":"다크 모드"} aria-label="테마 전환">
                 {theme==='dark'?"☀️":"🌙"}
               </button>
               {[["table","목록"],["stats","통계"]].map(([v,l])=>(
-                <button key={v} className={`tb ${tab===v?"a":""}`} onClick={()=>setTab(v)}>{l}</button>
+                <button key={v} className={`tb ${tab===v?"a":""}`} onClick={()=>setTab(v)} aria-pressed={tab===v}>{l}</button>
               ))}
+              <button className="tb" onClick={()=>{setShowOnboarding(true);setOnboardStep(0);}} title="사용법 가이드" aria-label="사용법 보기">{"❓"}</button>
             </div>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div style={{maxWidth:1400,margin:"0 auto",padding:"10px 16px 40px"}}>
+      <main id="main-content" role="main" style={{maxWidth:1400,margin:"0 auto",padding:"10px 16px 40px"}}>
 
         {/* Stats Tab */}
         {tab==="stats" && (
@@ -968,19 +1144,82 @@ function App(){
               </div>
             </div>
 
-            {/* Program distribution */}
-            <div style={{background:"var(--stat-card-bg)",border:"1px solid var(--stat-card-border)",borderRadius:10,padding:16}}>
-              <h3 style={{fontSize:13,fontWeight:700,color:"var(--text-primary)",marginBottom:12}}>종목별</h3>
-              <div style={{maxHeight:280,overflowY:"auto"}}>
-              {Object.entries(stats.gc).sort((a,b)=>b[1]-a[1]).map(([k,v])=>(
-                <div key={k} style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
-                  <span style={{fontSize:11,width:100,whiteSpace:"nowrap",color:"var(--text-secondary)"}}>{getEmoji(k)} {k}</span>
-                  <div style={{flex:1,height:16,background:"var(--bar-bg)",borderRadius:3,overflow:"hidden"}}>
-                    <div style={{width:(v/Math.max(...Object.values(stats.gc))*100)+"%",height:"100%",background:"linear-gradient(90deg,var(--accent),var(--accent2))",opacity:0.5,borderRadius:3,transition:"width .5s ease"}}/>
-                  </div>
-                  <span style={{fontSize:11,fontWeight:700,color:"var(--accent)",width:35,textAlign:"right"}}>{v.toLocaleString()}</span>
+            <div className="stats-grid-2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12}}>
+              {/* Price analysis */}
+              <div style={{background:"var(--stat-card-bg)",border:"1px solid var(--stat-card-border)",borderRadius:10,padding:16}}>
+                <h3 style={{fontSize:13,fontWeight:700,color:"var(--text-primary)",marginBottom:12}}>가격대별 분포</h3>
+                {Object.entries(stats.priceRanges).map(([k,v])=>{
+                  const max=Math.max(...Object.values(stats.priceRanges));
+                  const colors={"무료":"#34D399","~5만원":"#60A5FA","5~10만원":"#FBBF24","10~20만원":"#FB923C","20만원~":"#F87171","미정":"#94A3B8"};
+                  const c=colors[k]||"var(--accent)";
+                  return(
+                    <div key={k} style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
+                      <span style={{fontSize:11,width:60,color:c,fontWeight:600}}>{k}</span>
+                      <div style={{flex:1,height:18,background:"var(--bar-bg)",borderRadius:4,overflow:"hidden"}}>
+                        <div style={{width:(max>0?(v/max*100):0)+"%",height:"100%",background:"linear-gradient(90deg,"+c+","+c+"88)",borderRadius:4,transition:"width .5s ease"}}/>
+                      </div>
+                      <span style={{fontSize:11,fontWeight:700,color:c,width:45,textAlign:"right"}}>{v.toLocaleString()}</span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Region distribution */}
+              <div style={{background:"var(--stat-card-bg)",border:"1px solid var(--stat-card-border)",borderRadius:10,padding:16}}>
+                <h3 style={{fontSize:13,fontWeight:700,color:"var(--text-primary)",marginBottom:12}}>지역별 분포</h3>
+                <div style={{maxHeight:220,overflowY:"auto"}}>
+                {Object.entries(stats.regionDist).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).map(([k,v])=>{
+                  const max=Math.max(...Object.values(stats.regionDist));
+                  return(
+                    <div key={k} style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
+                      <span style={{fontSize:11,width:30,color:"var(--text-secondary)",fontWeight:600}}>{k}</span>
+                      <div style={{flex:1,height:16,background:"var(--bar-bg)",borderRadius:3,overflow:"hidden"}}>
+                        <div style={{width:(max>0?(v/max*100):0)+"%",height:"100%",background:"linear-gradient(90deg,#60A5FA,#818CF8)",opacity:0.6,borderRadius:3,transition:"width .5s ease"}}/>
+                      </div>
+                      <span style={{fontSize:10,fontWeight:700,color:"#60A5FA",width:45,textAlign:"right"}}>{v.toLocaleString()}</span>
+                    </div>
+                  );
+                })}
                 </div>
-              ))}
+              </div>
+            </div>
+
+            <div className="stats-grid-2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12}}>
+              {/* Program distribution */}
+              <div style={{background:"var(--stat-card-bg)",border:"1px solid var(--stat-card-border)",borderRadius:10,padding:16}}>
+                <h3 style={{fontSize:13,fontWeight:700,color:"var(--text-primary)",marginBottom:12}}>종목별 TOP 15</h3>
+                <div style={{maxHeight:280,overflowY:"auto"}}>
+                {Object.entries(stats.gc).sort((a,b)=>b[1]-a[1]).slice(0,15).map(([k,v])=>(
+                  <div key={k} style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
+                    <span style={{fontSize:11,width:100,whiteSpace:"nowrap",color:"var(--text-secondary)"}}>{getEmoji(k)} {k}</span>
+                    <div style={{flex:1,height:16,background:"var(--bar-bg)",borderRadius:3,overflow:"hidden"}}>
+                      <div style={{width:(v/Math.max(...Object.values(stats.gc))*100)+"%",height:"100%",background:"linear-gradient(90deg,var(--accent),var(--accent2))",opacity:0.5,borderRadius:3,transition:"width .5s ease"}}/>
+                    </div>
+                    <span style={{fontSize:11,fontWeight:700,color:"var(--accent)",width:35,textAlign:"right"}}>{v.toLocaleString()}</span>
+                  </div>
+                ))}
+                </div>
+              </div>
+
+              {/* Center top 10 */}
+              <div style={{background:"var(--stat-card-bg)",border:"1px solid var(--stat-card-border)",borderRadius:10,padding:16}}>
+                <h3 style={{fontSize:13,fontWeight:700,color:"var(--text-primary)",marginBottom:12}}>센터별 강좌 수 TOP 10</h3>
+                <div style={{maxHeight:280,overflowY:"auto"}}>
+                {stats.centerTop10.map(([name,cnt],idx)=>{
+                  const max=stats.centerTop10[0]?.[1]||1;
+                  const medal=idx===0?"🥇":idx===1?"🥈":idx===2?"🥉":"";
+                  return(
+                    <div key={name} style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
+                      <span style={{fontSize:10,width:12,textAlign:"center",color:"var(--text-faint)"}}>{medal||idx+1}</span>
+                      <span style={{fontSize:10,width:100,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",color:"var(--text-secondary)",cursor:"pointer"}} onClick={()=>setCenterModal(name)} title={name}>{name.replace(/홈플러스 |이마트 |롯데마트 |롯데쇼핑 /,'')}</span>
+                      <div style={{flex:1,height:16,background:"var(--bar-bg)",borderRadius:3,overflow:"hidden"}}>
+                        <div style={{width:(cnt/max*100)+"%",height:"100%",background:"linear-gradient(90deg,#E8A0BF,#E8A0BF88)",borderRadius:3,transition:"width .5s ease"}}/>
+                      </div>
+                      <span style={{fontSize:11,fontWeight:700,color:"#E8A0BF",width:35,textAlign:"right"}}>{cnt}</span>
+                    </div>
+                  );
+                })}
+                </div>
               </div>
             </div>
           </div>
@@ -1031,11 +1270,43 @@ function App(){
             </div>
           )}
 
+          {/* Active filter tags */}
+          {getActiveFilters().length>0&&(
+            <div className="active-filters">
+              {getActiveFilters().map((f,i)=>(
+                <span key={i} className="active-filter-tag">
+                  {f.label}
+                  <span className="remove" onClick={f.clear}>{"×"}</span>
+                </span>
+              ))}
+              <span className="active-filter-tag" style={{cursor:"pointer",background:"rgba(239,68,68,0.08)",borderColor:"rgba(239,68,68,0.2)",color:"#EF4444"}}
+                onClick={()=>{setFRegion("전국");setFCat("전체");setFGrp("전체");setFGrpCat(null);setFStat("전체");setFDay("전체");setFTime("전체");setQ("");setFavOnly(false);setPriceSort("none");}}>
+                전체 초기화
+              </span>
+            </div>
+          )}
+
           {/* Filter result count */}
           <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
             <span style={{fontSize:13,fontWeight:800,color:"var(--accent)"}}>{filtered.length.toLocaleString()}</span>
             <span style={{fontSize:10,color:"var(--text-muted)"}}>개 강좌</span>
             {settings.address&&<span style={{fontSize:9,color:"var(--text-faint)"}}>| {centers.length}곳</span>}
+            <div style={{marginLeft:"auto"}} className="price-filter">
+              <span>가격:</span>
+              <select value={priceSort} onChange={e=>setPriceSort(e.target.value)}>
+                <option value="none">기본</option>
+                <option value="asc">낮은순</option>
+                <option value="desc">높은순</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Region filter */}
+          <div className="region-pills">
+            <span style={{fontSize:9.5,color:"var(--text-faint)"}}>지역:</span>
+            {REGIONS.map(r=>(
+              <button key={r} className={"region-pill"+(fRegion===r?" active":"")} onClick={()=>setFRegion(r)}>{r}</button>
+            ))}
           </div>
 
           <div style={{display:"flex",gap:3,flexWrap:"wrap",marginBottom:4}}>
@@ -1177,13 +1448,25 @@ function App(){
             </div>
           )}
 
-          {!filtered.length&&<div style={{textAlign:"center",padding:40,color:"var(--text-faint)",fontSize:12}}>조건에 맞는 강좌가 없습니다.</div>}
+          {!filtered.length&&(
+            <div style={{textAlign:"center",padding:40,color:"var(--text-faint)"}}>
+              <div style={{fontSize:32,marginBottom:8}}>{"🔍"}</div>
+              <div style={{fontSize:13,fontWeight:600}}>조건에 맞는 강좌가 없습니다</div>
+              <div style={{fontSize:11,marginTop:4}}>필터를 조정하거나 검색어를 변경해보세요</div>
+            </div>
+          )}
           {filtered.length>showCount&&(
-            <div style={{textAlign:"center",padding:12}}>
-              <button onClick={()=>setShowCount(s=>s+100)}
-                style={{background:"linear-gradient(135deg,#7EC8E3,#3AAFA9)",border:"none",borderRadius:8,color:"#0A1628",fontWeight:800,fontSize:12,padding:"8px 24px",cursor:"pointer",transition:"transform .15s"}}>
-                더보기 ({showCount}/{filtered.length.toLocaleString()}개)
-              </button>
+            <div ref={sentinelRef} style={{textAlign:"center",padding:16}}>
+              <div style={{display:"inline-flex",alignItems:"center",gap:8,background:"var(--card-bg)",border:"1px solid var(--card-border)",borderRadius:10,padding:"10px 20px"}}>
+                <div style={{width:16,height:16,border:"2px solid rgba(126,200,227,0.3)",borderTop:"2px solid var(--accent)",borderRadius:"50%",animation:"spin 1s linear infinite"}}/>
+                <span style={{fontSize:11,color:"var(--text-muted)"}}>더 불러오는 중... ({showCount}/{filtered.length.toLocaleString()})</span>
+              </div>
+              <style>{"@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}"}</style>
+            </div>
+          )}
+          {filtered.length>0&&filtered.length<=showCount&&(
+            <div style={{textAlign:"center",padding:12,fontSize:10,color:"var(--text-faint)"}}>
+              전체 {filtered.length.toLocaleString()}개 강좌를 모두 표시하고 있습니다
             </div>
           )}
 
@@ -1196,7 +1479,37 @@ function App(){
             데이터 출처: 이마트/롯데마트/홈플러스 문화센터 공개 강좌 정보(2026.01 수집) + 공공시설 웹사이트
           </div>
         </>)}
-      </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="app-footer" role="contentinfo">
+        <div className="footer-grid">
+          <div className="footer-col">
+            <h4>문화센터 강좌 파인더</h4>
+            <p>전국 95,000+ 문화센터 강좌를 한눈에 비교하고 검색하세요. OSRM 기반 실시간 이동시간 계산으로 나에게 가까운 강좌를 찾아드립니다.</p>
+          </div>
+          <div className="footer-col">
+            <h4>데이터 소스</h4>
+            <p>홈플러스 문화센터</p>
+            <p>롯데마트 문화센터</p>
+            <p>이마트 문화센터</p>
+            <p>롯데백화점 문화센터</p>
+            <p>현대백화점 문화센터</p>
+          </div>
+          <div className="footer-col">
+            <h4>기능 안내</h4>
+            <p>출발지 기반 이동시간 계산</p>
+            <p>종목/요일/상태/지역 필터</p>
+            <p>강좌 비교 (최대 3개)</p>
+            <p>즐겨찾기 및 메모</p>
+            <p>CSV/JSON 내보내기</p>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <p>v3.0 | NEXTERA+PRISM Auto Agent | 비영리 정보 제공 서비스 | 강좌 정보는 각 센터 공식 사이트에서 확인하세요</p>
+          <p style={{marginTop:4}}>PWA 지원 | 다크/라이트 모드 | 모바일 최적화 | 접근성 지원 (ARIA, 키보드 네비게이션)</p>
+        </div>
+      </footer>
 
       {/* Add/Edit Modal */}
       {(modal==='add'||modal==='edit')&&(
@@ -1385,7 +1698,34 @@ function App(){
         </div>
       )}
 
-      {toast&&<div className="toast">{toast}</div>}
+      {/* Onboarding Guide */}
+      {showOnboarding&&(
+        <div className="onboarding-overlay" onClick={completeOnboarding}>
+          <div className="onboarding-card" onClick={e=>e.stopPropagation()}>
+            <div className="icon">{ONBOARD_DATA[onboardStep].icon}</div>
+            <h3>{ONBOARD_DATA[onboardStep].title}</h3>
+            <p>{ONBOARD_DATA[onboardStep].desc}</p>
+            <div className="onboarding-steps">
+              {ONBOARD_DATA.map((_,i)=>(
+                <div key={i} className={"onboarding-dot"+(i===onboardStep?" active":"")} onClick={()=>setOnboardStep(i)} style={{cursor:"pointer"}}/>
+              ))}
+            </div>
+            <div style={{display:"flex",gap:8,justifyContent:"center"}}>
+              {onboardStep>0&&(
+                <button className="onboarding-btn" style={{background:"var(--input-bg)",color:"var(--text)"}} onClick={()=>setOnboardStep(s=>s-1)}>이전</button>
+              )}
+              {onboardStep<ONBOARD_DATA.length-1?(
+                <button className="onboarding-btn" onClick={()=>setOnboardStep(s=>s+1)}>다음 ({onboardStep+1}/{ONBOARD_DATA.length})</button>
+              ):(
+                <button className="onboarding-btn" onClick={completeOnboarding}>시작하기!</button>
+              )}
+            </div>
+            <button className="onboarding-skip" onClick={completeOnboarding}>건너뛰기</button>
+          </div>
+        </div>
+      )}
+
+      {toast&&<div className="toast" role="alert">{toast}</div>}
 
       {/* Scroll to top button */}
       {showScrollTop&&!showCompare&&!centerModal&&!modal&&(
@@ -1395,26 +1735,26 @@ function App(){
       )}
 
       {/* Mobile Bottom Navigation */}
-      <div className={"bottom-nav"+(bottomNavVisible?"":" hidden")}>
+      <nav className={"bottom-nav"+(bottomNavVisible?"":" hidden")} role="navigation" aria-label="모바일 네비게이션">
         <div className="bottom-nav-inner">
           <button className={"bottom-nav-btn"+(tab==="table"&&mobileTab==="search"?" active":"")}
-            onClick={()=>{setTab("table");setMobileTab("search");if(searchRef.current)searchRef.current.focus();}}>
+            onClick={()=>{setTab("table");setMobileTab("search");if(searchRef.current)searchRef.current.focus();}} aria-label="검색">
             <span>{"🔍"}</span>검색
           </button>
           <button className={"bottom-nav-btn"+(tab==="stats"?" active":"")}
-            onClick={()=>{setTab("stats");setMobileTab("stats");}}>
+            onClick={()=>{setTab("stats");setMobileTab("stats");}} aria-label="통계">
             <span>{"📊"}</span>통계
           </button>
           <button className={"bottom-nav-btn"+(favOnly?" active":"")}
-            onClick={()=>{setTab("table");setFavOnly(!favOnly);setMobileTab("fav");}}>
+            onClick={()=>{setTab("table");setFavOnly(!favOnly);setMobileTab("fav");}} aria-label="즐겨찾기">
             <span>{"⭐"}</span>즐겨찾기
           </button>
           <button className={"bottom-nav-btn"+(mobileTab==="settings"?" active":"")}
-            onClick={()=>{setMobileTab("settings");toggleTheme();}}>
+            onClick={()=>{setMobileTab("settings");toggleTheme();}} aria-label="설정">
             <span>{"⚙️"}</span>설정
           </button>
         </div>
-      </div>
+      </nav>
     </div>
   );
 }
