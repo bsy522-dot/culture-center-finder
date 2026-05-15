@@ -1406,6 +1406,8 @@ function App(){
                         <TH col={6} w="38px">요일</TH>
                         <TH col={7} w="68px">시간</TH>
                         <TH col={8} w="72px">수강료</TH>
+                        <TH col={13} w="62px">시작일</TH>
+                        <TH col={14} w="34px">회차</TH>
                         <TH col={10} w="48px">상태</TH>
                         <th style={{padding:"6px 4px",borderBottom:"2px solid var(--table-header-border)",position:"sticky",top:0,background:"var(--table-header-bg)",zIndex:2,width:28,textAlign:"center",color:"var(--text-secondary)",fontWeight:600,fontSize:9.5}}>{"📍"}</th>
                       </tr></thead>
@@ -1433,6 +1435,8 @@ function App(){
                               <td style={{padding:"5px 3px",color:"var(--accent)",fontSize:9,textAlign:"center"}}>{r[6]}</td>
                               <td style={{padding:"5px 3px",color:"#FFB347",fontWeight:600,fontSize:9}}>{r[7]}</td>
                               <td style={{padding:"5px 3px",color:"#95D5B2",fontSize:9}}>{r[8]}</td>
+                              <td style={{padding:"5px 3px",fontSize:8.5,whiteSpace:"nowrap",color:r[13]&&r[13]>=TODAY?"#34D399":"var(--text-faint)"}}>{r[13]?r[13].slice(5):"-"}{r[13]&&r[13]<TODAY?" 지남":""}</td>
+                              <td style={{padding:"5px 3px",textAlign:"center",fontSize:8.5,color:"var(--text-muted)"}}>{r[14]?r[14]+"회":"-"}</td>
                               <td style={{padding:"5px 3px",textAlign:"center"}}><span style={{color:sc,fontWeight:700,fontSize:8.5}}>{r[10]}</span></td>
                               <td style={{padding:"5px 2px",textAlign:"center"}}>
                                 {r[12]&&<a href={r[12]} target="_blank" rel="noopener noreferrer" style={{fontSize:9}} title="상세">{"🔗"}</a>}
