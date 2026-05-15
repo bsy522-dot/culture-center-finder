@@ -547,16 +547,6 @@ function App(){
     return()=>window.removeEventListener('keydown',handler);
   },[modal,centerModal,showCompare,q]);
 
-  // IntersectionObserver for infinite scroll
-  useEffect(()=>{
-    if(!sentinelRef.current)return;
-    const obs=new IntersectionObserver((entries)=>{
-      if(entries[0].isIntersecting){setShowCount(s=>Math.min(s+100,filtered.length));}
-    },{rootMargin:'200px'});
-    obs.observe(sentinelRef.current);
-    return()=>obs.disconnect();
-  },[filtered.length]);
-
   // Parse price from string to number
   const parsePrice=(s)=>{
     if(!s)return 0;
@@ -725,6 +715,17 @@ function App(){
     }
     return f;
   },[data,fCat,fGrp,fGrpCat,fStat,fDay,fTime,favOnly,q,settings,sCol,sAsc,fav,childAge,travelVer,fRegion,priceSort]);
+
+  // IntersectionObserver for infinite scroll — placed AFTER `filtered` is declared so
+  // the dependency array does not read `filtered` before initialization (var-hoist crash fix)
+  useEffect(()=>{
+    if(!sentinelRef.current)return;
+    const obs=new IntersectionObserver((entries)=>{
+      if(entries[0].isIntersecting){setShowCount(s=>Math.min(s+100,filtered.length));}
+    },{rootMargin:'200px'});
+    obs.observe(sentinelRef.current);
+    return()=>obs.disconnect();
+  },[filtered.length]);
 
   const grouped=useMemo(()=>{
     if(gBy==="none")return{"전체":filtered};
