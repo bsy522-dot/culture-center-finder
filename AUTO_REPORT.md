@@ -2,6 +2,81 @@
 
 ---
 
+## [AUTO] 2026-05-16 v4.0 SEO+캘린더뷰+강사필터+URL공유+키보드가이드+최근본강좌+인사이트+인쇄최적화
+
+### 1차: 벤치마킹 (클래스101 / 탈잉 대비)
+
+| 항목 | 클래스101/탈잉 | culture-center-finder v3.0 | v4.0 조치 |
+|------|---------------|---------------------------|-----------|
+| SEO 메타태그 | OG+Twitter+JSON-LD | 없음 | OG 4태그+Twitter 4태그+JSON-LD+canonical 추가 |
+| 인기/추천 | 인기순위+개인추천 | 없음 | 인사이트 배너 (데이터 기반 추천/팁) |
+| 최근 본 강좌 | 히스토리 제공 | 없음 | 최근 본 10개 사이드 패널 |
+| 캘린더뷰 | 주간/월간 시간표 | 없음 | 7요일 주간 캘린더 그리드 |
+| URL 공유 | 필터상태 공유 가능 | 없음 | 해시 기반 필터 URL 복사/복원 |
+| 강사 프로필 | 강사별 필터 | 없음 | 인기 강사 TOP10 칩 필터 |
+| 키보드단축키 가이드 | 도움말 패널 | /+Esc만 | 7종 단축키+오버레이 가이드 |
+| 인쇄 최적화 | 인쇄 스타일 | 없음 | @media print 전용 스타일시트 |
+| 접근성 강화 | WCAG AA | 부분 | footer ARIA, kbd label, focus 강화 |
+| 모바일 네비 | 하단 5탭 | 4탭 | 5탭 (캘린더 탭 추가) |
+
+**총 10개 열위점 -> 전부 해결**
+
+### 2차: 개발팀 투입 내용
+
+#### 프론트엔드 (SEO/UI)
+- OG 메타태그 4종 (type, title, description, image)
+- Twitter Card 메타태그 4종 (card, title, description, image)
+- JSON-LD 구조화 데이터 (WebApplication 스키마, featureList 9개)
+- Canonical URL 추가
+- 키보드 단축키 가이드 오버레이 (7종 단축키 문서화)
+- 인쇄 전용 CSS (불필요 UI 숨김, 흑백 최적화, page-break 제어)
+- 캘린더뷰 CSS (7컬럼 그리드, 셀 호버, 아이템 스타일)
+- 최근 본 강좌 사이드 패널 CSS (슬라이드 애니메이션)
+- 강사 칩 필터 UI (활성/비활성 상태, 호버 효과)
+- 인사이트 배너 UI (아이콘 + 텍스트 + 닫기 버튼)
+- 모바일 하단 네비 5탭 (캘린더 탭 추가)
+- Footer 갱신 (v4.0, 실시간 강좌수 표시)
+
+#### 백엔드/로직
+- URL 해시 기반 필터 상태 동기화 (읽기: useEffect 초기 로드, 쓰기: shareFilterURL)
+- 인기 강사 집계 알고리즘 (빈도순 TOP 20)
+- 캘린더 데이터 집계 (요일별 강좌 분류 + 시간순 정렬)
+- 최근 본 강좌 추적 (10개, localStorage cc-recent-views)
+- 인사이트 생성 (6종 팁: 접수중/마감임박/인기종목/즐겨찾기/주말/무료)
+- 강사명 필터 로직 (fInstructor state + filtered useMemo 연동)
+- Notification API 연동 (마감임박 알림, opt-in)
+- 키보드 단축키 확장 (? = 가이드, C = 캘린더, R = 최근뷰, P = 인쇄)
+- 강좌 조회 추적 (trackView 함수, 카드 클릭 시 기록)
+- 검색 결과에 강사명 검색 포함
+
+#### 인프라
+- sw.js v4→v5 (캐시 ccf-v5-20260516)
+- manifest.json v4 (shortcuts 2개, description 갱신)
+
+### 3차: 품질 검증
+
+- JS 괄호 균형: () 0, [] 0, {} 0 — **PASS**
+- HTML 태그: header 1/1, main 1/1, footer 1/1, nav 1/1, table 3/3 — **PASS**
+- 외부 CDN 검사: 0건 (React/Babel unpkg만 유지) — **PASS**
+- 개인정보 검출: 0건 — **PASS**
+- 파일 크기: 1770줄 → 2068줄 (+298, +17%), 107KB → 117KB (+9%)
+- React hooks: useState 54, useEffect 10, useMemo 7, useCallback 2, useRef 5
+- SEO: OG 4태그 + Twitter 4태그 + JSON-LD + canonical — **PASS**
+- 인쇄: @media print 전용 스타일 — **PASS**
+- 접근성: skip-link, ARIA, roles, keyboard 7종 — **PASS**
+- 키보드 단축키: / ? Esc C R P Ctrl+K — **PASS**
+- 캘린더뷰: 7요일 그리드 + 시간순 정렬 — **PASS**
+- URL 공유: hash params 읽기/쓰기 — **PASS**
+- prefers-reduced-motion: 지원 — **PASS**
+- 기존 기능 호환: 다크/라이트, OSRM, 즐겨찾기, 비교, 통계 — **유지**
+
+### 4차: 배포
+
+- 커밋: [AUTO] 2026-05-16 culture-center-finder v4.0
+- 파일 변경: index.html, sw.js, manifest.json, AUTO_REPORT.md
+
+---
+
 ## [AUTO] 2026-05-11 v3.0 지역필터+가격분석+무한스크롤+온보딩+접근성+통계강화+Footer
 
 ### 1차: 벤치마킹 (클래스101 / 탈잉 대비)
