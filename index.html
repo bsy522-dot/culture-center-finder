@@ -3,12 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>문화센터 강좌 파인더</title>
+<title>문화센터 강좌 파인더 - 전국 74,000+ 강좌 검색</title>
+<meta name="description" content="전국 74,000개 이상 문화센터 강좌를 한눈에 비교. 이동시간 자동계산, 종목/요일/가격 필터, 즐겨찾기, 통계분석 지원. 백화점·대형마트 문화센터 총망라.">
+<meta name="keywords" content="문화센터,강좌,백화점문화센터,대형마트,수영,발레,피아노,요가,필라테스,이마트,롯데마트,홈플러스">
+<meta property="og:type" content="website">
+<meta property="og:title" content="문화센터 강좌 파인더 - 전국 74,000+ 강좌 검색">
+<meta property="og:description" content="전국 74,000개 문화센터 강좌 비교. OSRM 이동시간, 종목·요일·가격 필터, 강좌비교, 통계분석.">
+<meta property="og:image" content="icon-512.png">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="문화센터 강좌 파인더">
+<meta name="twitter:description" content="전국 74,000+ 강좌를 이동시간·종목·가격으로 비교 검색">
+<meta name="twitter:image" content="icon-512.png">
+<link rel="canonical" href="https://bsy522-dot.github.io/culture-center-finder/">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#7EC8E3">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="apple-touch-icon" href="icon-192.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"문화센터 강좌 파인더","description":"전국 74,000개 이상 문화센터 강좌를 검색하고 비교할 수 있는 PWA","url":"https://bsy522-dot.github.io/culture-center-finder/","applicationCategory":"EducationalApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["OSRM 이동시간 계산","종목별 필터","요일별 필터","가격 정렬","즐겨찾기","강좌 비교","통계 분석","다크/라이트 모드","오프라인 지원"]}
+</script>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -255,6 +270,56 @@ tr:hover td{background:var(--card-hover)!important}
   .stats-grid-2{grid-template-columns:1fr!important}
   .app-footer .footer-grid{grid-template-columns:1fr}
 }
+
+/* Print stylesheet */
+@media print{
+  body{background:#fff!important;color:#000!important;font-size:10pt}
+  .bottom-nav,.scroll-top-btn,.theme-toggle,.skip-link,#scroll-progress,.splash-screen,.onboarding-overlay,.toast,header button,.share-btn,input[type=checkbox]{display:none!important}
+  header{background:#fff!important;border-bottom:2px solid #333!important;padding:8px!important}
+  header h1{color:#000!important;font-size:14pt!important}
+  .course-card{break-inside:avoid;border:1px solid #ccc!important;background:#fff!important;box-shadow:none!important}
+  .course-card *{color:#000!important}
+  table{font-size:8pt}
+  th,td{border:1px solid #ddd!important;padding:3px 5px!important}
+  .modal-overlay{position:static!important;background:none!important}
+  .modal{box-shadow:none!important;border:1px solid #333!important}
+  a[href]:after{content:" (" attr(href) ")";font-size:8pt;color:#666}
+}
+
+/* Keyboard guide overlay */
+.kbd-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:600;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);animation:fadeIn .2s ease}
+.kbd-card{background:var(--modal-bg);border:1px solid var(--modal-border);border-radius:16px;padding:28px;max-width:480px;width:92%;max-height:80vh;overflow-y:auto;animation:modalIn .25s ease}
+.kbd-card h3{font-size:16px;font-weight:800;color:var(--text-primary);margin-bottom:16px;text-align:center}
+.kbd-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--card-border)}
+.kbd-key{background:linear-gradient(135deg,rgba(126,200,227,0.15),rgba(58,175,169,0.1));border:1px solid rgba(126,200,227,0.3);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:700;color:var(--accent);min-width:60px;text-align:center;font-family:monospace}
+.kbd-desc{font-size:12px;color:var(--text-secondary)}
+
+/* Recent view panel */
+.recent-panel{position:fixed;top:50%;right:0;transform:translateY(-50%);background:var(--modal-bg);border:1px solid var(--modal-border);border-right:none;border-radius:12px 0 0 12px;padding:12px;z-index:50;max-height:60vh;overflow-y:auto;width:220px;box-shadow:-4px 0 20px rgba(0,0,0,0.3);animation:slideInRight .3s ease}
+@keyframes slideInRight{from{transform:translateY(-50%) translateX(100%)}to{transform:translateY(-50%) translateX(0)}}
+.recent-panel h4{font-size:11px;font-weight:700;color:var(--text-primary);margin-bottom:8px}
+.recent-item{padding:6px 8px;border-radius:6px;margin-bottom:4px;cursor:pointer;transition:background .2s;font-size:10px;color:var(--text-secondary);border:1px solid transparent}
+.recent-item:hover{background:var(--card-hover);border-color:var(--card-border)}
+
+/* Calendar view */
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px}
+.cal-header{font-size:10px;font-weight:700;text-align:center;padding:6px 2px;color:var(--text-secondary);border-bottom:2px solid var(--card-border)}
+.cal-cell{min-height:60px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:6px;padding:4px;overflow-y:auto;max-height:120px}
+.cal-cell:hover{border-color:var(--accent)}
+.cal-item{font-size:8px;padding:2px 4px;border-radius:3px;margin-bottom:2px;background:rgba(126,200,227,0.08);border-left:2px solid var(--accent);color:var(--text-secondary);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-item:hover{background:rgba(126,200,227,0.15)}
+
+/* Insight banner */
+.insight-banner{background:linear-gradient(135deg,rgba(126,200,227,0.08),rgba(58,175,169,0.05));border:1px solid rgba(126,200,227,0.15);border-radius:10px;padding:10px 16px;margin-bottom:10px;display:flex;align-items:center;gap:10px;animation:cardFadeIn .5s ease}
+.insight-banner .icon{font-size:20px;flex-shrink:0}
+.insight-banner .text{font-size:11px;color:var(--text-secondary);flex:1}
+.insight-banner .text strong{color:var(--accent);font-weight:700}
+.insight-banner .dismiss{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:4px}
+
+/* Instructor filter */
+.instructor-chip{display:inline-flex;align-items:center;gap:3px;background:rgba(232,160,191,0.1);border:1px solid rgba(232,160,191,0.2);border-radius:12px;padding:2px 8px;font-size:9px;color:#E8A0BF;font-weight:600;cursor:pointer;transition:all .2s}
+.instructor-chip:hover{background:rgba(232,160,191,0.2);border-color:rgba(232,160,191,0.4)}
+.instructor-chip.active{background:rgba(232,160,191,0.25);border-color:#E8A0BF}
 </style>
 </head>
 <body>
@@ -498,6 +563,15 @@ function App(){
   const [splashPct,setSplashPct]=useState(0);
   const sentinelRef=useRef(null);
 
+  // v4.0 new states
+  const [showKbdGuide,setShowKbdGuide]=useState(false);
+  const [showCalendar,setShowCalendar]=useState(false);
+  const [showRecentView,setShowRecentView]=useState(false);
+  const [recentViews,setRecentViews]=useState(()=>load('cc-recent-views',[]));
+  const [insightDismissed,setInsightDismissed]=useState(false);
+  const [fInstructor,setFInstructor]=useState("");
+  const [showNotifPrompt,setShowNotifPrompt]=useState(false);
+
   // Apply theme
   useEffect(()=>{
     document.documentElement.setAttribute('data-theme',theme);
@@ -537,15 +611,41 @@ function App(){
       }
       // Escape to close modal or clear search
       if(e.key==='Escape'){
+        if(showKbdGuide){setShowKbdGuide(false);return;}
         if(modal){setModal(null);return;}
         if(centerModal){setCenterModal(null);return;}
         if(showCompare){setShowCompare(false);return;}
+        if(showRecentView){setShowRecentView(false);return;}
         if(q){setQ("");return;}
+      }
+      // "?" to show keyboard guide
+      if(e.key==='?'&&!e.ctrlKey&&!e.metaKey){
+        const active=document.activeElement;
+        if(active&&(active.tagName==='INPUT'||active.tagName==='TEXTAREA'||active.tagName==='SELECT'))return;
+        e.preventDefault();setShowKbdGuide(true);
+      }
+      // "c" to toggle calendar
+      if(e.key==='c'&&!e.ctrlKey&&!e.metaKey){
+        const active=document.activeElement;
+        if(active&&(active.tagName==='INPUT'||active.tagName==='TEXTAREA'||active.tagName==='SELECT'))return;
+        setShowCalendar(v=>!v);
+      }
+      // "r" to toggle recent views
+      if(e.key==='r'&&!e.ctrlKey&&!e.metaKey){
+        const active=document.activeElement;
+        if(active&&(active.tagName==='INPUT'||active.tagName==='TEXTAREA'||active.tagName==='SELECT'))return;
+        setShowRecentView(v=>!v);
+      }
+      // "p" to print
+      if(e.key==='p'&&!e.ctrlKey&&!e.metaKey){
+        const active=document.activeElement;
+        if(active&&(active.tagName==='INPUT'||active.tagName==='TEXTAREA'||active.tagName==='SELECT'))return;
+        e.preventDefault();window.print();
       }
     };
     window.addEventListener('keydown',handler);
     return()=>window.removeEventListener('keydown',handler);
-  },[modal,centerModal,showCompare,q]);
+  },[modal,centerModal,showCompare,showKbdGuide,showRecentView,q]);
 
   // Parse price from string to number
   const parsePrice=(s)=>{
@@ -590,8 +690,104 @@ function App(){
     if(q) tags.push({label:"검색: "+q,clear:()=>setQ("")});
     if(favOnly) tags.push({label:"즐겨찾기만",clear:()=>setFavOnly(false)});
     if(priceSort!=="none") tags.push({label:"가격: "+(priceSort==="asc"?"낮은순":"높은순"),clear:()=>setPriceSort("none")});
+    if(fInstructor) tags.push({label:"강사: "+fInstructor,clear:()=>setFInstructor("")});
     return tags;
   };
+
+  // Track recent views
+  const trackView=(courseName,centerName,gi)=>{
+    setRecentViews(prev=>{
+      const filtered=prev.filter(v=>v.gi!==gi);
+      const next=[{name:courseName,center:centerName,gi,ts:Date.now()},...filtered].slice(0,10);
+      save('cc-recent-views',next);
+      return next;
+    });
+  };
+
+  // Insight data
+  const getInsight=useCallback(()=>{
+    if(data.length===0)return null;
+    const insights=[
+      ()=>{const recruiting=data.filter(r=>r[10]==='접수중').length;return recruiting>0?{icon:"🔥",text:`현재 <strong>${recruiting.toLocaleString()}개</strong> 강좌가 접수중입니다. 서둘러 신청하세요!`}:null;},
+      ()=>{const urgent=data.filter(r=>r[10]==='마감임박').length;return urgent>0?{icon:"⏰",text:`<strong>${urgent}개</strong> 강좌가 마감임박! 관심 강좌를 빨리 확인하세요.`}:null;},
+      ()=>{const topProg=Object.entries(stats.gc||{}).sort((a,b)=>b[1]-a[1])[0];return topProg?{icon:"🏆",text:`가장 인기 종목: <strong>${topProg[0]}</strong> (${topProg[1].toLocaleString()}개 강좌)`}:null;},
+      ()=>{const favCount=fav.size;return favCount>0?{icon:"⭐",text:`즐겨찾기 <strong>${favCount}개</strong> 강좌를 저장하셨어요. 비교해 보세요!`}:null;},
+      ()=>{const weekend=data.filter(r=>(r[6]||'').includes('토')||(r[6]||'').includes('일')).length;return{icon:"📅",text:`주말 강좌 <strong>${weekend.toLocaleString()}개</strong> 있습니다. 직장인에게 추천!`};},
+      ()=>{const free=data.filter(r=>(r[8]||'').includes('무료')).length;return free>0?{icon:"💰",text:`<strong>${free}개</strong> 무료 강좌가 있습니다. 부담없이 시작하세요!`}:null;},
+    ];
+    const day=new Date().getDate();
+    const insight=insights[day%insights.length]();
+    return insight;
+  },[data,stats,fav]);
+
+  // Instructor list (top 20)
+  const instructors=useMemo(()=>{
+    const ic={};
+    data.forEach(r=>{const n=r[9];if(n&&n.trim()&&n!=='-'&&n!=='미정'){ic[n]=(ic[n]||0)+1;}});
+    return Object.entries(ic).sort((a,b)=>b[1]-a[1]).slice(0,20);
+  },[data]);
+
+  // URL hash state sync
+  useEffect(()=>{
+    const hash=window.location.hash.slice(1);
+    if(!hash)return;
+    try{
+      const params=new URLSearchParams(hash);
+      if(params.get('q'))setQ(params.get('q'));
+      if(params.get('region'))setFRegion(params.get('region'));
+      if(params.get('cat'))setFCat(params.get('cat'));
+      if(params.get('grp'))setFGrp(params.get('grp'));
+      if(params.get('day'))setFDay(params.get('day'));
+      if(params.get('stat'))setFStat(params.get('stat'));
+    }catch(e){}
+  },[]);
+
+  const shareFilterURL=()=>{
+    const params=new URLSearchParams();
+    if(q)params.set('q',q);
+    if(fRegion!=='전국')params.set('region',fRegion);
+    if(fCat!=='전체')params.set('cat',fCat);
+    if(fGrp!=='전체')params.set('grp',fGrp);
+    if(fDay!=='전체')params.set('day',fDay);
+    if(fStat!=='전체')params.set('stat',fStat);
+    const url=window.location.origin+window.location.pathname+'#'+params.toString();
+    navigator.clipboard.writeText(url).then(()=>showT('검색 결과 링크 복사됨!')).catch(()=>{});
+    window.location.hash=params.toString();
+  };
+
+  // Notification for 마감임박
+  const requestNotifPermission=async()=>{
+    if(!('Notification' in window)){showT('이 브라우저는 알림을 지원하지 않습니다');return;}
+    const perm=await Notification.requestPermission();
+    if(perm==='granted'){
+      const urgent=data.filter(r=>r[10]==='마감임박').length;
+      if(urgent>0){
+        new Notification('문화센터 강좌 파인더',{body:`${urgent}개 강좌가 마감임박입니다!`,icon:'icon-192.png'});
+      }
+      showT('알림이 활성화되었습니다');
+    }
+    setShowNotifPrompt(false);
+  };
+
+  // Calendar data
+  const calendarData=useMemo(()=>{
+    const DNAMES=["월","화","수","목","금","토","일"];
+    const byDay={};
+    DNAMES.forEach(d=>byDay[d]=[]);
+    const items=filtered.slice(0,500);
+    items.forEach(({r,i:gi})=>{
+      const dayStr=r[6]||"";
+      DNAMES.forEach(d=>{
+        if(dayStr.includes(d)){
+          byDay[d].push({name:r[4],time:r[7]||"",center:r[1],prog:r[3],gi});
+        }
+      });
+    });
+    Object.keys(byDay).forEach(d=>{
+      byDay[d].sort((a,b)=>(a.time||"").localeCompare(b.time||""));
+    });
+    return byDay;
+  },[filtered]);
 
   // Recent searches
   const addRecentSearch=(term)=>{
@@ -699,7 +895,8 @@ function App(){
       });
     }
     if(fRegion!=="전국")f=f.filter(({r})=>{const addr=r[15]||r[1]||"";return addr.includes(fRegion);});
-    if(s)f=f.filter(({r})=>r[1].toLowerCase().includes(s)||r[4].toLowerCase().includes(s)||r[3].toLowerCase().includes(s)||(r[15]||'').toLowerCase().includes(s));
+    if(fInstructor)f=f.filter(({r})=>r[9]===fInstructor);
+    if(s)f=f.filter(({r})=>r[1].toLowerCase().includes(s)||r[4].toLowerCase().includes(s)||r[3].toLowerCase().includes(s)||(r[15]||'').toLowerCase().includes(s)||(r[9]||'').toLowerCase().includes(s));
     if(priceSort!=="none"){
       f=[...f].sort((a,b)=>{
         const pa=parsePrice(a.r[8]),pb=parsePrice(b.r[8]);
@@ -714,7 +911,7 @@ function App(){
       });
     }
     return f;
-  },[data,fCat,fGrp,fGrpCat,fStat,fDay,fTime,favOnly,q,settings,sCol,sAsc,fav,childAge,travelVer,fRegion,priceSort]);
+  },[data,fCat,fGrp,fGrpCat,fStat,fDay,fTime,favOnly,q,settings,sCol,sAsc,fav,childAge,travelVer,fRegion,priceSort,fInstructor]);
 
   // IntersectionObserver for infinite scroll — placed AFTER `filtered` is declared so
   // the dependency array does not read `filtered` before initialization (var-hoist crash fix)
@@ -953,7 +1150,7 @@ function App(){
         const iF=fav.has(gi);
         const isCompare=compareItems.includes(gi);
         return(
-          <div key={gi} className="course-card" style={{animationDelay:(idx%12)*30+'ms'}} onClick={()=>setCenterModal(r[1])}>
+          <div key={gi} className="course-card" style={{animationDelay:(idx%12)*30+'ms'}} onClick={()=>{setCenterModal(r[1]);trackView(r[4],r[1],gi);}}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:8}}>
               <div style={{fontSize:10,color:CC[r[0]]||"var(--text-muted)",fontWeight:600}}>
                 {r[0]==="백화점"?"🏬":r[0]==="대형마트"?"🛒":"🏛"} {r[1].replace(/홈플러스 |이마트 |롯데마트 |롯데쇼핑 /,'')}
@@ -1042,6 +1239,10 @@ function App(){
               {[["table","목록"],["stats","통계"]].map(([v,l])=>(
                 <button key={v} className={`tb ${tab===v?"a":""}`} onClick={()=>setTab(v)} aria-pressed={tab===v}>{l}</button>
               ))}
+              <button className={"tb"+(showCalendar?" a":"")} onClick={()=>setShowCalendar(v=>!v)} title="캘린더뷰 (C)" aria-label="캘린더뷰">{"📅"}</button>
+              <button className="tb" onClick={()=>setShowRecentView(v=>!v)} title="최근 본 강좌 (R)" aria-label="최근 본 강좌">{"🕐"}</button>
+              <button className="tb" onClick={shareFilterURL} title="필터 링크 공유" aria-label="검색결과 링크 복사">{"🔗"}</button>
+              <button className="tb" onClick={()=>setShowKbdGuide(true)} title="키보드 단축키 (?)" aria-label="단축키 가이드">{"⌨️"}</button>
               <button className="tb" onClick={()=>{setShowOnboarding(true);setOnboardStep(0);}} title="사용법 가이드" aria-label="사용법 보기">{"❓"}</button>
             </div>
           </div>
@@ -1049,6 +1250,59 @@ function App(){
       </header>
 
       <main id="main-content" role="main" style={{maxWidth:1400,margin:"0 auto",padding:"10px 16px 40px"}}>
+
+        {/* Insight Banner */}
+        {!insightDismissed&&!loading&&tab==="table"&&(()=>{
+          const insight=getInsight();
+          if(!insight)return null;
+          return(
+            <div className="insight-banner">
+              <div className="icon">{insight.icon}</div>
+              <div className="text" dangerouslySetInnerHTML={{__html:insight.text}}/>
+              <button className="dismiss" onClick={()=>setInsightDismissed(true)} aria-label="닫기">{"×"}</button>
+            </div>
+          );
+        })()}
+
+        {/* Calendar View */}
+        {showCalendar&&tab==="table"&&(
+          <div style={{background:"var(--stat-card-bg)",border:"1px solid var(--stat-card-border)",borderRadius:10,padding:16,marginBottom:12}}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+              <h3 style={{fontSize:13,fontWeight:700,color:"var(--text-primary)"}}>{"📅"} 주간 시간표 ({filtered.length>500?"상위 500개 기준":filtered.length+"개"})</h3>
+              <button onClick={()=>setShowCalendar(false)} style={{background:"none",border:"none",color:"var(--text-muted)",fontSize:16,cursor:"pointer"}}>{"×"}</button>
+            </div>
+            <div className="calendar-grid">
+              {["월","화","수","목","금","토","일"].map(d=>(
+                <div key={d} className="cal-header" style={{color:d==="토"?"#60A5FA":d==="일"?"#F87171":"var(--text-secondary)"}}>{d} ({(calendarData[d]||[]).length})</div>
+              ))}
+              {["월","화","수","목","금","토","일"].map(d=>(
+                <div key={d+"cell"} className="cal-cell">
+                  {(calendarData[d]||[]).slice(0,15).map((item,idx)=>(
+                    <div key={idx} className="cal-item" onClick={()=>{setCenterModal(item.center);trackView(item.name,item.center,item.gi);}} title={item.name+" - "+item.center}>
+                      <span style={{color:"#FFB347"}}>{item.time}</span> {item.name.substring(0,12)}
+                    </div>
+                  ))}
+                  {(calendarData[d]||[]).length>15&&<div style={{fontSize:8,color:"var(--text-muted)",textAlign:"center",padding:2}}>+{(calendarData[d]||[]).length-15}개</div>}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Instructor Filter (collapsible) */}
+        {tab==="table"&&instructors.length>0&&(
+          <div style={{marginBottom:8}}>
+            <div style={{display:"flex",gap:4,flexWrap:"wrap",alignItems:"center"}}>
+              <span style={{fontSize:10,color:"var(--text-muted)",fontWeight:600}}>{"👨‍🏫"} 인기 강사:</span>
+              {instructors.slice(0,10).map(([name,cnt])=>(
+                <span key={name} className={"instructor-chip"+(fInstructor===name?" active":"")} onClick={()=>setFInstructor(fInstructor===name?"":name)}>
+                  {name} ({cnt})
+                </span>
+              ))}
+              {fInstructor&&<span className="instructor-chip" onClick={()=>setFInstructor("")} style={{background:"rgba(239,68,68,0.1)",color:"#EF4444",borderColor:"rgba(239,68,68,0.3)"}}>{"×"} 초기화</span>}
+            </div>
+          </div>
+        )}
 
         {/* Stats Tab */}
         {tab==="stats" && (
@@ -1486,36 +1740,6 @@ function App(){
         </>)}
       </main>
 
-      {/* Footer */}
-      <footer className="app-footer" role="contentinfo">
-        <div className="footer-grid">
-          <div className="footer-col">
-            <h4>문화센터 강좌 파인더</h4>
-            <p>전국 95,000+ 문화센터 강좌를 한눈에 비교하고 검색하세요. OSRM 기반 실시간 이동시간 계산으로 나에게 가까운 강좌를 찾아드립니다.</p>
-          </div>
-          <div className="footer-col">
-            <h4>데이터 소스</h4>
-            <p>홈플러스 문화센터</p>
-            <p>롯데마트 문화센터</p>
-            <p>이마트 문화센터</p>
-            <p>롯데백화점 문화센터</p>
-            <p>현대백화점 문화센터</p>
-          </div>
-          <div className="footer-col">
-            <h4>기능 안내</h4>
-            <p>출발지 기반 이동시간 계산</p>
-            <p>종목/요일/상태/지역 필터</p>
-            <p>강좌 비교 (최대 3개)</p>
-            <p>즐겨찾기 및 메모</p>
-            <p>CSV/JSON 내보내기</p>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <p>v3.0 | NEXTERA+PRISM Auto Agent | 비영리 정보 제공 서비스 | 강좌 정보는 각 센터 공식 사이트에서 확인하세요</p>
-          <p style={{marginTop:4}}>PWA 지원 | 다크/라이트 모드 | 모바일 최적화 | 접근성 지원 (ARIA, 키보드 네비게이션)</p>
-        </div>
-      </footer>
-
       {/* Add/Edit Modal */}
       {(modal==='add'||modal==='edit')&&(
         <div className="modal-overlay" onClick={()=>setModal(null)}>
@@ -1730,6 +1954,55 @@ function App(){
         </div>
       )}
 
+      {/* Keyboard Shortcuts Guide */}
+      {showKbdGuide&&(
+        <div className="kbd-overlay" onClick={()=>setShowKbdGuide(false)}>
+          <div className="kbd-card" onClick={e=>e.stopPropagation()}>
+            <h3>{"⌨️"} 키보드 단축키</h3>
+            {[
+              {key:"/",desc:"검색창 포커스"},
+              {key:"?",desc:"이 단축키 가이드 표시"},
+              {key:"Esc",desc:"모달/검색 닫기"},
+              {key:"C",desc:"캘린더뷰 토글"},
+              {key:"R",desc:"최근 본 강좌 패널"},
+              {key:"P",desc:"인쇄 (Print)"},
+              {key:"Ctrl+K",desc:"검색창 포커스 (대체)"},
+            ].map(({key,desc})=>(
+              <div key={key} className="kbd-row">
+                <span className="kbd-key">{key}</span>
+                <span className="kbd-desc">{desc}</span>
+              </div>
+            ))}
+            <div style={{textAlign:"center",marginTop:16}}>
+              <button className="btn-p" onClick={()=>setShowKbdGuide(false)} style={{padding:"8px 24px",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer",border:"none"}}>닫기</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Recent View Panel */}
+      {showRecentView&&(
+        <div className="recent-panel">
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+            <h4>{"🕐"} 최근 본 강좌</h4>
+            <button onClick={()=>setShowRecentView(false)} style={{background:"none",border:"none",color:"var(--text-muted)",fontSize:14,cursor:"pointer"}}>{"×"}</button>
+          </div>
+          {recentViews.length===0?(
+            <div style={{fontSize:10,color:"var(--text-muted)",textAlign:"center",padding:16}}>아직 본 강좌가 없습니다</div>
+          ):(
+            recentViews.map((v,idx)=>(
+              <div key={idx} className="recent-item" onClick={()=>{setCenterModal(v.center);setShowRecentView(false);}}>
+                <div style={{fontWeight:600,color:"var(--text-primary)",fontSize:10,marginBottom:2}}>{v.name.substring(0,20)}</div>
+                <div style={{fontSize:9,color:"var(--text-muted)"}}>{v.center}</div>
+              </div>
+            ))
+          )}
+          {recentViews.length>0&&(
+            <button onClick={()=>{setRecentViews([]);save('cc-recent-views',[]);}} style={{width:"100%",marginTop:8,padding:"5px",background:"rgba(239,68,68,0.1)",border:"1px solid rgba(239,68,68,0.2)",borderRadius:6,color:"#EF4444",fontSize:9,fontWeight:600,cursor:"pointer"}}>기록 삭제</button>
+          )}
+        </div>
+      )}
+
       {toast&&<div className="toast" role="alert">{toast}</div>}
 
       {/* Scroll to top button */}
@@ -1739,12 +2012,37 @@ function App(){
         </button>
       )}
 
+      {/* Footer */}
+      <footer className="app-footer" role="contentinfo">
+        <div className="footer-grid">
+          <div className="footer-col">
+            <h4>{"📌"} 문화센터 강좌 파인더 v4.0</h4>
+            <p>전국 74,000+ 강좌를 한눈에 비교<br/>OSRM 실시간 이동시간 계산<br/>종목/요일/가격/강사 필터<br/>즐겨찾기, 비교, 통계 분석</p>
+          </div>
+          <div className="footer-col">
+            <h4>{"📊"} 데이터 소스</h4>
+            <p>이마트 컬처클럽 (GraphQL)<br/>롯데마트/롯데쇼핑 문화센터<br/>홈플러스 문화센터<br/>백화점 문화센터</p>
+          </div>
+          <div className="footer-col">
+            <h4>{"🔧"} 기능</h4>
+            <p>PWA 오프라인 지원<br/>다크/라이트 모드<br/>키보드 단축키 7종<br/>주간 캘린더뷰<br/>인쇄 최적화</p>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          PRIME Holdings NEXTERA &middot; v4.0 ({new Date().toISOString().slice(0,10)}) &middot; {data.length.toLocaleString()}개 강좌 &middot; {stats.ctrs}개 센터
+        </div>
+      </footer>
+
       {/* Mobile Bottom Navigation */}
       <nav className={"bottom-nav"+(bottomNavVisible?"":" hidden")} role="navigation" aria-label="모바일 네비게이션">
         <div className="bottom-nav-inner">
           <button className={"bottom-nav-btn"+(tab==="table"&&mobileTab==="search"?" active":"")}
             onClick={()=>{setTab("table");setMobileTab("search");if(searchRef.current)searchRef.current.focus();}} aria-label="검색">
             <span>{"🔍"}</span>검색
+          </button>
+          <button className={"bottom-nav-btn"+(showCalendar?" active":"")}
+            onClick={()=>{setTab("table");setShowCalendar(v=>!v);setMobileTab("cal");}} aria-label="캘린더">
+            <span>{"📅"}</span>캘린더
           </button>
           <button className={"bottom-nav-btn"+(tab==="stats"?" active":"")}
             onClick={()=>{setTab("stats");setMobileTab("stats");}} aria-label="통계">

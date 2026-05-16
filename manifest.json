@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 95,000+ 문화센터 강좌를 한눈에 비교하세요. 지역/종목/요일/가격 필터, OSRM 이동시간 계산, 다크/라이트 모드, 강좌 비교, 통계 분석 지원.",
+  "description": "전국 74,000+ 문화센터 강좌를 한눈에 비교. 이동시간 자동계산, 종목/요일/가격/강사 필터, 캘린더뷰, 강좌비교, 통계분석, URL필터공유, 키보드단축키 지원.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -10,6 +10,13 @@
   "lang": "ko",
   "dir": "ltr",
   "categories": ["education", "lifestyle", "utilities"],
+  "screenshots": [
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "form_factor": "wide", "label": "문화센터 강좌 검색"}
+  ],
+  "shortcuts": [
+    {"name": "강좌 검색", "url": "./index.html", "description": "전체 강좌 목록 검색"},
+    {"name": "통계 분석", "url": "./index.html#tab=stats", "description": "강좌 통계 확인"}
+  ],
   "icons": [
     {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
     {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
