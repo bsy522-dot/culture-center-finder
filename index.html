@@ -6,9 +6,22 @@
 <title>문화센터 강좌 파인더</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#7EC8E3">
+<meta name="description" content="전국 74,000+ 문화센터 강좌를 한눈에 비교. 지역/종목/요일/가격 필터, AI추천, 주간시간표, OSRM 이동시간 계산, 기타 세분화 20개 카테고리.">
+<meta name="keywords" content="문화센터,강좌,수강,홈플러스,롯데마트,백화점,수영,피아노,요가,발레,미술,댄스,교육">
+<meta property="og:title" content="문화센터 강좌 파인더 - 전국 74,000+ 강좌 비교">
+<meta property="og:description" content="AI 추천, 주간시간표, 20개 세분화 카테고리로 나에게 딱 맞는 문화센터 강좌를 찾아보세요.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="icon-512.png">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="문화센터 강좌 파인더">
+<meta name="twitter:description" content="전국 74,000+ 문화센터 강좌 비교 PWA. AI추천, 시간표, 이동시간 계산.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="apple-touch-icon" href="icon-192.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"문화센터 강좌 파인더","description":"전국 74,000+ 문화센터 강좌를 한눈에 비교하세요","applicationCategory":"EducationApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"author":{"@type":"Organization","name":"PRIME Holdings"}}
+</script>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -1766,5 +1779,6 @@ function App(){
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
 </script>
+<script src="v4_patch.js"></script>
 </body>
 </html>
