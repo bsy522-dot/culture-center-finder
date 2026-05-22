@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 74,000+ 문화센터 강좌를 한눈에 비교. AI추천, 주간시간표, 기타 세분화 20카테고리, OSRM 이동시간 계산, 강좌 알림, 강사검색 지원.",
+  "description": "전국 74,000+ 문화센터 강좌를 한눈에 비교. AI추천, 가격분석, 시간대히트맵, 학습플래너, 업적30종, 퀴즈15문, 수강리뷰, 공유카드, 난이도가이드, OSRM 이동시간 계산.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -13,5 +13,9 @@
   "icons": [
     {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
     {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ],
+  "shortcuts": [
+    {"name": "가격 분석", "url": "./index.html#price-analysis", "description": "종목별/센터별 가격 분석 대시보드"},
+    {"name": "학습 플래너", "url": "./index.html#planner", "description": "주간 수강 계획 관리"}
   ]
 }
