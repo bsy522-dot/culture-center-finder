@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 74,000+ 문화센터 강좌를 한눈에 비교. AI추천, 가격분석, 시간대히트맵, 학습플래너, 업적30종, 퀴즈15문, 수강리뷰, 공유카드, 난이도가이드, OSRM 이동시간 계산.",
+  "description": "전국 74,000+ 문화센터 강좌를 한눈에 비교. 커리큘럼로드맵, 센터비교, 시즌추천, 성향테스트, D-Day카운트다운, 종목백과사전, 업적42종, 퀴즈30문, AI추천, 가격분석, OSRM 이동시간 계산.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -15,7 +15,7 @@
     {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
   ],
   "shortcuts": [
-    {"name": "가격 분석", "url": "./index.html#price-analysis", "description": "종목별/센터별 가격 분석 대시보드"},
-    {"name": "학습 플래너", "url": "./index.html#planner", "description": "주간 수강 계획 관리"}
+    {"name": "커리큘럼 로드맵", "url": "./index.html#roadmap", "description": "종목별 학습 경로 로드맵"},
+    {"name": "종목 백과사전", "url": "./index.html#encyclopedia", "description": "종목별 역사, 기대효과, 인기도"}
   ]
 }
