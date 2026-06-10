@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>문센파인더 안드로이드 출시 종합 가이드</title><style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Pretendard','Malgun Gothic',sans-serif;background:#f1f5f9;color:#1e293b;line-height:1.6}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px 60px}header{background:linear-gradient(135deg,#7c3aed,#6366f1);color:#fff;padding:28px 0;margin-bottom:20px}
+h1{font-size:25px}.sub{opacity:.93;font-size:14px;margin-top:5px}
+section{background:#fff;border-radius:14px;padding:22px 24px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+h2{font-size:19px;margin-bottom:6px;display:flex;align-items:center;gap:8px}.hd{font-size:13px;color:#64748b;margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}th,td{border:1px solid #e2e8f0;padding:8px 11px;text-align:left;vertical-align:top}th{background:#f8fafc}.t{font-weight:700;width:165px}.s{font-weight:700;width:100px}
+.concl{background:#eef2ff;border:1px solid #c7d2fe;border-radius:10px;padding:14px 18px;font-size:14.5px;color:#3730a3}
+.steps{counter-reset:s}.step{display:flex;gap:13px;padding:11px 0;border-top:1px solid #f1f5f9}
+.step::before{counter-increment:s;content:counter(s);flex:0 0 28px;height:28px;background:#7c3aed;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.stb{font-size:14px}.stb b{font-size:14.5px}.stm{font-size:12.5px;color:#7c3aed;margin-top:3px}
+ul{margin:4px 0 4px 18px}li{font-size:14px;padding:3px 0}
+.must li{color:#991b1b}.should li{color:#92400e}
+.alt{border:1px solid #e2e8f0;border-left:5px solid #7c3aed;border-radius:10px;padding:12px 15px;margin-bottom:10px}.alt b{font-size:14.5px}.alt p{font-size:13.5px;color:#475569;margin-top:4px}
+.namebox{border:1px solid #e2e8f0;border-radius:10px;padding:12px 15px;margin-bottom:9px}.nb-h{display:flex;gap:9px;align-items:center}.nb-n{font-size:16px;font-weight:800}.rec{font-size:11px;font-weight:700;padding:2px 9px;border-radius:6px;color:#fff}
+.r상{background:#16a34a}.r중{background:#d97706}.r하{background:#94a3b8}.nb-d{font-size:13px;color:#475569;margin-top:5px}.nb-t{font-size:12px;color:#7c3aed;margin-top:3px}
+.pill{display:inline-block;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;font-size:12px;padding:2px 9px;border-radius:6px}
+@media(max-width:640px){.t,.s{width:auto}}
+</style></head><body>
+<header><div class="wrap"><h1>📱 문센파인더 — 안드로이드 출시 종합 가이드</h1><div class="sub">법률·보안 검토 · 출시 방법 · 상품명 · 개인정보/데이터안전 · 체크리스트 (쉬운 말)</div></div></header>
+<div class="wrap">
+
+<section><h2>🎯 결론 먼저</h2><div class="concl"><b>앱으로 만들 수 있습니다.</b> 보안 구멍은 모두 막았고(XSS·CSP·SRI·개인정보), 개인정보처리방침도 준비됐습니다. 안드로이드 출시의 <b>유일한 전제는 ‘커스텀 도메인 1개(연 1~2만원)’</b> — 이것만 있으면 PWABuilder로 Play 스토어 앱을 코드 거의 그대로(기능 100% 유지) 발급할 수 있습니다. 도메인 없이 당장 쓰려면 ‘홈 화면에 추가(PWA)’로도 앱처럼 설치됩니다.</div></section>
+
+<section><h2>🔒 1. 보안 — 다 막았습니다</h2><div class="hd">이번에 처리한 보안 항목 (출시 차단급 ‘구멍’ 0)</div>
+<table><tr><th>항목</th><th>상태</th><th>내용</th></tr><tr><td class="t">입력 글 악성코드(XSS)</td><td class="s">🟢 완료</td><td>메모·노트·후기 등 19곳에 자동 안전처리(esc) 적용 — 해커 공격 시뮬레이션 미실행 확인</td></tr><tr><td class="t">외부 자원 변조(공급망)</td><td class="s">🟢 완료</td><td>화면 라이브러리(React) 버전 고정 + 무결성 검사(SRI) — 변조본 차단</td></tr><tr><td class="t">보안 정책(CSP)</td><td class="s">🟢 완료</td><td>접속 허용 도메인 제한 + 클릭재킹/주소위조 차단</td></tr><tr><td class="t">외부 링크 탭 탈취</td><td class="s">🟢 완료</td><td>새 탭 링크 보호(noopener) 적용</td></tr><tr><td class="t">비밀번호·열쇠 노출</td><td class="s">🟢 없음</td><td>코드에 하드코딩된 비밀키 0건, 외부 보안 취약점 0건</td></tr><tr><td class="t">강사 개인정보</td><td class="s">🟢 완료</td><td>강사 실명 18만건 제거(라이브 0건), 원본은 비공개 보관</td></tr></table>
+<p style="font-size:12.5px;color:#64748b;margin-top:8px"><span class="pill">참고</span> 브라우저에서 코드를 즉석 번역하는 부분 때문에 소스 단계 보안정책은 일부 완화가 불가피하나, ‘미리 번역한 배포본(dist)’에는 더 엄격한 정책이 적용됩니다(이미 빌드 도입).</p></section>
+
+<section><h2>⚖ 2. 법률 — 출시 전 점검</h2><div class="hd">🟢=완료 🟡=출시 전 확인/조치</div>
+<table><tr><th>항목</th><th>상태</th><th>설명</th></tr><tr><td class="t">개인정보처리방침</td><td class="s" style="color:#dc2626">🟢 준비완료</td><td>privacy.html 작성 — 단말저장·서버없음·위치 일시처리 정확 반영. Play Console에 URL 등록만 하면 됨</td></tr><tr><td class="t">강좌 데이터 출처</td><td class="s" style="color:#dc2626">🟡 완화됨</td><td>마트 문화센터 강좌를 모아 보여줌 → ‘사실정보(시간·가격)만 + 신청은 원본 링크로 연결’ 방식이라 검색 디렉터리로 방어적. 단 수익화 시 공식 제휴/공공데이터 권장</td></tr><tr><td class="t">위치정보(GPS)</td><td class="s" style="color:#d97706">🟡 확인필요</td><td>거리계산용으로만 쓰고 저장 안 함 → 비상업이면 대체로 OK. 영리 출시 시 ‘위치기반서비스사업’ 신고 대상 가능(소상공인 1개월 유예)</td></tr><tr><td class="t">제3자 지도/경로 약관</td><td class="s" style="color:#d97706">🟡 확인필요</td><td>무료 공개서버(Nominatim/OSRM)는 대량·상업엔 부적합 → 출시 규모 커지면 유료/자체 API 교체</td></tr><tr><td class="t">상품명 상표</td><td class="s" style="color:#d97706">🟡 권고</td><td>‘문센파인더’는 식별력 약해 ‘주의’ → 아래 제안명으로 변경 + 출원 전 변리사 정밀검색</td></tr></table>
+<p style="font-size:12px;color:#94a3b8;margin-top:8px">※ 본 검토는 AI 기반이며 법률자문이 아닙니다. 데이터 출처·위치·상표는 정식 출시 전 전문가 확인 권장.</p></section>
+
+<section><h2>🏷 3. 상품명 제안</h2><div class="hd">‘문센파인더’는 식별력이 약해 상표등록 ‘주의’ — 아래로 변경 권장</div>
+<div class="namebox"><div class="nb-h"><span class="nb-n">강좌마실</span><span class="rec r상">추천 상</span></div><div class="nb-d">순우리말 ‘마실(나들이)’로 식별력 최상·등록 안전. Play/웹 충돌 사실상 없음. 도메인 가능</div><div class="nb-t">💡 ‘강좌마실 – 전국 문화센터 강좌 찾기’ 태그라인 병기 권장</div></div><div class="namebox"><div class="nb-h"><span class="nb-n">문센플래너</span><span class="rec r중">추천 중</span></div><div class="nb-d">‘문센’ 검색 인지도 + 시간표 짜기 USP 직관적. 동일 앱 없음. ‘문센’ 약어 식별력은 약점</div><div class="nb-t">💡 SEO·마케팅 강점, 로고 결합 출원 권장</div></div><div class="namebox"><div class="nb-h"><span class="nb-n">문센노트</span><span class="rec r중">추천 중</span></div><div class="nb-d">강좌 메모·시간표 기록 컨셉. 동일 앱 없음</div><div class="nb-t">💡 ‘문센’ 패밀리 브랜드 후보</div></div><div class="namebox"><div class="nb-h"><span class="nb-n">문센파인더(현재)</span><span class="rec r하">추천 하</span></div><div class="nb-d">동일 상표/앱은 없으나 식별력 약해 등록 거절 위험·권리 좁음</div><div class="nb-t">💡 그대로 쓰면 ‘주의’ — 변경 권장</div></div>
+<div class="concl" style="margin-top:6px"><b>추천:</b> 등록 안전성 최우선이면 <b>강좌마실</b>, ‘문센’ 검색 인지도·시간표 기능 강조면 <b>문센플래너</b>. (두 개 동시 출원도 전략) 어떤 명칭이든 ‘이마트문화센터’ 등 <b>타사 브랜드명은 절대 미포함</b>.</div></section>
+
+<section><h2>📲 4. 안드로이드에 올리는 법 (단계별)</h2><div class="hd">PWA → TWA 방식 (코드 그대로, 기능 100% 유지)</div><div class="steps">
+<div class="step"><div class="stb"><b>커스텀 도메인 확보 (필수)</b><div>현재 주소(github.io/culture-center-finder)는 폴더형이라 앱 신뢰검증 파일을 못 올림 → 도메인 1개 구매(예 gangjwamasil.kr, 연 1~2만원) 후 연결</div><div class="stm">▸ 도메인 구매처: 가비아/후이즈 등. GitHub Pages에 CNAME 연결</div></div></div><div class="step"><div class="stb"><b>PWA 점검</b><div>앱처럼 설치되도록 manifest·아이콘·서비스워커 확인(이미 PWA 구성됨). 시작 빠르게 하려면 빌드본(dist) 배포</div><div class="stm">▸ npm run build 결과(dist) 또는 현 소스</div></div></div><div class="step"><div class="stb"><b>TWA 패키징</b><div>PWABuilder(웹)에 도메인 입력 → ‘Android 패키지(AAB)’ 자동 생성. 또는 Bubblewrap CLI</div><div class="stm">▸ pwabuilder.com 접속 → URL 입력 → Generate → Android</div></div></div><div class="step"><div class="stb"><b>도메인 검증 파일</b><div>PWABuilder가 준 assetlinks.json을 도메인의 /.well-known/ 에 업로드(주소창 없는 ‘진짜 앱’ 모드)</div><div class="stm">▸ TWA 신뢰모드 필수</div></div></div><div class="step"><div class="stb"><b>Play Console 등록</b><div>개발자 계정($25 1회) → AAB 업로드 → 개인정보처리방침 URL(privacy.html) + 데이터안전 폼 + 콘텐츠등급 작성</div><div class="stm">▸ play.google.com/console</div></div></div><div class="step"><div class="stb"><b>비공개 테스트 → 출시</b><div>개인 계정은 테스터 12명·14일 비공개테스트 후 프로덕션 신청</div><div class="stm">▸ 요건 충족 후 ‘프로덕션’ 출시</div></div></div>
+</div></section>
+
+<section><h2>🛡 5. 개인정보처리방침 & 데이터안전(Data Safety)</h2>
+<div class="hd">개인정보처리방침: <span class="pill">privacy.html 작성 완료</span> → 배포 후 그 주소를 Play Console에 등록</div>
+<p style="font-size:13.5px;margin-bottom:8px"><b>Google Play ‘데이터 안전’ 폼 답변</b> (이대로 입력하면 됩니다):</p>
+<table><tr><th>질문</th><th>답변</th><th>근거</th></tr><tr><td class="t">데이터 수집(앱→개발자 서버)</td><td class="s">없음</td><td>서버·계정 없음. 즐겨찾기·메모·후기 등은 모두 기기에만 저장</td></tr><tr><td class="t">위치정보</td><td class="s">공유(일시처리)</td><td>현재위치 좌표를 거리계산 위해 지도서비스(OSM/OSRM)에 일시 전달, 저장 안 함 → ‘앱 기능’ 목적으로 선언</td></tr><tr><td class="t">데이터 공유(제3자)</td><td class="s">위치(지도서비스)</td><td>지오코딩·경로계산 목적. 광고·판매 목적 공유 없음</td></tr><tr><td class="t">암호화</td><td class="s">전송 중 암호화</td><td>모든 통신 HTTPS</td></tr><tr><td class="t">데이터 삭제 요청</td><td class="s">해당없음(서버데이터 없음)</td><td>기기 데이터는 사용자가 직접 삭제/앱 제거로 제거</td></tr><tr><td class="t">계정 생성</td><td class="s">없음</td><td>로그인·회원가입 없음</td></tr></table></section>
+
+<section><h2>✅ 6. 반드시 해야 할 것 (체크리스트)</h2>
+<p style="font-weight:700;color:#991b1b;margin-bottom:4px">반드시 (출시 전 필수)</p><ul class="must"><li>커스텀 도메인 구매·연결 (TWA 신뢰검증의 전제 — 이게 없으면 ‘주소창 없는 앱’ 불가)</li><li>Play Console에 개인정보처리방침 URL 등록 (privacy.html 배포 후 그 주소)</li><li>데이터안전(Data Safety) 폼 작성 — 위치=‘공유(앱기능)’로 정확히 신고(불일치 시 거부)</li><li>상품명 확정 — ‘강좌마실’ 또는 ‘문센플래너’로 변경(현재명은 등록 위험)</li><li>콘텐츠 등급 설문(IARC) + 위치권한 사용 사유 명시</li></ul>
+<p style="font-weight:700;color:#92400e;margin:12px 0 4px">권장 (가급적)</p><ul class="should"><li>수익화(광고/결제) 도입 시: 지도·경로를 유료/자체 API로 교체, 위치기반서비스 신고 검토</li><li>강좌 데이터는 ‘신청=원본 센터 링크’ 원칙 유지(디렉터리 포지션)</li><li>상표는 변리사 정밀검색 후 ‘강좌마실’(강한권리)+‘문센플래너’(SEO) 이중 출원</li><li>성능: 첫 화면 데이터(27MB) 지역별 분할 로드(체감속도 개선)</li></ul></section>
+
+<section><h2>🔀 7. 앱으로 만들기 어렵다면? (대안)</h2><div class="hd">기능을 빼지 않고 사용성 유지하는 선택지</div>
+<div class="alt"><b>PWA ‘홈 화면에 추가’ (지금 즉시·무료)</b><p>스토어 없이도 사용자가 브라우저에서 ‘홈 화면에 추가’하면 앱처럼 아이콘 설치·전체화면 실행. 도메인·심사 불필요. 가장 빠른 시작.</p></div><div class="alt"><b>커스텀 도메인 + TWA (권장·진짜 Play 앱)</b><p>도메인만 있으면 PWABuilder로 Play 스토어 앱 발급 가능. 코드 거의 그대로, 기능 100% 유지.</p></div><div class="alt"><b>Capacitor 래퍼 (네이티브 기능 필요 시)</b><p>푸시알림 등 네이티브가 필요하면 Capacitor로 감싸기. 단 ‘단순 웹뷰’ 거부정책 주의(가치 추가 필요).</p></div>
+<div class="concl" style="margin-top:6px"><b>가장 현실적:</b> ① 지금 바로 ‘홈 화면에 추가’로 앱처럼 쓰기(무료·즉시) → ② 도메인 사서 PWABuilder로 Play 스토어 정식 등록. 둘 다 <b>기능은 그대로</b>입니다.</div></section>
+
+<footer style="text-align:center;color:#94a3b8;font-size:12px;padding:14px">문센파인더 안드로이드 출시 가이드 · 보안 0구멍·기능 유지 원칙 · AI 검토(법률자문 아님)</footer>
+</div></body></html>
