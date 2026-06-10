@@ -7,3 +7,19 @@ _baseline_*/
 node_modules/
 dist/
 src/app.jsx
+
+# [세션2] 배포 정크/PII/원본 스크랩 재유입 차단 (앱은 all.json+center_coords.json만 사용)
+data/all_backup_*.json
+data/courses_*.json
+data/courses_*_js.txt
+data/*_live.json
+data/full_yuah.json
+data/excel_preview.json
+data/parsed_courses.json
+data/final_js.txt
+data/hp_*.html
+data/hp_api_response.html
+data/*_screenshot.png
+data/*_mobile_home.png
+data/lotte_shopping_*.png
+data/hp_after_search.png
