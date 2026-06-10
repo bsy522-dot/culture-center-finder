@@ -103,7 +103,7 @@ async function main() {
   await fs.writeFile(SRC_JSX, banner + jsx, 'utf8');
 
   // 2. dist 초기화(이전 산출물·임시파일 제거) + esbuild 변환/번들/minify
-  await fs.rm(DIST_DIR, { recursive: true, force: true });
+  try { await fs.rm(DIST_DIR, { recursive: true, force: true }); } catch (e) { console.warn('dist 정리 건너뜀(파일락):', e.code); }
   await fs.mkdir(DIST_DIR, { recursive: true });
   const result = await build({
     entryPoints: [SRC_JSX],
