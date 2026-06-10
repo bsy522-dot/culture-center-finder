@@ -4,6 +4,7 @@
  */
 (function(){
 'use strict';
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 
 const V8_ID = 'ccf-v8-patch';
 if (document.getElementById(V8_ID)) return;
@@ -220,7 +221,7 @@ function showCertificateGen() {
   let html = '<div style="margin-bottom:16px;font-size:13px;color:var(--text-secondary)">수료한 종목의 수강 증명서를 생성합니다. 이름을 입력하고 종목을 선택하세요.</div>';
 
   html += '<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">' +
-    '<input id="v8-cert-name" placeholder="수강자 이름" value="' + lsGet('cc-cert-name','') + '" style="flex:1;min-width:160px;padding:10px 14px;border-radius:10px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-size:13px;outline:none">' +
+    '<input id="v8-cert-name" placeholder="수강자 이름" value="' + esc(lsGet('cc-cert-name','')) + '" style="flex:1;min-width:160px;padding:10px 14px;border-radius:10px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-size:13px;outline:none">' +
     '<select id="v8-cert-cat" style="flex:1;min-width:140px;padding:10px 14px;border-radius:10px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-size:13px;outline:none">';
   const allCats = ['수영','피아노','요가','발레','미술','댄스','보컬','코딩','드로잉','쿠킹','서예','공예'];
   allCats.forEach(c => {
@@ -420,7 +421,7 @@ function showActivityTimeline() {
         '<div style="display:flex;justify-content:space-between;align-items:center">' +
         '<div style="display:flex;align-items:center;gap:8px">' +
         '<span style="font-size:16px">' + ev.icon + '</span>' +
-        '<span style="font-size:13px;font-weight:600;color:var(--text-primary)">' + ev.text + '</span>' +
+        '<span style="font-size:13px;font-weight:600;color:var(--text-primary)">' + esc(ev.text) + '</span>' +
         '</div>' +
         (ev.date ? '<span style="font-size:10px;color:var(--text-muted)">' + ev.date + '</span>' : '') +
         '</div></div></div>';
@@ -589,7 +590,7 @@ function showCommunity() {
       html += '<div style="display:flex;justify-content:' + (isMe ? 'flex-end' : 'flex-start') + '">' +
         '<div style="max-width:70%;padding:8px 14px;border-radius:' + (isMe ? '14px 14px 4px 14px' : '14px 14px 14px 4px') + ';background:' + (isMe ? 'linear-gradient(135deg,#60A5FA,#3B82F6)' : 'var(--card-bg)') + ';border:1px solid ' + (isMe ? 'transparent' : 'var(--card-border)') + ';color:' + (isMe ? '#fff' : 'var(--text-primary)') + ';font-size:12px">' +
         (isMe ? '' : '<span style="font-size:10px;font-weight:700;color:' + (isMe ? '#ddd' : '#60A5FA') + ';display:block;margin-bottom:2px">' + msg.from + '</span>') +
-        msg.text + '</div></div>';
+        esc(msg.text) + '</div></div>';
     });
   }
   html += '</div>';
@@ -840,13 +841,13 @@ function showNotes() {
         '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">' +
         '<div style="display:flex;align-items:center;gap:8px">' +
         '<span style="font-size:11px;padding:3px 10px;border-radius:8px;background:' + cc + '15;color:' + cc + ';font-weight:600">' + n.cat + '</span>' +
-        '<span style="font-weight:700;font-size:14px;color:var(--text-primary)">' + n.title + '</span>' +
+        '<span style="font-weight:700;font-size:14px;color:var(--text-primary)">' + esc(n.title) + '</span>' +
         '</div>' +
         '<div style="display:flex;align-items:center;gap:6px">' +
         '<span style="font-size:10px;color:var(--text-muted)">' + n.date + '</span>' +
         '<button class="v8-note-del" data-idx="' + origIdx + '" style="background:none;border:none;color:#EF4444;cursor:pointer;font-size:16px;padding:2px">&times;</button>' +
         '</div></div>' +
-        '<div style="font-size:12px;color:var(--text-secondary);line-height:1.7;white-space:pre-wrap">' + n.content + '</div>' +
+        '<div style="font-size:12px;color:var(--text-secondary);line-height:1.7;white-space:pre-wrap">' + esc(n.content) + '</div>' +
         '</div>';
     });
     html += '</div>';
@@ -922,7 +923,7 @@ function showAlertSystem() {
     html += '<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--card-bg);border:1px solid ' + (a.urgent ? a.color + '33' : 'var(--card-border)') + ';border-radius:12px;' + (a.urgent ? 'border-left:3px solid ' + a.color : '') + '">' +
       '<span style="font-size:20px">' + a.icon + '</span>' +
       '<div style="flex:1">' +
-      '<div style="font-size:13px;font-weight:600;color:var(--text-primary)">' + a.text + '</div>' +
+      '<div style="font-size:13px;font-weight:600;color:var(--text-primary)">' + esc(a.text) + '</div>' +
       '</div>' +
       (a.urgent ? '<span style="font-size:9px;padding:3px 8px;border-radius:8px;background:' + a.color + '22;color:' + a.color + ';font-weight:700;animation:v8Pulse 2s infinite">긴급</span>' : '') +
       '</div>';
@@ -965,7 +966,7 @@ function showProfileCard() {
   let html = '<div style="margin-bottom:16px;font-size:13px;color:var(--text-secondary)">나의 학습 프로필 카드를 생성하고 공유하세요.</div>';
 
   html += '<div style="display:flex;gap:8px;margin-bottom:16px">' +
-    '<input id="v8-profile-name" placeholder="닉네임" value="' + userName + '" style="flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-size:13px;outline:none">' +
+    '<input id="v8-profile-name" placeholder="닉네임" value="' + esc(userName) + '" style="flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-primary);font-size:13px;outline:none">' +
     '<button id="v8-profile-gen" style="padding:10px 20px;border-radius:10px;border:none;background:linear-gradient(135deg,#60A5FA,#3B82F6);color:#fff;font-weight:700;cursor:pointer;font-size:13px">생성</button></div>';
 
   html += '<div style="text-align:center;margin-bottom:12px"><canvas id="v8-profile-canvas" width="600" height="380" style="max-width:100%;border-radius:12px;border:1px solid var(--card-border)"></canvas></div>';

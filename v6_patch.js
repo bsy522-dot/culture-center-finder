@@ -4,6 +4,7 @@
  */
 (function(){
 'use strict';
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 
 const V6_ID = 'ccf-v6-patch';
 if (document.getElementById(V6_ID)) return;
@@ -598,7 +599,7 @@ function showPersonalityTest() {
         '<div style="font-size:10px;color:var(--text-muted);margin-bottom:8px">질문 ' + (step + 1) + '/' + PERSONALITY_QUESTIONS.length + '</div>' +
         '<div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:20px;line-height:1.5">' + q.q + '</div>';
       q.a.forEach((a, i) => {
-        html += '<button class="v6-pt-ans" data-idx="' + i + '" style="display:block;width:100%;text-align:left;padding:14px 16px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;margin-bottom:8px;font-size:13px;color:var(--text);cursor:pointer;transition:all .2s;font-family:inherit">' + a.text + '</button>';
+        html += '<button class="v6-pt-ans" data-idx="' + i + '" style="display:block;width:100%;text-align:left;padding:14px 16px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;margin-bottom:8px;font-size:13px;color:var(--text);cursor:pointer;transition:all .2s;font-family:inherit">' + esc(a.text) + '</button>';
       });
       modal.innerHTML = html;
       modal.querySelector('#v6-pt-close').onclick = () => overlay.remove();

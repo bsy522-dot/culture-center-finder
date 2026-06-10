@@ -4,6 +4,7 @@
  */
 (function(){
 'use strict';
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 
 // ─── 1. 기타(21,000+) 세분화 엔진 ───────────────────────────────────
 const SUB_RULES = [
@@ -517,7 +518,7 @@ function renderAlerts() {
     matches.forEach(m => {
       html += `<div class="v4-alert-item">
         <div>
-          <span style="font-size:11px;color:var(--text-primary);font-weight:600">${m.keyword}</span>
+          <span style="font-size:11px;color:var(--text-primary);font-weight:600">${esc(m.keyword)}</span>
           <span style="font-size:9px;color:var(--text-muted);margin-left:4px">${m.region}</span>
         </div>
         <div style="display:flex;align-items:center;gap:8px">

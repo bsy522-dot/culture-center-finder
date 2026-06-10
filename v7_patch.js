@@ -4,6 +4,7 @@
  */
 (function(){
 'use strict';
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 
 const V7_ID = 'ccf-v7-patch';
 if (document.getElementById(V7_ID)) return;
@@ -247,7 +248,7 @@ function showWishlist() {
   html += '<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">';
   folders.forEach(f => {
     const cnt = wishlist.filter(w => w.folder === f).length;
-    html += '<button class="v7-folder-btn" data-folder="' + f + '" style="padding:6px 14px;border-radius:20px;border:1px solid var(--card-border);background:var(--card-bg);color:var(--text-primary);font-size:12px;font-weight:600;cursor:pointer">' + f + ' (' + cnt + ')</button>';
+    html += '<button class="v7-folder-btn" data-folder="' + esc(f) + '" style="padding:6px 14px;border-radius:20px;border:1px solid var(--card-border);background:var(--card-bg);color:var(--text-primary);font-size:12px;font-weight:600;cursor:pointer">' + esc(f) + ' (' + cnt + ')</button>';
   });
   html += '<button id="v7-add-folder" style="padding:6px 14px;border-radius:20px;border:1px dashed var(--accent);background:transparent;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">+ 폴더</button>';
   html += '</div>';
@@ -264,9 +265,9 @@ function showWishlist() {
     html += '<div style="display:flex;flex-direction:column;gap:8px">';
     wishlist.forEach((w, i) => {
       html += '<div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px">' +
-        '<span style="font-size:11px;padding:3px 8px;border-radius:8px;background:rgba(126,200,227,0.1);color:var(--accent);font-weight:600">' + w.folder + '</span>' +
-        '<span style="font-weight:700;font-size:14px;color:var(--text-primary)">' + w.cat + '</span>' +
-        '<span style="flex:1;font-size:12px;color:var(--text-muted)">' + (w.memo || '') + '</span>' +
+        '<span style="font-size:11px;padding:3px 8px;border-radius:8px;background:rgba(126,200,227,0.1);color:var(--accent);font-weight:600">' + esc(w.folder) + '</span>' +
+        '<span style="font-weight:700;font-size:14px;color:var(--text-primary)">' + esc(w.cat) + '</span>' +
+        '<span style="flex:1;font-size:12px;color:var(--text-muted)">' + (w.memo ? esc(w.memo) : '') + '</span>' +
         '<span style="font-size:10px;color:var(--text-faint)">' + (w.date || '') + '</span>' +
         '<button class="v7-wish-del" data-idx="' + i + '" style="background:none;border:none;color:#EF4444;cursor:pointer;font-size:16px;padding:4px">&times;</button>' +
         '</div>';
@@ -695,10 +696,10 @@ function showDiary() {
         '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
         '<div style="display:flex;align-items:center;gap:8px">' +
         '<span style="font-size:18px">' + m.emoji + '</span>' +
-        '<span style="font-weight:700;font-size:13px;color:var(--text-primary)">' + d.cat + '</span>' +
+        '<span style="font-weight:700;font-size:13px;color:var(--text-primary)">' + esc(d.cat) + '</span>' +
         '</div>' +
         '<span style="font-size:10px;color:var(--text-faint)">' + d.date + '</span></div>' +
-        '<div style="font-size:12px;color:var(--text-secondary);line-height:1.6">' + d.text.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div></div>';
+        '<div style="font-size:12px;color:var(--text-secondary);line-height:1.6">' + esc(d.text) + '</div></div>';
     });
   }
 

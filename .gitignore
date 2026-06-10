@@ -1,3 +1,4 @@
 .claude/
 *.bak
 _baseline_*/
+*.xssbak

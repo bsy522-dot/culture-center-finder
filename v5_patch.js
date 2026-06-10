@@ -4,6 +4,7 @@
  */
 (function(){
 'use strict';
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 
 // ─── 1. 수강 리뷰 시스템 ────────────────────────────────────────────
 const Reviews = {
@@ -704,7 +705,7 @@ function renderPlanner() {
       items.forEach(item => {
         html += `<div class="v5-planner-item">
           <input type="checkbox" ${item.done ? 'checked' : ''} onchange="window.__v5patch.togglePlan(${item.idx})" style="cursor:pointer"/>
-          <span style="flex:1;color:${item.done ? 'var(--text-muted)' : 'var(--text-primary)'};${item.done ? 'text-decoration:line-through' : ''}">${item.memo || '(미정)'}</span>
+          <span style="flex:1;color:${item.done ? 'var(--text-muted)' : 'var(--text-primary)'};${item.done ? 'text-decoration:line-through' : ''}">${item.memo ? esc(item.memo) : '(미정)'}</span>
           <button style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:12px" onclick="window.__v5patch.removePlan(${item.idx})">&#x2715;</button>
         </div>`;
       });
