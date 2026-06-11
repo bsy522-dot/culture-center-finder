@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 84,000+ 문화센터 강좌를 한눈에 비교. 수강추천엔진, 수강증명서Canvas, 활동타임라인, 종목인기랭킹Canvas, 학습커뮤니티AI10인, 수강스트릭, 음성검색, 수강노트, 강좌알림, 소셜프로필카드, 업적66종, 퀴즈60문, AI추천, OSRM 이동시간.",
+  "description": "전국 84,000+ 문화센터 강좌를 한눈에 비교. 학습경로맵Canvas, 수강통계레이더Canvas, 가격트렌드Canvas, 마이러닝포트폴리오Canvas, 주간학습플래너, 강좌북마크, 마일스톤타임라인, 접근성패널, 워드클라우드, 업적78종, 퀴즈75문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -15,9 +15,11 @@
     {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
   ],
   "shortcuts": [
-    {"name": "수강 추천 엔진", "url": "./index.html#recommend", "description": "AI 기반 맞춤 강좌 추천"},
-    {"name": "수강 증명서", "url": "./index.html#certificate", "description": "수료 증명서 Canvas 생성"},
-    {"name": "인기 랭킹", "url": "./index.html#ranking", "description": "종목별 인기도 순위"},
-    {"name": "퀴즈 도전", "url": "./index.html#quiz", "description": "문화센터 퀴즈 60문"}
+    {"name": "학습 경로 맵", "url": "./index.html#learning-path", "description": "12종목 단계별 학습 로드맵"},
+    {"name": "수강 통계 레이더", "url": "./index.html#stats-radar", "description": "6축 학습 성취도 분석"},
+    {"name": "가격 트렌드", "url": "./index.html#price-trend", "description": "종목별 수강료 추이 분석"},
+    {"name": "마이러닝 포트폴리오", "url": "./index.html#portfolio", "description": "학습 이력 포트폴리오 생성"},
+    {"name": "주간 학습 플래너", "url": "./index.html#planner", "description": "7일 과제 체크리스트"},
+    {"name": "퀴즈 v9", "url": "./index.html#quiz-v9", "description": "문화센터 퀴즈 75문"}
   ]
 }
