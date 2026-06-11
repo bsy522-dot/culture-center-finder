@@ -929,7 +929,7 @@ function insertQuickActions7() {
     width:'38px',height:'38px',borderRadius:'50%',border:'1px solid rgba(82,183,136,0.4)',
     background:'linear-gradient(135deg,#1B4332,#0C1525)',color:'#52B788',
     fontSize:'16px',cursor:'pointer',fontWeight:'800',boxShadow:'0 4px 16px rgba(0,0,0,0.3)',zIndex:'701'
-  }}, 'v7');
+  }}, '📚');
   bar.appendChild(toggle);
 
   buttons.forEach(b => {

@@ -1308,7 +1308,7 @@ function insertQuickActions8() {
     width:'38px',height:'38px',borderRadius:'50%',border:'1px solid rgba(96,165,250,0.4)',
     background:'linear-gradient(135deg,#1E3A5F,#0C1525)',color:'#60A5FA',
     fontSize:'14px',cursor:'pointer',fontWeight:'800',boxShadow:'0 4px 16px rgba(0,0,0,0.3)',zIndex:'701'
-  }}, 'v8');
+  }}, '🎯');
   bar.appendChild(toggle);
 
   buttons.forEach(b => {

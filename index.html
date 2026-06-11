@@ -995,7 +995,7 @@ function App(){
               <span style={{fontSize:8.5,fontWeight:700,color:sc,background:sc+"18",padding:"2px 6px",borderRadius:4}}>{r[10]}</span>
             </div>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:6}}>
-              {settings.address&&<span style={{fontSize:9,color:"#FFB347",fontWeight:600}}>{(r[2]>0?r[2]:estimateTravel(r[15],r[1],settings.address))+"분"}</span>}
+              {settings.address&&<span style={{fontSize:9,color:"#FFB347",fontWeight:600}}>{"약 "+(r[2]>0?r[2]:estimateTravel(r[15],r[1],settings.address))+"분"}</span>}
               <button className="share-btn" onClick={(e)=>{e.stopPropagation();shareCourse(r);}} title="공유">{"📤"} 공유</button>
             </div>
           </div>
@@ -1448,7 +1448,7 @@ function App(){
                                 <span style={{fontWeight:600,color:"var(--text-secondary)"}}>{r[1].replace(/홈플러스 |이마트 |롯데마트 |롯데쇼핑 /,'')}</span>
                                 <br/><span style={{fontSize:8,color:"var(--text-faint)"}}>{r[0]==="백화점"?"🏬":r[0]==="대형마트"?"🛒":"🏛"} {r[1].split(' ')[0]}</span>
                               </td>
-                              <td style={{padding:"5px 3px",textAlign:"center",color:"#FFB347",fontWeight:700,fontSize:10}}>{settings.address?(r[2]>0?r[2]:estimateTravel(r[15],r[1],settings.address))+"분":"-"}</td>
+                              <td style={{padding:"5px 3px",textAlign:"center",color:"#FFB347",fontWeight:700,fontSize:10}}>{settings.address?"약 "+(r[2]>0?r[2]:estimateTravel(r[15],r[1],settings.address))+"분":"-"}</td>
                               {gBy!=="program"&&<td style={{padding:"5px 4px"}}><span style={{background:"rgba(251,191,36,0.08)",color:"#FBBF24",padding:"1px 4px",borderRadius:3,fontSize:8.5}}>{getEmoji(r[3])}{r[3]}</span></td>}
                               <td style={{padding:"5px 4px",color:"var(--text-primary)",fontWeight:500,fontSize:11,lineHeight:"15px"}}>
                                 {r[4]}
