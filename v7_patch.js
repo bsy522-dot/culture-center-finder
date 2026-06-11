@@ -169,24 +169,18 @@ function showProgressTracker() {
 // ═══════════════════════════════════════════════════════════════════
 // 2. 강사 평점 시스템
 // ═══════════════════════════════════════════════════════════════════
-const INSTRUCTORS = [
-  { name: '김수연', cat: '수영', center: '홈플러스 영등포', rating: 4.8, reviews: 42, badge: '베스트' },
-  { name: '박지현', cat: '요가', center: '롯데마트 잠실', rating: 4.7, reviews: 38, badge: '인기' },
-  { name: '이민호', cat: '피아노', center: '홈플러스 강동', rating: 4.9, reviews: 55, badge: '베스트' },
-  { name: '최유진', cat: '발레', center: '갤러리아 압구정', rating: 4.6, reviews: 29, badge: '추천' },
-  { name: '정하늘', cat: '미술', center: '롯데마트 은평', rating: 4.5, reviews: 24, badge: '인기' },
-  { name: '강도윤', cat: '댄스', center: '홈플러스 금천', rating: 4.8, reviews: 47, badge: '베스트' },
-  { name: '윤서아', cat: '보컬', center: '현대백화점 판교', rating: 4.7, reviews: 33, badge: '추천' },
-  { name: '한지우', cat: '코딩', center: '이마트 성수', rating: 4.4, reviews: 21, badge: '신규' },
-  { name: '오채원', cat: '쿠킹', center: '홈플러스 목동', rating: 4.6, reviews: 36, badge: '인기' },
-  { name: '신예준', cat: '드로잉', center: '롯데마트 구리', rating: 4.5, reviews: 27, badge: '추천' },
-  { name: '임수빈', cat: '서예', center: '백화점 본점', rating: 4.3, reviews: 18, badge: '신규' },
-  { name: '조현우', cat: '공예', center: '홈플러스 신도림', rating: 4.6, reviews: 31, badge: '인기' }
-];
+// [세션2] 가짜 강사 평점 제거 — 실제 상호(홈플러스/롯데마트/갤러리아 등)에 허구 강사·평점을
+// 결부하는 것은 명예훼손·기만(부정경쟁) 법적 리스크. 실데이터 연동 전까지 비활성(빈 배열).
+const INSTRUCTORS = [];
 
 function showInstructorRating() {
   SFX7.play('rating');
   const myRatings = lsGet('cc-instructor-ratings', {});
+
+  if (!INSTRUCTORS.length) {
+    createModal('⭐ 강사 평점', '<div style="padding:24px;text-align:center;color:var(--text-secondary);line-height:1.8">강사 평점 기능은 <b>실제 강사 데이터 연동 후</b> 제공될 예정입니다.<br>확인되지 않은 정보는 표시하지 않습니다.</div>');
+    return;
+  }
 
   let html = '<div style="margin-bottom:16px;font-size:13px;color:var(--text-secondary)">강사님을 평가하고 리뷰를 남겨보세요. 별을 클릭해 평점을 매깁니다.</div>';
   html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px">';
