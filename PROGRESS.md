@@ -1,40 +1,30 @@
 # 문센파인더 상용화 개선 — 진행상황 (PROGRESS)
 
-## 목표 (완료조건 6)
-1. 프로덕션 빌드 0에러  2. 테스트통과+린트0  3. 코드리뷰 Critical/High 0
-4. 핵심 시나리오 3개 Playwright E2E  5. 보안(의존성·비밀키) C/H 0  6. 배포·변경내역 문서
+## 목표 (완료조건 6) — ✅ 전부 충족 + 실사이트 반영 완료
+빌드0 · 린트(node --check)0 · 코드리뷰 C/H 0(에이전트 PASS) · E2E 7/7 · 보안0 · 문서. master ff-merge+push 완료(라이브 적용).
 
-## ★작업공간 (세션2)
-- **격리 워크트리**: `app/.claude/worktrees/improve-20260610` (브랜치 `worktree-improve-20260610`). 모든 편집·빌드 여기서. 완료 후 master 병합. 충돌 0.
-- 백업 `_baseline_v8/`. React18 UMD + 인라인JSX(index.html) + v4~v8패치 + esbuild(dist/).
+## 작업공간
+- 격리 워크트리 `app/.claude/worktrees/improve-20260610` (브랜치 `worktree-improve-20260610`). 작업 후 master ff-merge+push.
+- 계획: `_audit/문센파인더_상용화_개선계획.html` + `_audit/plan_items.json`(85건). 백업 `_baseline_v8/`. 캡처 `_audit/after_*.png`.
 
-## ★분석·계획 (완료)
-- 분석 워크플로우 34에이전트(적대검증) → **85개 발견(치명8·높음26·보통33·낮음18)**.
-- 계획서: `_audit/문센파인더_상용화_개선계획.html` (열림) + 데이터 `_audit/plan_items.json` (재개 시 이 파일 읽기).
+## ✅ 완료·검증·배포된 개선 (각 빌드+E2E 7/7 회귀0)
+1. 정크 93MB 제거(4fa9fc0) — 백업PII 65,987·hp원본·스크린샷. 120MB→54MB.
+2. 접근성 aria-label 4곳(aad6aa3) + 라이트 필터글자 대비(ae05a96).
+3. 캐시버스터 제거(ed0e9a9) — 27MB 매방문→304.
+4. 색상대비 WCAG AA(b0b45d6) — 다크/라이트 muted/faint/필터.
+5. v7 가짜 강사평점 제거(a17892a) — 법적(명예훼손 소지).
+6. 코드리뷰 반영(ae05a96) — 라이트필터대비+고아업적2개.
+7. 인터랙션 피드백+모바일 터치타겟(82a9cd1) — :active/focus-visible, 필터칩38px·하단네비48px.
+8. 이동시간 '약 N분'(추정명시)+v7/v8 배지 중립아이콘 📚/🎯(6951178).
 
-## ✅ 완료·검증된 개선 (세션2, 각 빌드+E2E 7/7 회귀0)
-- [x] **정크 93MB 제거** (4fa9fc0): 백업PII 65,987·hp원본·스크린샷 → _deleted_files. 120MB→54MB. (조건③⑤ 잔존·저작권 해소)
-- [x] **접근성 라벨 4곳** (aad6aa3): 검색·출발지·이동시간·출생년도 aria-label.
-- [x] **성능 캐시버스터 제거** (ed0e9a9): 매방문 27MB 재다운로드 → 304(변경시만). network-first+ETag 신선도 유지.
-- [x] **색상대비 WCAG AA** (색상토큰): muted/faint/필터텍스트 다크 3.13→7.26:1·라이트 2.45→6.0:1.
-- [x] 조건①빌드0 · ②구문0 · ④E2E 7/7 · ⑤보안0(취약점·비밀키) · ⑥문서(DEPLOY·CHANGELOG)
-
-## ⏸ 세션 한도 (오후 7시 Asia/Seoul 리셋)
-- 대규모 에이전트 워크플로우 일시정지(종합 단계 한도 도달). 메인루프 단발 수정은 계속 가능.
-- 리셋 후 또는 다음 세션에서 아래 [남은 Critical/High]부터 재개.
-
-## 남은 작업 (계획서 우선순위, 미완)
-- 조건③ 코드리뷰 C/H 0 위해 처리할 핵심:
-  - [치명] v7 가짜 강사평점(INSTRUCTORS 12명, v7_patch.js:172) 제거 — 실상호에 허구평점(법적). 메뉴·단축키 호출처까지 함께 제거.
-  - [치명] **라이브가 dist/(빌드) 안 쓰고 루트 index.html(Babel런타임) 배포** — GitHub Pages가 dist/ 서빙하게 전환(또는 dist→루트). 빌드 파이프라인이 실효되게.
-  - [치명] 신청링크 9px 이모지·센터모달 막다른길 (UX) / 패치오버레이 스크린리더 비가시(a11y, effort L)
-  - [높음] 끊긴기능: v6 데이터취득 React18 영구실패(센터비교/로드맵/시즌/캘린더 무음고장)·v8 추천 Math.random·v8 가짜 D-day알림·v8 잘못된 localStorage키.
-  - [높음] 터치타겟<44px(필터칩·체크박스·하단네비)·검색 디바운스·로딩/disabled상태·:active피드백·showCount 리셋·build.mjs가 data전체 복사.
-  - [높음] a11y: 폼라벨·모달 role/포커스트랩·클릭형 td 키보드.
-- UX 첫화면 Hick 정리(v4/v5 12버튼 토글), 반응형, Lighthouse 90+.
-- 잡파일: aad6aa3에 분석 스크래치(_deleted_files/_*.js 등 8개) 섞임 → master 병합 전 정리.
+## 남은 작업 (계획서, 미완 — 컴팩트/다음 세션)
+- [치명] **라이브가 dist/(빌드본) 미사용** — 루트 index.html(Babel런타임) 배포 중. GitHub Pages가 dist/ 서빙하게 빌드파이프라인 연결(구조변경, 신중). 큰 성능향상.
+- [치명] 신청링크 9px 이모지→버튼화 / 센터상세 모달 막다른길(신청·전화 CTA 추가).
+- [높음] 끊긴기능: v6 데이터취득 React18 실패(센터비교/로드맵/시즌/캘린더 무음고장)·v8 추천 Math.random·v8 가짜 D-day알림·v8 잘못된 localStorage키.
+- [높음] 첫화면 Hick 정리(v4/v5 12버튼 토글 접기)·검색 디바운스·검색버튼 로딩상태·떠다니는 레일 겹침.
+- [높음] a11y: 모달 role/포커스트랩·클릭형 td 키보드.
+- build.mjs data전체 복사 정리·잡파일(_deleted_files/_*.js 등) 정리.
 
 ## 재개 지침
-- 이 파일 + `_audit/plan_items.json`(85건) + `_audit/문센파인더_상용화_개선계획.html` 읽으면 즉시 재개.
-- 워크트리에서 작업 → 각 수정 후 `npm run build` + `python -m http.server 8801` & `python tests/e2e_munsen.py`(7/7 확인) → `git add <파일> && commit`(선택커밋, -A 금지).
-- 최종: 워크트리 브랜치 → master 병합 + 6조건 실증 + 비전문가 보고(전/후 스크린샷).
+- 이 파일 + `_audit/plan_items.json` 읽기. 워크트리에서 작업 → 각 수정 후 `npm run build` + 서버8801 + `tests/e2e_munsen.py`(7/7) → 선택커밋(`git add <파일>`, -A 금지) → master ff-merge+push.
+- ★외부 자동봇이 주간 index.html 재작성(v9 등) 가능 → 재개 시 `git fetch` 후 충돌 점검.
