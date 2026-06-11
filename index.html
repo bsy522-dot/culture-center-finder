@@ -1022,6 +1022,7 @@ function App(){
                 <h1 style={{fontSize:17,fontWeight:800,color:"var(--text-primary)",letterSpacing:-0.5}}>문화센터 강좌 파인더</h1>
                 <div style={{fontSize:10.5,color:"var(--accent)",marginTop:5,display:"flex",alignItems:"center",gap:4,flexWrap:"wrap",lineHeight:"26px"}}>
                   <input value={addrInput} onChange={e=>setAddrInput(e.target.value)}
+                    aria-label="출발지 주소 입력 (이동시간 계산용)"
                     onKeyDown={e=>{if(e.key==='Enter')applyAddr();}}
                     placeholder="출발지 (예: 일산, 서초역, 강남구)"
                     style={{background:"rgba(126,200,227,0.12)",border:"1px solid rgba(126,200,227,0.25)",borderRadius:5,color:"var(--accent)",fontWeight:700,fontSize:12,padding:"4px 8px",flex:"1 1 120px",minWidth:120,outline:"none",fontFamily:"inherit"}}/>
@@ -1029,11 +1030,11 @@ function App(){
                     style={{background:settings.transport==="car"?"rgba(149,213,178,0.15)":"rgba(126,200,227,0.15)",border:"1px solid "+(settings.transport==="car"?"rgba(149,213,178,0.3)":"rgba(126,200,227,0.3)"),borderRadius:5,color:settings.transport==="car"?"#95D5B2":"var(--accent)",fontWeight:700,fontSize:11,padding:"4px 8px",cursor:"pointer",fontFamily:"inherit",whiteSpace:"nowrap"}}>
                     {settings.transport==="car"?"🚗 차량":"🚌 대중교통"}
                   </button>
-                  <select value={settings.maxMin} onChange={e=>setSettings({...settings,maxMin:+e.target.value})}
+                  <select value={settings.maxMin} onChange={e=>setSettings({...settings,maxMin:+e.target.value})} aria-label="이동시간 제한 선택"
                     style={{background:"rgba(255,183,71,0.12)",border:"1px solid rgba(255,183,71,0.25)",borderRadius:5,color:"#FFB347",fontWeight:700,fontSize:11,padding:"4px 4px",outline:"none",fontFamily:"inherit",cursor:"pointer"}}>
                     {[10,15,20,25,30,35,40,45,50,55,60,70,80,90,120,180].map(m=><option key={m} value={m}>{m}분 이내</option>)}
                   </select>
-                  <select value={settings.birthYear} onChange={e=>setSettings({...settings,birthYear:+e.target.value})}
+                  <select value={settings.birthYear} onChange={e=>setSettings({...settings,birthYear:+e.target.value})} aria-label="자녀 출생년도 선택"
                     style={{background:"rgba(232,160,191,0.12)",border:"1px solid rgba(232,160,191,0.25)",borderRadius:5,color:"#E8A0BF",fontWeight:700,fontSize:11,padding:"4px 4px",outline:"none",fontFamily:"inherit",cursor:"pointer"}}>
                     {[0,...Array.from({length:75},(_,i)=>2024-i)].map(y=><option key={y} value={y}>{y===0?"나이 무관":y+"년생"}</option>)}
                   </select>
@@ -1243,6 +1244,7 @@ function App(){
         {tab==="table"&&(<>
           <div style={{display:"flex",gap:5,flexWrap:"wrap",marginBottom:6,alignItems:"center"}}>
             <input ref={searchRef} value={q} onChange={e=>setQ(e.target.value)}
+              aria-label="강좌명·센터·종목·주소로 검색"
               onKeyDown={e=>{if(e.key==='Enter')handleSearchSubmit();}}
               placeholder="강좌명/센터/종목/주소 (/ 또는 Ctrl+K)"
               style={{width:220,background:"var(--input-bg)",color:"var(--text-primary)",border:"1px solid var(--input-border)",borderRadius:7,padding:"5px 10px",fontSize:11,outline:"none",transition:"border-color .2s"}}/>
