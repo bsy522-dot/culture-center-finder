@@ -660,8 +660,8 @@ function App(){
     setSearchMsg("데이터 로딩중...");
     setSplashPct(20);
     Promise.all([
-      fetch("data/all.json?t="+Date.now()).then(r=>{setSplashPct(50);return r.json();}),
-      fetch("data/center_coords.json?t="+Date.now()).then(r=>{setSplashPct(70);return r.json();}).catch(()=>({}))
+      fetch("data/all.json").then(r=>{setSplashPct(50);return r.json();}),
+      fetch("data/center_coords.json").then(r=>{setSplashPct(70);return r.json();}).catch(()=>({}))
     ]).then(([d,cc])=>{
       setSplashPct(90);
       CENTER_COORDS=cc;
