@@ -837,8 +837,6 @@ function showQuizV7Result(state) {
 const ACHIEVEMENTS_V7 = [
   { id: 'course_complete', name: '수료생', desc: '종목 하나를 100% 완료', icon: '&#127891;' },
   { id: 'multi_learner', name: '멀티 러너', desc: '5종목 이상 50% 진행', icon: '&#128218;' },
-  { id: 'reviewer_5', name: '리뷰어', desc: '강사 5명 이상 평가', icon: '&#11088;' },
-  { id: 'reviewer_all', name: '평론가', desc: '전체 강사 평가 완료', icon: '&#127942;' },
   { id: 'wish_5', name: '위시 수집가', desc: '위시리스트 5개 이상', icon: '&#128149;' },
   { id: 'wish_15', name: '위시 마니아', desc: '위시리스트 15개 이상', icon: '&#128150;' },
   { id: 'trend_viewer', name: '트렌드 분석가', desc: '트렌드 분석 확인', icon: '&#128200;' },
