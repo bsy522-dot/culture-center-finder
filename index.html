@@ -120,6 +120,8 @@ input,select,textarea,button{font-family:inherit}
 #scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#7EC8E3,#3AAFA9);z-index:999;width:0;transition:width .1s linear}
 
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--overlay-bg);display:flex;align-items:center;justify-content:center;z-index:100;backdrop-filter:blur(6px);animation:fadeIn .2s ease}
+/* 모달/온보딩이 열리면 v9 떠다니는 퀵액션 레일을 숨김(모달 위 겹침 방지) — durable, v9_patch 재생성에도 유지 */
+body:has(.modal-overlay) #v9-quick-actions,body:has(.onboarding-overlay) #v9-quick-actions{display:none!important}
 .modal{background:var(--modal-bg);border:1px solid var(--modal-border);border-radius:12px;padding:24px;width:92%;max-width:600px;max-height:85vh;overflow-y:auto;box-shadow:var(--shadow);animation:modalIn .25s ease}
 .modal h2{color:var(--text-primary);font-size:16px;margin-bottom:16px}
 .modal label{display:block;font-size:11px;color:var(--text-secondary);margin-bottom:3px;font-weight:600}
