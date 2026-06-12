@@ -217,6 +217,9 @@ tr:hover td{background:var(--card-hover)!important}
 /* Share button */
 .share-btn{background:none;border:1px solid var(--card-border);border-radius:6px;color:var(--text-muted);font-size:10px;padding:3px 8px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:3px}
 .share-btn:hover{background:var(--filter-active-bg);color:var(--accent);border-color:var(--accent)}
+.apply-btn{display:inline-flex;align-items:center;gap:2px;background:var(--accent);color:#0b1220;font-size:10px;font-weight:700;padding:3px 10px;border-radius:6px;text-decoration:none;border:none;cursor:pointer;transition:transform .15s,filter .2s;white-space:nowrap}
+.apply-btn:hover{filter:brightness(1.08)}
+.apply-btn:active{transform:scale(.96)}
 
 /* Onboarding tour */
 .onboarding-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:500;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);animation:fadeIn .3s ease}
@@ -994,9 +997,12 @@ function App(){
               <span style={{fontSize:10,color:"#95D5B2",fontWeight:600}}>{r[8]||"-"}</span>
               <span style={{fontSize:8.5,fontWeight:700,color:sc,background:sc+"18",padding:"2px 6px",borderRadius:4}}>{r[10]}</span>
             </div>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:6}}>
-              {settings.address&&<span style={{fontSize:9,color:"#FFB347",fontWeight:600}}>{"약 "+(r[2]>0?r[2]:estimateTravel(r[15],r[1],settings.address))+"분"}</span>}
-              <button className="share-btn" onClick={(e)=>{e.stopPropagation();shareCourse(r);}} title="공유">{"📤"} 공유</button>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:6,gap:6}}>
+              {settings.address?<span style={{fontSize:9,color:"#FFB347",fontWeight:600}}>{"약 "+(r[2]>0?r[2]:estimateTravel(r[15],r[1],settings.address))+"분"}</span>:<span/>}
+              <div style={{display:"flex",gap:6,alignItems:"center"}}>
+                <button className="share-btn" onClick={(e)=>{e.stopPropagation();shareCourse(r);}} title="공유">{"📤"} 공유</button>
+                {r[12]&&<a href={r[12]} target="_blank" rel="noopener noreferrer" onClick={(e)=>e.stopPropagation()} className="apply-btn" aria-label={r[4]+" 신청 페이지 새 창에서 열기"}>{"신청 →"}</a>}
+              </div>
             </div>
           </div>
         );
@@ -1462,7 +1468,7 @@ function App(){
                               <td style={{padding:"5px 3px",textAlign:"center",fontSize:8.5,color:"var(--text-muted)"}}>{r[14]?r[14]+"회":"-"}</td>
                               <td style={{padding:"5px 3px",textAlign:"center"}}><span style={{color:sc,fontWeight:700,fontSize:8.5}}>{r[10]}</span></td>
                               <td style={{padding:"5px 2px",textAlign:"center"}}>
-                                {r[12]&&<a href={r[12]} target="_blank" rel="noopener noreferrer" style={{fontSize:9}} title="상세">{"🔗"}</a>}
+                                {r[12]&&<a href={r[12]} target="_blank" rel="noopener noreferrer" style={{fontSize:13,padding:"1px 3px"}} title="신청 페이지 열기" aria-label={r[4]+" 신청 페이지 새 창에서 열기"}>{"🔗"}</a>}
                                 {r[15]&&<a href={mapLink(r[15])} target="_blank" rel="noopener noreferrer" style={{fontSize:9,marginLeft:1}} title={r[15]}>{"📍"}</a>}
                               </td>
                             </tr>
@@ -1631,7 +1637,7 @@ function App(){
                   {getCenterInfo(centerModal).addr&&<span>{"📍"} {getCenterInfo(centerModal).addr}</span>}
                 </div>
                 <div style={{fontSize:11,color:"var(--text-secondary)"}}>
-                  {getCenterInfo(centerModal).phone&&<span>{"📞"} {getCenterInfo(centerModal).phone}</span>}
+                  {getCenterInfo(centerModal).phone&&<a href={"tel:"+getCenterInfo(centerModal).phone.replace(/[^0-9+]/g,'')} style={{color:"var(--accent)",textDecoration:"none",fontWeight:600}} aria-label={"전화 걸기 "+getCenterInfo(centerModal).phone}>{"📞"} {getCenterInfo(centerModal).phone}</a>}
                 </div>
               </div>
               <button onClick={()=>setCenterModal(null)} style={{background:"none",border:"none",color:"var(--text-muted)",fontSize:20,cursor:"pointer",padding:"0 4px"}}>{"×"}</button>
@@ -1648,6 +1654,7 @@ function App(){
                     <th style={{padding:"6px",textAlign:"left",color:"var(--text-secondary)",fontWeight:600,fontSize:9.5,borderBottom:"2px solid var(--table-header-border)"}}>시간</th>
                     <th style={{padding:"6px",textAlign:"left",color:"var(--text-secondary)",fontWeight:600,fontSize:9.5,borderBottom:"2px solid var(--table-header-border)"}}>수강료</th>
                     <th style={{padding:"6px",textAlign:"center",color:"var(--text-secondary)",fontWeight:600,fontSize:9.5,borderBottom:"2px solid var(--table-header-border)"}}>상태</th>
+                    <th style={{padding:"6px",textAlign:"center",color:"var(--text-secondary)",fontWeight:600,fontSize:9.5,borderBottom:"2px solid var(--table-header-border)"}}>신청</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1662,6 +1669,7 @@ function App(){
                         <td style={{padding:"5px 6px",color:"#FFB347",fontSize:9}}>{r[7]}</td>
                         <td style={{padding:"5px 6px",color:"#95D5B2",fontSize:9}}>{r[8]}</td>
                         <td style={{padding:"5px 6px",textAlign:"center"}}><span style={{color:sc,fontWeight:700,fontSize:8.5}}>{r[10]}</span></td>
+                        <td style={{padding:"5px 6px",textAlign:"center"}}>{r[12]?<a href={r[12]} target="_blank" rel="noopener noreferrer" className="apply-btn" style={{fontSize:9,padding:"2px 8px"}} aria-label={r[4]+" 신청 페이지 새 창에서 열기"}>{"신청"}</a>:<span style={{color:"var(--text-faint)",fontSize:9}}>{"-"}</span>}</td>
                       </tr>
                     );
                   })}
