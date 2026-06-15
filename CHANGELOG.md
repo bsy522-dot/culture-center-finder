@@ -1,5 +1,19 @@
 # 변경 내역 (개선 작업)
 
+## 세션3-R2 (2026-06-12) — 26에이전트 워크플로 적대검증 반영 (마무리)
+독립 8차원 검증 + 적대적 재검증(26에이전트)이 적발한 실재 결함을 수정·재검증·배포.
+### 접근성 (High)
+- 키보드로 센터 상세 모달을 열 수 없던 문제 해소: 카드·표 센터명·통계 TOP10·표 즐겨찾기 트리거에 role="button"/tabIndex/aria-label/onKeyDown(Enter·Space) 추가. Playwright 키보드 테스트로 'Tab→Enter 모달 열림·ESC 닫힘' 실증(WCAG 2.1.1).
+- add/edit·메모·삭제확인 모달에 role="dialog"/aria-modal/aria-label 추가(센터·비교 2개 + 3개 = 코어 5개 모달 일관).
+### 빌드 무결성 (High)
+- build.mjs가 v9_patch.js를 dist에 누락하던 문제 수정: 패치 파일을 하드코딩(v4~v8) 대신 정규식(/^v\d+_patch\.js$/)으로 자동 수집 → 봇이 v9·v10… 추가해도 dist 단독배포 무결. dist/v4~v9_patch.js 생성 확인.
+### 보안 (Medium)
+- v5 강좌 리뷰 후기 textarea raw 삽입(저장형 self-XSS) 차단: esc() 적용(v5_patch.js:1093).
+### 문서
+- README 'v4~v8'→'v4~v9', PROGRESS 모달 a11y 완료 반영.
+### 잔여 (별도 항목, 본 범위 밖)
+- 포커스 트랩·dist 배포 전환(GitHub Pages; build.mjs 준비완료)·27MB 데이터 SWR 캐싱.
+
 ## 세션3 (2026-06-12) — v9 통합 + 신청 동선·접근성 (각 빌드+E2E 7/7 회귀0, 라이브 배포 검증)
 ### 호환·통합
 - 외부 자동봇 **v9.0**(학습경로맵·통계레이더·가격트렌드·포트폴리오·플래너·북마크·마일스톤·접근성패널·워드클라우드 등 + v9_patch.js 1,402줄)을 충돌 점검 후 통합. 봇 변경은 순수 추가형(index.html 메타+스크립트 1줄)이라 기존 개선 전부 보존 확인 → 깨끗이 rebase, 빌드+E2E 7/7 무손상.

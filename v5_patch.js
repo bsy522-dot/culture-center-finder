@@ -1090,7 +1090,7 @@ function renderReviewModal(courseIdx) {
         ${[1,2,3,4,5].map(s => `<span class="v5-star" data-star="${s}" onclick="window.__v5patch.setRating(${s})" style="color:${s <= currentRating ? '#FBBF24' : 'var(--text-faint)'}">${s <= currentRating ? '★' : '☆'}</span>`).join('')}
       </div>
     </div>
-    <textarea id="v5-review-comment" placeholder="수강 후기를 작성해주세요 (선택)" style="width:100%;height:80px;background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;padding:10px;font-size:12px;color:var(--text-primary);outline:none;resize:none;font-family:inherit">${existing ? existing.comment : ''}</textarea>
+    <textarea id="v5-review-comment" placeholder="수강 후기를 작성해주세요 (선택)" style="width:100%;height:80px;background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;padding:10px;font-size:12px;color:var(--text-primary);outline:none;resize:none;font-family:inherit">${esc(existing ? existing.comment : '')}</textarea>
     <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
       ${existing ? '<button class="v5-close" style="color:#EF4444" onclick="window.__v5patch.deleteReview(' + courseIdx + ')">삭제</button>' : ''}
       <button class="v5-close" style="background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0A1628;font-weight:700;border:none" onclick="window.__v5patch.saveReview(${courseIdx})">저장</button>

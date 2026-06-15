@@ -1,6 +1,6 @@
 # 문화센터 강좌 파인더 (culture-center-finder)
 
-전국 84,000+ 문화센터 강좌 비교 PWA. React 18 (UMD) + v4~v8 패치 스크립트.
+전국 84,000+ 문화센터 강좌 비교 PWA. React 18 (UMD) + v4~v9 패치 스크립트.
 
 ## 프로덕션 빌드
 

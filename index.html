@@ -979,7 +979,7 @@ function App(){
         const iF=fav.has(gi);
         const isCompare=compareItems.includes(gi);
         return(
-          <div key={gi} className="course-card" style={{animationDelay:(idx%12)*30+'ms'}} onClick={()=>setCenterModal(r[1])}>
+          <div key={gi} className="course-card" style={{animationDelay:(idx%12)*30+'ms'}} onClick={()=>setCenterModal(r[1])} role="button" tabIndex={0} aria-label={r[1]+" 센터 상세 보기"} onKeyDown={e=>{if((e.key==='Enter'||e.key===' ')&&e.target===e.currentTarget){e.preventDefault();setCenterModal(r[1]);}}}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:8}}>
               <div style={{fontSize:10,color:CC[r[0]]||"var(--text-muted)",fontWeight:600}}>
                 {r[0]==="백화점"?"🏬":r[0]==="대형마트"?"🛒":"🏛"} {r[1].replace(/홈플러스 |이마트 |롯데마트 |롯데쇼핑 /,'')}
@@ -1242,7 +1242,7 @@ function App(){
                   return(
                     <div key={name} style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
                       <span style={{fontSize:10,width:12,textAlign:"center",color:"var(--text-faint)"}}>{medal||idx+1}</span>
-                      <span style={{fontSize:10,width:100,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",color:"var(--text-secondary)",cursor:"pointer"}} onClick={()=>setCenterModal(name)} title={name}>{name.replace(/홈플러스 |이마트 |롯데마트 |롯데쇼핑 /,'')}</span>
+                      <span style={{fontSize:10,width:100,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",color:"var(--text-secondary)",cursor:"pointer"}} onClick={()=>setCenterModal(name)} role="button" tabIndex={0} aria-label={name+" 센터 상세 보기"} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setCenterModal(name);}}} title={name}>{name.replace(/홈플러스 |이마트 |롯데마트 |롯데쇼핑 /,'')}</span>
                       <div style={{flex:1,height:16,background:"var(--bar-bg)",borderRadius:3,overflow:"hidden"}}>
                         <div style={{width:(cnt/max*100)+"%",height:"100%",background:"linear-gradient(90deg,#E8A0BF,#E8A0BF88)",borderRadius:3,transition:"width .5s ease"}}/>
                       </div>
@@ -1450,9 +1450,9 @@ function App(){
                           const isCompare=compareItems.includes(gi);
                           return(
                             <tr key={gi} style={{borderBottom:"1px solid var(--table-row-border)"}}>
-                              <td style={{padding:"5px 2px",textAlign:"center",cursor:"pointer",fontSize:12}} onClick={()=>toggleFav(gi)}>{iF?"⭐":"☆"}</td>
+                              <td style={{padding:"5px 2px",textAlign:"center",cursor:"pointer",fontSize:12}} onClick={()=>toggleFav(gi)} role="button" tabIndex={0} aria-label={iF?"즐겨찾기 해제":"즐겨찾기 추가"} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleFav(gi);}}}>{iF?"⭐":"☆"}</td>
                               <td style={{padding:"5px 2px",textAlign:"center"}}><input type="checkbox" checked={isCompare} onChange={()=>toggleCompare(gi)} style={{width:11,height:11,cursor:"pointer"}} title="비교"/></td>
-                              <td style={{padding:"5px 4px",color:"var(--text-muted)",fontSize:9.5,lineHeight:"13px",cursor:"pointer"}} onClick={()=>setCenterModal(r[1])}>
+                              <td style={{padding:"5px 4px",color:"var(--text-muted)",fontSize:9.5,lineHeight:"13px",cursor:"pointer"}} onClick={()=>setCenterModal(r[1])} role="button" tabIndex={0} aria-label={r[1]+" 센터 상세 보기"} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setCenterModal(r[1]);}}}>
                                 <span style={{fontWeight:600,color:"var(--text-secondary)"}}>{r[1].replace(/홈플러스 |이마트 |롯데마트 |롯데쇼핑 /,'')}</span>
                                 <br/><span style={{fontSize:8,color:"var(--text-faint)"}}>{r[0]==="백화점"?"🏬":r[0]==="대형마트"?"🛒":"🏛"} {r[1].split(' ')[0]}</span>
                               </td>
@@ -1556,7 +1556,7 @@ function App(){
       {/* Add/Edit Modal */}
       {(modal==='add'||modal==='edit')&&(
         <div className="modal-overlay" onClick={()=>setModal(null)}>
-          <div className="modal" onClick={e=>e.stopPropagation()}>
+          <div className="modal" onClick={e=>e.stopPropagation()} role="dialog" aria-modal="true" aria-label={modal==='add'?'새 강좌 추가':'강좌 수정'}>
             <h2>{modal==='edit'?"강좌 수정":"새 강좌 추가"}</h2>
             <div className="row">
               <div><label>센터분류 *</label><select value={form[0]} onChange={e=>uf(0,e.target.value)}>{CATS.map(c=><option key={c}>{c}</option>)}</select></div>
@@ -1602,7 +1602,7 @@ function App(){
       {/* Memo Modal */}
       {modal==='memo'&&(
         <div className="modal-overlay" onClick={()=>setModal(null)}>
-          <div className="modal" onClick={e=>e.stopPropagation()} style={{maxWidth:400}}>
+          <div className="modal" onClick={e=>e.stopPropagation()} style={{maxWidth:400}} role="dialog" aria-modal="true" aria-label="메모">
             <h2>메모 - {data[memoIdx]?.[4]}</h2>
             <textarea value={memoTxt} onChange={e=>setMemoTxt(e.target.value)} rows={4} placeholder="메모 입력..."
               style={{width:"100%",background:"var(--input-bg)",color:"var(--text-primary)",border:"1px solid var(--input-border)",borderRadius:6,padding:"8px 10px",fontSize:12,outline:"none",resize:"vertical",fontFamily:"inherit"}}/>
@@ -1617,7 +1617,7 @@ function App(){
       {/* Delete Modal */}
       {modal==='delete'&&delIdx!==null&&(
         <div className="modal-overlay" onClick={()=>setModal(null)}>
-          <div className="modal" onClick={e=>e.stopPropagation()} style={{maxWidth:380}}>
+          <div className="modal" onClick={e=>e.stopPropagation()} style={{maxWidth:380}} role="dialog" aria-modal="true" aria-label="삭제 확인">
             <h2 style={{color:"#EF4444"}}>삭제 확인</h2>
             <p style={{fontSize:12,color:"var(--text-muted)"}}><b style={{color:"var(--text-primary)"}}>{data[delIdx]?.[4]}</b>를 삭제하시겠습니까?</p>
             <div className="actions">

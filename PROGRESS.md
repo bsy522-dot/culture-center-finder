@@ -19,13 +19,15 @@
 9. **봇 v9.0 통합**(rebase) — 봇이 6951178 위에 v9(학습경로맵·레이더·포트폴리오 등 +1402줄 v9_patch.js) 추가. 순수 추가형(index.html 메타+스크립트1줄, 내 개선 전부 보존 확인)이라 깨끗이 rebase, 빌드+E2E 7/7 무손상.
 10. **신청 동선 강화**(a3e0bf3, 라이브✓) — 카드 '신청 →' 버튼·센터모달 강좌별 '신청' 컬럼·센터 전화 클릭형 tel: 링크·표 신청링크 확대(9→13px)+aria. 9px 🔗 막다른길 해소(Fitts/Jakob, 명시적 텍스트 CTA).
 11. **v9 레일 모달 겹침 수정**(cc32334, 라이브✓) — #v9-quick-actions(z940)가 코어모달(z100) 위로 떠 센터모달 신청컬럼 가리던 문제. `body:has(.modal-overlay) #v9-quick-actions{display:none}` CSS로 모달 열림시 숨김. index.html이라 v9_patch 주간 재생성에도 유지(durable).
+12. **키보드 접근성·모달 role**(세션3-R2, 라이브✓) — 26에이전트 검증 적발: 센터 모달을 키보드로 못 열던 High 결함 해소(카드·표 센터명·통계·표 즐겨찾기 트리거에 role=button/tabIndex/onKeyDown, Tab→Enter 실증)+코어 5개 모달 role=dialog/aria-modal 일관.
+13. **build.mjs v9 누락·v5 XSS 수정**(세션3-R2, 라이브✓) — dist 패치 자동수집(정규식 /^v\d+_patch\.js$/)으로 v9 단독배포 무결화(dist/v4~v9 생성), v5 리뷰 후기 self-XSS esc() 차단.
 
 ## 남은 작업 (계획서, 미완 — 다음 세션)
-- [치명] **라이브가 dist/(빌드본) 미사용** — 루트 index.html(Babel런타임) 배포 중. GitHub Pages가 dist/ 서빙하게 빌드파이프라인 연결(구조변경, 신중). 큰 성능향상.
+- [치명] **라이브가 dist/(빌드본) 미사용** — 루트 index.html(Babel런타임) 배포 중. GitHub Pages가 dist/ 서빙하게 전환(구조변경, 신중). ※build.mjs는 v9 포함 완전한 dist 생성 준비완료 → 남은 건 Pages source=/dist 또는 빌드CI 연결뿐. 큰 성능향상.
 - [높음] 끊긴기능: v6 데이터취득 React18 실패(센터비교/로드맵/시즌/캘린더 무음고장)·v8 추천 Math.random·v8 가짜 D-day알림·v8 잘못된 localStorage키. (※v8_patch는 봇 미재생성 → durable 수정 가능)
 - [높음] 첫화면 Hick 정리(v4/v5/v9 떠다니는 버튼 다수 — 토글 접기/그룹화)·검색 디바운스·검색버튼 로딩상태.
-- [높음] a11y: 모달 role="dialog"/aria-modal/포커스트랩·클릭형 td 키보드.
-- build.mjs data전체 복사 정리·잡파일(_deleted_files/_*.js 등) 정리.
+- [중간] a11y 포커스 트랩(모달 열림시 초기포커스·Tab 모달내 순환·배경 aria-hidden) — role/aria-modal/클릭형 td·카드 키보드는 완료(세션3-R2).
+- [중간] SW 데이터 SWR 캐싱(27MB all.json 온라인 재방문 왕복 완화)·build.mjs data 복사 정리·잡파일 정리.
 
 ## 재개 지침
 - 이 파일 + `_audit/plan_items.json` 읽기. 워크트리에서 작업 → 각 수정 후 `npm run build`(+[build] OK) + 서버8801 + `tests/e2e_munsen.py`(7/7) → 선택커밋(`git add <파일>`, -A 금지) → `git push origin worktree-improve-20260610:master`(ff).

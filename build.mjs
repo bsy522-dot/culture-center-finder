@@ -38,7 +38,6 @@ const BABEL_CDN_RE = /[ \t]*<script[^>]*@babel\/standalone[^>]*><\/script>\s*\n?
 
 // dist 로 복사할 정적 자산(존재하는 것만 복사). data/ 는 디렉터리 재귀 복사.
 const STATIC_FILES = [
-  'v4_patch.js', 'v5_patch.js', 'v6_patch.js', 'v7_patch.js', 'v8_patch.js',
   'manifest.json', 'sw.js', 'icon-192.png', 'icon-512.png',
 ];
 const STATIC_DIRS = ['data'];
@@ -73,6 +72,12 @@ function buildDistHtml(html) {
 }
 
 async function copyStatics() {
+  // vN_patch.js 자동 수집 — 외부 봇이 v9,v10… 추가해도 dist 누락 없이 단독 배포 유지
+  const patchFiles = (await fs.readdir(ROOT)).filter(f => /^v\d+_patch\.js$/.test(f));
+  for (const f of patchFiles) {
+    try { await fs.copyFile(path.join(ROOT, f), path.join(DIST_DIR, f)); }
+    catch (e) { if (e.code !== 'ENOENT') throw e; }
+  }
   for (const f of STATIC_FILES) {
     const srcP = path.join(ROOT, f);
     try {
