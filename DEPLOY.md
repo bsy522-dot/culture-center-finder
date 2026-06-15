@@ -1,6 +1,6 @@
 # 문센파인더 배포·운영 가이드
 
-전국 문화센터 강좌 검색 PWA. React18(UMD) + 패치(v4~v8) + 정적 데이터(data/).
+전국 문화센터 강좌 검색 PWA. React18(UMD) + 패치(v4~v9) + 정적 데이터(data/).
 
 ## 설치 (개발/로컬 미리보기)
 ```
@@ -35,5 +35,9 @@ cd dist && python -m http.server 8802
 - 상기 항목은 비상업 단계에선 사용 가능하나 수익화 시 교체 필요(법률 검토 리포트 참조).
 
 ## 보안
-- 사용자 입력은 esc() 헬퍼로 이스케이프(저장형 XSS 차단, v4~v8 적용).
+- 사용자 입력은 esc() 헬퍼로 이스케이프(저장형 XSS 차단, v4~v8 적용). ※v9_patch.js는 자동봇 생성분 — 출시 전 XSS 재검토 권장.
 - 하드코딩 비밀키 없음. localStorage만 사용(서버 전송 없음).
+
+## 운영 주의 (주간 자동봇)
+- 외부 자동봇이 주기적으로 index.html·manifest·sw·vN_patch.js를 master에 **추가형**으로 푸시(v4→v9 …). 순수 추가형이라 보통 충돌은 없으나, 개선 작업 재개 시 **반드시 `git fetch` 후 origin/master 변동 점검** → 변동 시 `git rebase origin/master`.
+- 개선 배포는 워크트리 브랜치에서 `git push origin <branch>:master`(빨리감기)로 수행. GitHub Pages 1~2분 후 반영.
