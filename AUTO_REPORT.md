@@ -560,3 +560,70 @@
 
 - 커밋: [AUTO] 2026-05-07 culture-center-finder v2.0
 - 파일 변경: index.html, sw.js, manifest.json, AUTO_REPORT.md
+
+---
+
+## v11.0 (2026-06-24)
+
+### 1차: 벤치마킹 (클래스101, 탈잉)
+
+| 항목 | 클래스101 | 탈잉 | 문센파인더 v10 | v11 목표 |
+|------|-----------|-------|---------------|----------|
+| 수강후기 분석 | 별점+텍스트 리뷰 | 별점 리뷰 | 미지원 | 감성분석 Canvas 파이차트 |
+| 난이도 안내 | 초급/중급/고급 3단계 | 난이도 태그 | 미지원 | 10개 강좌 상세 가이드 |
+| 커뮤니티 | 댓글, Q&A | 수강평 | 미지원 | 12종 카테고리 게시판 |
+| 접근성 평가 | 미지원 | 미지원 | 미지원 | 8항목 레이더 Canvas |
+| 추천 시스템 | AI 큐레이션 | 카테고리 추천 | AI추천 기본 | 5문항 인터랙티브 퀴즈 |
+| 목표 관리 | 학습 대시보드 | 미지원 | 미지원 | 6종 목표 트래커 Canvas |
+| 비교 기능 | 클래스 비교 | 미지원 | 센터비교 기본 | 4종 차트 비교분석기 |
+| 수강증명서 | 수료증 PDF | 미지원 | v1 기본 | v2 Canvas PNG 고급 |
+
+### 2차: 개발 (8개 신규 기능)
+
+#### 프론트엔드
+1. **수강후기 감성분석기** - Canvas 파이차트 기반 긍정/부정/중립 비율 분석, 감정 키워드 추출
+2. **강좌난이도 가이드** - 10개 대표 강좌 5단계 난이도 시각화, 추천 대상자 안내
+3. **학습커뮤니티 게시판** - 12개 카테고리(수영, 요가, 피아노 등) 게시판, 댓글/좋아요
+4. **센터접근성 평가** - 8항목(주차, 엘리베이터, 화장실 등) 레이더 Canvas 분석
+5. **강좌추천 퀴즈** - 5문항 인터랙티브 플로우, 성향 기반 강좌 매칭
+6. **수강목표 트래커** - 6종 목표(주3회, 자격증, 발표회 등), Canvas 막대 차트 달성률
+7. **강좌비교 분석기** - 4종 차트(가격막대, 만족도바, 레이더, 종합표) Canvas 비교
+8. **수강증명서 v2** - Canvas PNG 내보내기, QR코드 스타일, 학습시간/달성률 포함
+
+#### 콘텐츠
+- 퀴즈 15문항 추가 (90→105문)
+- 업적 12종 추가 (90→102종)
+- 키보드 단축키 8종 (Alt+R/D/M/X/Q/G/P/C)
+- 퀵액션 레일 8종
+
+#### 오디오
+- SFX 12종 (review11/difficulty11/community11/access11/recommend11/goal11/compare11/cert11/quiz11/achieve11/keyboard11/init11)
+
+#### 데이터
+- localStorage 키: ccf-v11-community-*, ccf-v11-access-*, ccf-v11-goals, ccf-v11-comparison-*, ccf-v11-quiz-*, ccf-v11-achieve-*, ccf-v11-feature-*
+
+#### 인프라
+- sw.js 캐시 버전 ccf-v12-20260624
+- STATIC_ASSETS에 v11_patch.js 추가
+- manifest.json v11 갱신 (설명, 숏컷 8종)
+
+### 3차: 품질 검증
+
+| 검증 항목 | 결과 | 상세 |
+|-----------|------|------|
+| JS 구문 검증 | PASS | node -c v11_patch.js 정상 |
+| 브라켓 균형 | PASS | 1583/1583 balanced |
+| 파일 크기 | 59,090 bytes | 1,404 lines |
+| 외부 CDN 검사 | PASS | 0건 (React/Babel 기존 unpkg만) |
+| 개인정보 검출 | PASS | 0건 |
+| manifest.json | PASS | JSON 유효성 검증 완료 |
+| sw.js 구문 | PASS | node -c 정상 |
+| IIFE 패턴 | PASS | v10 동일 구조 준수 |
+| 중복 실행 방지 | PASS | meta[name=ccf-v11-patch] 마커 |
+| HTML entities | PASS | esc() 함수 적용 |
+
+### 4차: 배포
+
+- 커밋: [AUTO] 2026-06-24 culture-center-finder v11.0
+- 파일 변경: v11_patch.js(신규), index.html, sw.js, manifest.json, AUTO_REPORT.md
+- 총 변경: 신규 1,404줄 + 기존 파일 수정
