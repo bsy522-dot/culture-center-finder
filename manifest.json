@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 84,000+ 문화센터 강좌를 한눈에 비교. 수강후기감성분석기Canvas, 강좌난이도가이드10종, 학습커뮤니티게시판12종, 센터접근성평가8항목Canvas, 강좌추천퀴즈인터랙티브, 수강목표트래커6종Canvas, 강좌비교분석기Canvas4종, 수강증명서v2CanvasPNG, 업적102종, 퀴즈105문, AI추천, OSRM 이동시간.",
+  "description": "전국 84,000+ 문화센터 강좌를 한눈에 비교. 수강스케줄최적화기Canvas, 강좌매칭성향테스트10문Canvas, 학습그룹매칭시뮬레이터12인, 강좌리뷰랭킹리더보드Canvas, 센터시설비교기6축RadarCanvas, 수강로드맵플래너Canvas12주, 학습통계인포그래픽CanvasPNG, 수강버킷리스트20종, 업적114종, 퀴즈120문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -15,13 +15,13 @@
     {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
   ],
   "shortcuts": [
-    {"name": "후기 감성분석기", "url": "./index.html#review-sentiment", "description": "수강후기 감성 파이차트 분석"},
-    {"name": "난이도 가이드", "url": "./index.html#difficulty-guide", "description": "10개 강좌 난이도 상세 안내"},
-    {"name": "학습 커뮤니티", "url": "./index.html#community-board", "description": "12종 카테고리 커뮤니티 게시판"},
-    {"name": "접근성 평가", "url": "./index.html#accessibility-eval", "description": "8항목 센터 접근성 레이더"},
-    {"name": "추천 퀴즈", "url": "./index.html#recommend-quiz", "description": "5문항 인터랙티브 강좌 추천"},
-    {"name": "목표 트래커", "url": "./index.html#goal-tracker", "description": "6종 수강 목표 달성 추적"},
-    {"name": "비교 분석기", "url": "./index.html#comparison", "description": "4종 차트 강좌 비교 분석"},
-    {"name": "퀴즈 v11", "url": "./index.html#quiz-v11", "description": "문화센터 퀴즈 105문"}
+    {"name": "스케줄 최적화", "url": "./index.html#schedule-optimizer", "description": "주간 수강 스케줄 충돌 검사"},
+    {"name": "성향 테스트", "url": "./index.html#match-test", "description": "10문항 강좌 매칭 성향 테스트"},
+    {"name": "그룹 매칭", "url": "./index.html#group-matching", "description": "학습 그룹 자동 매칭"},
+    {"name": "리뷰 랭킹", "url": "./index.html#leaderboard", "description": "강좌 리뷰 랭킹 리더보드"},
+    {"name": "시설 비교", "url": "./index.html#facility-compare", "description": "6축 센터 시설 비교 레이더"},
+    {"name": "로드맵 플래너", "url": "./index.html#roadmap-planner", "description": "12주 수강 로드맵 플래너"},
+    {"name": "인포그래픽", "url": "./index.html#infographic", "description": "학습 통계 인포그래픽 PNG"},
+    {"name": "퀴즈 v12", "url": "./index.html#quiz-v12", "description": "문화센터 퀴즈 120문"}
   ]
 }
