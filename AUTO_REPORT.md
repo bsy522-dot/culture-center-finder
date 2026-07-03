@@ -2,6 +2,59 @@
 
 ---
 
+## [AUTO] 2026-07-03 v13.0 강좌트렌드분석기Canvas+강사역량평가6축RadarCanvas+수강비용최적화계산기CanvasPie+Bar+학습커뮤니티매칭Canvas+강좌품질인증배지Canvas+수강다이어리히트맵30일Canvas+센터접근성스코어카드Canvas+AI강좌큐레이터Canvas+퀴즈+15(120→135)+업적+12(114→126)+SFX12종+키보드8종
+
+### 1차: 벤치마킹 분석 (클래스101/탈잉 대비)
+
+| # | 열위점 | 경쟁앱 | 해결 |
+|---|--------|--------|------|
+| 1 | 강좌 인기도 트렌드 없음 | 클래스101 실시간 인기 | 강좌트렌드분석기 Canvas 10카테고리 12개월 |
+| 2 | 강사 정량적 평가 없음 | 탈잉 강사 리뷰 시스템 | 강사역량평가 6축 레이더 Canvas |
+| 3 | 수강료 비교/최적화 없음 | 클래스101 가격표 비교 | 비용최적화 계산기 Pie+Bar Canvas |
+| 4 | 동료 학습자 매칭 없음 | 탈잉 소그룹 튜터링 | 학습커뮤니티 매칭 Canvas 12인 |
+| 5 | 학습 품질 인증 없음 | 클래스101 수료증+뱃지 | 품질인증 배지 시스템 6종 4티어 Canvas |
+| 6 | 장기 학습 추적 없음 | GitHub 잔디밭 형태 | 수강다이어리 30일 히트맵 Canvas |
+| 7 | 접근성 정량 평가 없음 | 탈잉 위치 기반 추천 | 접근성 스코어카드 8요소 Canvas |
+| 8 | AI 기반 추천 없음 | 클래스101 추천 알고리즘 | AI 강좌 큐레이터 4프로필 Canvas |
+| 9 | 퀴즈 문항 부족 | 자체 | +15문 (120→135) |
+| 10 | 업적 시스템 빈약 | 자체 | +12개 (114→126) |
+
+### 2차: 개발 상세
+
+**v13_patch.js**: 신규 790줄 ~52KB (자기완결형 IIFE 패치 모듈)
+
+1. **강좌 트렌드 분석기**: 10카테고리(요가/수영/피아노/미술/요리/어학/피트니스/공예/코딩/댄스) 12개월 Line Canvas 640x400, 카테고리별 필터, 계절성 분석
+2. **강사 역량 평가 시스템**: 전문성/수업력/소통력/열정/경력/평판 6축 Radar Canvas 520x440, 슬라이더 조정, S~D등급, localStorage 저장
+3. **수강 비용 최적화 계산기**: 6강좌 선택식, Pie Chart + 정가/할인가 Bar Canvas 600x340, 월/분기/반기/연간 비교, 절약 팁
+4. **학습 커뮤니티 매칭**: 12인 프로필, 관심사/수준/지역 기반 호환성 계산, Bar Canvas 600x300, TOP 6 매칭, 관심사 재설정
+5. **강좌 품질 인증 배지**: 6종 배지 (탐험가/퀴즈도전자/업적수집가/연속학습자/분석전문가/마스터), Bronze~Diamond 4티어 Canvas 600x360, 프로그레스 추적
+6. **수강 다이어리 히트맵**: 30일 Git-style 히트맵 Canvas 620x300, 5단계 활동레벨, 메모, 연속일/출석률/S~D등급
+7. **센터 접근성 스코어카드**: 8요소(교통/주차/버스/지하철/보행/장애인/유아/편의시설) 수평 Bar Canvas 560x400, 슬라이더, 종합 S~D등급
+8. **AI 강좌 큐레이터**: 4프로필(창의적탐구/건강중시/지적성장/예술적감성) Canvas 600x340, 프로필별 4강좌 추천 카드, 가격/레벨 표시
+9. **퀴즈 v13**: +15문 (120→135), 4지선다, Fisher-Yates 셔플, 등급 시스템
+10. **업적 +12개** (114→126): trend_analyst/trend_expert/instructor_reviewer/cost_optimizer/community_joiner/badge_collector/badge_master/diary_starter/diary_30days/access_checker/curator_user/v13_explorer
+11. **SFX 12종**: trend_open/instructor_eval/cost_calc/community_match/badge_earn/diary_check/access_score/curator_pick/quiz_v13/quiz_correct13/achieve_v13/feature_open13
+12. **키보드 Shift+T/I/C/M/B/D/A/U** + 좌측 퀵액션 레일 9종
+
+### 3차: 품질 검증
+
+- **JS 문법**: node -c PASS
+- **괄호 균형**: ALL BALANCED (861/264/111)
+- **CDN 참조**: 0건 (v13_patch.js 내 외부 참조 없음)
+- **개인정보**: 0건
+- **반응형**: @media(max-width:480px) 모바일 레이아웃 적용
+- **다크모드**: isDark() 분기로 전 기능 다크모드 대응
+- **파일 크기**: 790줄 52KB
+
+### 4차: 파일 변경 목록
+
+- v13_patch.js: 신규 생성 (790줄 52KB)
+- index.html: v13.0 SEO 전면 갱신 (title/desc/keywords/OG/Twitter/JSON-LD) + v13 스크립트태그
+- sw.js: v13→v14 캐시명 (ccf-v14-20260703), v13_patch.js PRECACHE 추가
+- manifest.json: v13.0 설명 + shortcuts 8종 교체
+
+---
+
 ## [AUTO] 2026-06-29 v12.0 수강스케줄최적화기Canvas+강좌매칭성향테스트10문Canvas+학습그룹매칭시뮬레이터12인+강좌리뷰랭킹리더보드Canvas+센터시설비교기6축RadarCanvas+수강로드맵플래너Canvas12주+학습통계인포그래픽CanvasPNG+수강버킷리스트20종+퀴즈+15(105→120)+업적+12(102→114)+SFX12종+키보드8종
 
 ### 1차: 벤치마킹 (클래스101 / 탈잉 대비)

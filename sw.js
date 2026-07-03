@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ccf-v13-20260629';
+const CACHE_NAME = 'ccf-v14-20260703';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -13,7 +13,8 @@ const STATIC_ASSETS = [
   './v9_patch.js',
   './v10_patch.js',
   './v11_patch.js',
-  './v12_patch.js'
+  './v12_patch.js',
+  './v13_patch.js'
 ];
 const DATA_ASSETS = [
   './data/all.json',

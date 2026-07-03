@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 84,000+ 문화센터 강좌를 한눈에 비교. 수강스케줄최적화기Canvas, 강좌매칭성향테스트10문Canvas, 학습그룹매칭시뮬레이터12인, 강좌리뷰랭킹리더보드Canvas, 센터시설비교기6축RadarCanvas, 수강로드맵플래너Canvas12주, 학습통계인포그래픽CanvasPNG, 수강버킷리스트20종, 업적114종, 퀴즈120문, AI추천, OSRM 이동시간.",
+  "description": "전국 84,000+ 문화센터 강좌를 한눈에 비교. 강좌트렌드분석기Canvas, 강사역량평가6축RadarCanvas, 수강비용최적화계산기CanvasPie+Bar, 학습커뮤니티매칭Canvas, 강좌품질인증배지Canvas, 수강다이어리히트맵30일Canvas, 센터접근성스코어카드Canvas, AI강좌큐레이터Canvas, 업적126종, 퀴즈135문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -15,13 +15,13 @@
     {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
   ],
   "shortcuts": [
-    {"name": "스케줄 최적화", "url": "./index.html#schedule-optimizer", "description": "주간 수강 스케줄 충돌 검사"},
-    {"name": "성향 테스트", "url": "./index.html#match-test", "description": "10문항 강좌 매칭 성향 테스트"},
-    {"name": "그룹 매칭", "url": "./index.html#group-matching", "description": "학습 그룹 자동 매칭"},
-    {"name": "리뷰 랭킹", "url": "./index.html#leaderboard", "description": "강좌 리뷰 랭킹 리더보드"},
-    {"name": "시설 비교", "url": "./index.html#facility-compare", "description": "6축 센터 시설 비교 레이더"},
-    {"name": "로드맵 플래너", "url": "./index.html#roadmap-planner", "description": "12주 수강 로드맵 플래너"},
-    {"name": "인포그래픽", "url": "./index.html#infographic", "description": "학습 통계 인포그래픽 PNG"},
-    {"name": "퀴즈 v12", "url": "./index.html#quiz-v12", "description": "문화센터 퀴즈 120문"}
+    {"name": "트렌드 분석", "url": "./index.html#trend-analyzer", "description": "월별 카테고리별 강좌 트렌드"},
+    {"name": "강사 평가", "url": "./index.html#instructor-eval", "description": "6축 레이더 강사 역량 평가"},
+    {"name": "비용 최적화", "url": "./index.html#cost-optimizer", "description": "수강 비용 최적화 계산기"},
+    {"name": "커뮤니티 매칭", "url": "./index.html#community-match", "description": "관심사 기반 학습 그룹 매칭"},
+    {"name": "품질 배지", "url": "./index.html#badge-system", "description": "강좌 품질 인증 배지 시스템"},
+    {"name": "다이어리", "url": "./index.html#diary-heatmap", "description": "30일 수강 다이어리 히트맵"},
+    {"name": "접근성 평가", "url": "./index.html#access-score", "description": "센터 접근성 종합 스코어카드"},
+    {"name": "AI 큐레이터", "url": "./index.html#ai-curator", "description": "AI 맞춤형 강좌 큐레이션"}
   ]
 }
