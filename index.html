@@ -120,8 +120,16 @@ input,select,textarea,button{font-family:inherit}
 #scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#7EC8E3,#3AAFA9);z-index:999;width:0;transition:width .1s linear}
 
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--overlay-bg);display:flex;align-items:center;justify-content:center;z-index:100;backdrop-filter:blur(6px);animation:fadeIn .2s ease}
-/* 모달/온보딩이 열리면 v9 떠다니는 퀵액션 레일을 숨김(모달 위 겹침 방지) — durable, v9_patch 재생성에도 유지 */
-body:has(.modal-overlay) #v9-quick-actions,body:has(.onboarding-overlay) #v9-quick-actions{display:none!important}
+/* 모달/온보딩이 열리면 떠다니는 퀵액션 레일 전부 숨김(모달 위 겹침 방지) — durable, vN_patch 재생성에도 유지. 속성선택자라 v6~v13 전부 + 향후 신버전도 자동 커버 */
+body:has(.modal-overlay) [id$="-quick-actions"],body:has(.onboarding-overlay) [id$="-quick-actions"]{display:none!important}
+/* 모바일 화면에서는 v6~v13 퀵액션 레일(좌/우/하단 아이콘 스택)이 핵심 강좌 목록·필터를 가려 전부 숨김.
+   각 패치가 개별로 넣은 max-width:480px 가드는 실제 폰(480~540px대 다수)에서 발동 안 해 무력함 확인 — 768px로 통일 */
+@media (max-width: 768px) {
+  [id$="-quick-actions"],[id$="-qa-toggle"]{display:none!important}
+}
+/* vN 패치가 각자 만드는 "새 버전 안내" 자체홍보 토스트(내부 버전명·기능목록을 사용자에게 그대로 노출) —
+   auto-dismiss가 안 돼 v9~v12 토스트가 동시에 겹쳐 뜨는 등 상용 서비스에 부적절해 화면 크기 무관 항상 숨김 */
+[id$="-toast"],[class*="-toast"]{display:none!important}
 .modal{background:var(--modal-bg);border:1px solid var(--modal-border);border-radius:12px;padding:24px;width:92%;max-width:600px;max-height:85vh;overflow-y:auto;box-shadow:var(--shadow);animation:modalIn .25s ease}
 .modal h2{color:var(--text-primary);font-size:16px;margin-bottom:16px}
 .modal label{display:block;font-size:11px;color:var(--text-secondary);margin-bottom:3px;font-weight:600}
