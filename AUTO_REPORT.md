@@ -2,6 +2,64 @@
 
 ---
 
+## [AUTO] 2026-07-06 v14.0 실시간강좌인기도Canvas+수강후기소셜피드+학습경로DAGCanvas+강사포트폴리오Canvas+주간시간표캘린더ics+수강료추이스파크라인Canvas+강좌비교매트릭스Canvas+개인화추천엔진Canvas+퀴즈+15(135→150)+업적+12(126→138)+SFX12종+키보드8종
+
+### 1차: 벤치마킹
+
+경쟁 대상: 클래스101, 탈잉, Udemy, Coursera
+
+**10개 열위점 식별:**
+1. 실시간 수강 수요/인기도 시그널 없음 (Class101 대비)
+2. 사용자 생성 리뷰 소셜 피드 부재 (Udemy/Taling 대비)
+3. 학습 경로(Learning Path) DAG 시각화 없음 (Coursera 대비)
+4. 강사 포트폴리오 상세 프로필 부족 (Class101 대비)
+5. 캘린더 연동(.ics 내보내기) 없음 (Udemy/Coursera 대비)
+6. 수강료 시간대별 변동 추이 부재 (Udemy price history 대비)
+7. 다차원 강좌 비교 매트릭스 없음 (Udemy side-by-side 대비)
+8. 북마크/이력 기반 개인화 추천 부재 (Coursera collaborative filtering 대비)
+9. 모바일 스티키 필터 UX 개선 필요 (Taling 대비)
+10. 공유 가능한 소셜 프로필 카드 없음 (Coursera learner profile 대비)
+
+### 2차: 개발팀 투입
+
+**v14_patch.js 신규 (858줄 ~53KB, 자기완결형 IIFE 패치 모듈)**
+
+8개 신규 Canvas 기반 기능:
+1. **실시간 강좌 인기도 대시보드** (Canvas 600x380): 10 카테고리 수강 수요 바차트 + 분기 대비 변동률 + HOT 마크 + 데이터 새로고침
+2. **수강 후기 소셜 피드**: 별점 리뷰 + 좋아요 시스템 + 답글 스레드 + 리뷰 작성 + localStorage 영구저장
+3. **학습 경로 DAG 시각화** (Canvas 640x420): 18노드 DAG 그래프, 선수과목 화살표, 클릭 탐색, 선수/후속 정보 표시
+4. **강사 포트폴리오 쇼케이스** (Canvas 560x380): 6강사 프로필, 경력 타임라인, 도넛 평점, 4개 능력 바차트
+5. **주간 시간표 캘린더 + .ics 내보내기** (Canvas 580x340): 7일x12시간 그리드, 강좌 블록, 추가/편집, RFC 5545 .ics Blob 다운로드
+6. **수강료 변동 추이 스파크라인** (Canvas 560x400): 8카테고리 6분기 스파크라인, min/max 주석, 분기대비 변동률
+7. **강좌 비교 매트릭스** (Canvas 600x400): 4강좌 x 6축(가성비/기간/평점/난이도/접근성/시간), 히트맵 셀, 종합 순위
+8. **개인화 추천 엔진** (Canvas 580x360): 4프로필(운동/예술/학습/웰니스), 4추천 강좌, 유사도 바, 프로필 전환
+
+추가 콘텐츠:
+- 퀴즈 v14: +15문항 (총 135→150)
+- 업적 v14: +12개 (총 126→138)
+- SFX: Web Audio 12종 (alert_open, review_post, dag_explore, instructor_card, cal_export, spark_view, matrix_compare, recommend_pick, quiz_v14, quiz_correct14, achieve_v14, feature_open14)
+- 키보드 단축키: Shift+L/R/G/P/W/H/X/N (8종)
+- Quick Actions Rail: 우측 고정 9버튼 (모바일: 하단 가로 스크롤)
+
+### 3차: 품질검증
+
+- **JS 구문 검사**: `node -c v14_patch.js` → PASS
+- **괄호 밸런스**: {308/308} (904/904) [130/130] → ALL BALANCED
+- **외부 CDN**: 0건 (허용된 React/Babel 외 무)
+- **개인정보**: 0건
+- **SW 정합성**: v14_patch.js PRECACHE 포함, 캐시 ccf-v15-20260706
+- **manifest 정합성**: 16 shortcuts, description v14 갱신
+- **index.html 정합성**: v14 script tag, title v14.0, SEO 메타 전면 갱신
+- **HTML entities**: 따옴표 &quot; 인코딩 적용
+
+### 4차: 배포
+
+- 커밋: [AUTO] 2026-07-06 culture-center-finder v14.0
+- 파일 변경: v14_patch.js(신규 858줄), index.html, sw.js, manifest.json, AUTO_REPORT.md
+- 총 LOC: v14_patch.js 858줄 + 기존 파일 수정
+
+---
+
 ## [AUTO] 2026-07-03 v13.0 강좌트렌드분석기Canvas+강사역량평가6축RadarCanvas+수강비용최적화계산기CanvasPie+Bar+학습커뮤니티매칭Canvas+강좌품질인증배지Canvas+수강다이어리히트맵30일Canvas+센터접근성스코어카드Canvas+AI강좌큐레이터Canvas+퀴즈+15(120→135)+업적+12(114→126)+SFX12종+키보드8종
 
 ### 1차: 벤치마킹 분석 (클래스101/탈잉 대비)

@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 84,000+ 문화센터 강좌를 한눈에 비교. 강좌트렌드분석기Canvas, 강사역량평가6축RadarCanvas, 수강비용최적화계산기CanvasPie+Bar, 학습커뮤니티매칭Canvas, 강좌품질인증배지Canvas, 수강다이어리히트맵30일Canvas, 센터접근성스코어카드Canvas, AI강좌큐레이터Canvas, 업적126종, 퀴즈135문, AI추천, OSRM 이동시간.",
+  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 실시간강좌인기도Canvas, 수강후기소셜피드, 학습경로DAGCanvas, 강사포트폴리오Canvas, 주간시간표캘린더ics, 수강료추이스파크라인Canvas, 강좌비교매트릭스Canvas, 개인화추천엔진Canvas, 업적138종, 퀴즈150문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -22,6 +22,14 @@
     {"name": "품질 배지", "url": "./index.html#badge-system", "description": "강좌 품질 인증 배지 시스템"},
     {"name": "다이어리", "url": "./index.html#diary-heatmap", "description": "30일 수강 다이어리 히트맵"},
     {"name": "접근성 평가", "url": "./index.html#access-score", "description": "센터 접근성 종합 스코어카드"},
-    {"name": "AI 큐레이터", "url": "./index.html#ai-curator", "description": "AI 맞춤형 강좌 큐레이션"}
+    {"name": "AI 큐레이터", "url": "./index.html#ai-curator", "description": "AI 맞춤형 강좌 큐레이션"},
+    {"name": "인기도 대시보드", "url": "./index.html#live-alert", "description": "실시간 강좌 인기도 분석"},
+    {"name": "후기 소셜피드", "url": "./index.html#peer-review", "description": "수강 후기 소셜 피드"},
+    {"name": "학습경로 DAG", "url": "./index.html#learning-dag", "description": "학습 경로 DAG 시각화"},
+    {"name": "강사 쇼케이스", "url": "./index.html#instructor-showcase", "description": "강사 포트폴리오 쇼케이스"},
+    {"name": "시간표 캘린더", "url": "./index.html#weekly-cal", "description": "주간 시간표 + .ics 내보내기"},
+    {"name": "수강료 추이", "url": "./index.html#price-spark", "description": "수강료 변동 추이 스파크라인"},
+    {"name": "비교 매트릭스", "url": "./index.html#compare-matrix", "description": "강좌 비교 매트릭스 6축"},
+    {"name": "AI 추천", "url": "./index.html#personal-recommend", "description": "개인화 추천 엔진"}
   ]
 }
