@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 실시간강좌인기도Canvas, 수강후기소셜피드, 학습경로DAGCanvas, 강사포트폴리오Canvas, 주간시간표캘린더ics, 수강료추이스파크라인Canvas, 강좌비교매트릭스Canvas, 개인화추천엔진Canvas, 업적138종, 퀴즈150문, AI추천, OSRM 이동시간.",
+  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 수강완주율분석Canvas, 학습스타일6축RadarCanvas, 시간대최적화히트맵Canvas, 커뮤니티매칭네트워크Canvas, 강좌ROI계산기Canvas, 마일스톤트래커Canvas, 지역밀도히트맵Canvas, 성장리포트CanvasPNG, 업적150종, 퀴즈165문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -30,6 +30,14 @@
     {"name": "시간표 캘린더", "url": "./index.html#weekly-cal", "description": "주간 시간표 + .ics 내보내기"},
     {"name": "수강료 추이", "url": "./index.html#price-spark", "description": "수강료 변동 추이 스파크라인"},
     {"name": "비교 매트릭스", "url": "./index.html#compare-matrix", "description": "강좌 비교 매트릭스 6축"},
-    {"name": "AI 추천", "url": "./index.html#personal-recommend", "description": "개인화 추천 엔진"}
+    {"name": "AI 추천", "url": "./index.html#personal-recommend", "description": "개인화 추천 엔진"},
+    {"name": "완주율 분석", "url": "./index.html#completion-analyzer", "description": "카테고리별 수강 완주율 분석"},
+    {"name": "학습스타일", "url": "./index.html#learning-style", "description": "VARK 6축 학습 스타일 진단"},
+    {"name": "시간대 최적화", "url": "./index.html#timeslot-optimizer", "description": "요일×시간대 경쟁도 히트맵"},
+    {"name": "커뮤니티 매칭", "url": "./index.html#community-match-v15", "description": "관심사 기반 학습 그룹 매칭"},
+    {"name": "ROI 계산기", "url": "./index.html#course-roi", "description": "강좌 투자 대비 효과 분석"},
+    {"name": "마일스톤", "url": "./index.html#milestone-tracker", "description": "학습 마일스톤 XP 트래커"},
+    {"name": "밀도 히트맵", "url": "./index.html#density-map", "description": "17개 시도 강좌 밀도 분석"},
+    {"name": "성장 리포트", "url": "./index.html#growth-report", "description": "학습 성장 리포트 카드 PNG"}
   ]
 }
