@@ -1415,8 +1415,8 @@ function App(){
             <span style={{fontSize:9.5,color:"var(--text-faint)",lineHeight:"22px"}}>센터:</span>
             {["전체",...CATS].map(c=>(<button key={c} onClick={()=>setFCat(c)} style={{background:fCat===c?"rgba(232,160,191,0.12)":"transparent",color:fCat===c?"#E8A0BF":"var(--filter-text)",border:"1px solid "+(fCat===c?"rgba(232,160,191,0.2)":"var(--filter-border)"),borderRadius:10,padding:"2px 8px",fontSize:9.5,cursor:"pointer",fontWeight:fCat===c?700:400,transition:"all .2s"}}>{c}</button>))}
             <span style={{fontSize:9.5,color:"var(--text-faint)",lineHeight:"22px",marginLeft:8}}>시기:</span>
-            {["전체","신규/모집중","신규강좌","모집중","진행중"].map(t=>{
-              const tc={"신규/모집중":"#34D399","신규강좌":"#60A5FA","모집중":"#FBBF24","진행중":"#94A3B8","전체":"var(--accent)"};
+            {["전체","신규/모집중","신규강좌","모집중"].map(t=>{
+              const tc={"신규/모집중":"#34D399","신규강좌":"#60A5FA","모집중":"#FBBF24","전체":"var(--accent)"};
               const c=tc[t]||"var(--accent)";
               return <button key={t} onClick={()=>setFTime(t)} style={{background:fTime===t?c+"18":"transparent",color:fTime===t?c:"var(--filter-text)",border:"1px solid "+(fTime===t?c+"33":"var(--filter-border)"),borderRadius:10,padding:"2px 8px",fontSize:9.5,cursor:"pointer",fontWeight:fTime===t?700:400,transition:"all .2s"}}>{t}</button>;
             })}
