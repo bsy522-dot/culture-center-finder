@@ -39,6 +39,7 @@ const BABEL_CDN_RE = /[ \t]*<script[^>]*@babel\/standalone[^>]*><\/script>\s*\n?
 // dist 로 복사할 정적 자산(존재하는 것만 복사). data/ 는 디렉터리 재귀 복사.
 const STATIC_FILES = [
   'manifest.json', 'sw.js', 'icon-192.png', 'icon-512.png',
+  'privacy.html', // 개인정보처리방침 — 배포 사이트에 반드시 포함(스토어 심사 하드게이트)
 ];
 const STATIC_DIRS = ['data'];
 

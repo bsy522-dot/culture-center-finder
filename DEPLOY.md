@@ -17,7 +17,8 @@ cd dist && python -m http.server 8802
 ## 업데이트 (코드/데이터 변경 후)
 1. 변경 → `npm run build` (빌드 에러 0 확인)
 2. 테스트: `python tests/e2e_munsen.py` (핵심 3시나리오 통과 확인)
-3. 배포: master 브랜치 push → GitHub Pages(culture-center-finder) 자동 반영(1~2분)
+3. 배포: master 브랜치 push → **GitHub Actions(`.github/workflows/deploy.yml`)가 esbuild로 dist/ 빌드 후 Pages 배포**(2026-07-10 전환, Pages build_type=workflow). 소스는 여전히 index.html(인라인 JSX)이며 빌드가 자동 추출 — 루트를 직접 서빙하던 legacy 방식 아님. 봇 [AUTO] 커밋도 푸시 즉시 자동 재빌드·반영. 빌드 실패 시 직전 성공 배포 유지.
+   - 롤백: Pages 설정을 legacy(master 루트)로 되돌리면 종전 Babel-in-browser 서빙으로 복귀 가능(루트 index.html은 계속 단독 동작 가능하게 유지할 것).
 
 ## 롤백 (문제 발생 시)
 - **저장 지점 단위 복원**: 각 작업은 커밋으로 저장됨. 직전 상태로 되돌리려면 해당 커밋으로 복원(작업자가 처리).

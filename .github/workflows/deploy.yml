@@ -1,0 +1,40 @@
+# GitHub Pages 배포: master 푸시 → esbuild 사전 컴파일(dist/) → Pages 배포.
+# 목적: Babel-in-browser(런타임 ~2.4MB 다운로드+즉석 컴파일) 제거 — 초기 로딩 속도·안정성.
+# 외부 자동봇의 [AUTO] 커밋(새 vN_patch.js 추가)도 푸시 즉시 이 워크플로가 재빌드해 반영한다
+# (build.mjs가 vN_patch.js를 자동 수집하므로 별도 수정 불필요).
+# 빌드 실패 시 직전 성공 배포가 그대로 유지된다(사이트 다운 없음).
+name: build-and-deploy-pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4
