@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>문화센터 강좌 파인더 v15.0 - 전국 42,000+ 강좌 비교</title>
 <link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
 <meta name="theme-color" content="#7EC8E3">
 <meta name="description" content="전국 42,000+ 문화센터 강좌를 한눈에 비교. 수강완주율분석Canvas, 학습스타일진단6축RadarCanvas, 시간대최적화히트맵Canvas, 커뮤니티매칭네트워크Canvas, 강좌ROI계산기Canvas, 마일스톤트래커Canvas, 지역별밀도히트맵Canvas, 성장리포트카드CanvasPNG, 업적150종, 퀴즈165문, OSRM 이동시간.">
 <meta name="keywords" content="문화센터,강좌,수강,홈플러스,롯데마트,백화점,수영,피아노,요가,발레,미술,댄스,교육,AI추천,가격분석,학습플래너,수강리뷰,문화센터퀴즈,시간표,업적,난이도,문화생활,커리큘럼,로드맵,센터비교,시즌추천,캘린더,D-Day,성향테스트,백과사전,수강진도,강사평점,위시리스트,트렌드,비용계획,동반수강,학습목표,체크인,수강일기,수강추천,수강증명서,타임라인,인기랭킹,학습커뮤니티,스트릭,음성검색,수강노트,강좌알림,소셜프로필,학습경로맵,수강통계레이더,가격트렌드,포트폴리오,북마크,마일스톤,접근성,워드클라우드,기타세분화,커리큘럼타임라인,강사프로필,수강캘린더,인기강좌차트,수강비용계산기,만족도설문,학습리포트,수강후기감성분석,강좌난이도가이드,학습커뮤니티게시판,센터접근성평가,강좌추천퀴즈,수강목표트래커,강좌비교분석기,수강증명서v2,수강스케줄최적화,강좌매칭성향테스트,학습그룹매칭,강좌리뷰랭킹,센터시설비교,수강로드맵플래너,학습통계인포그래픽,수강버킷리스트,강좌트렌드분석기,강사역량평가,수강비용최적화,학습커뮤니티매칭,품질인증배지,수강다이어리히트맵,센터접근성스코어카드,AI강좌큐레이터,실시간강좌인기도,수강후기소셜피드,학습경로DAG,강사포트폴리오쇼케이스,주간시간표캘린더,수강료변동추이,강좌비교매트릭스,개인화추천엔진,수강완주율분석,학습스타일진단,시간대최적화,커뮤니티매칭,강좌ROI계산,마일스톤트래커,지역별밀도히트맵,성장리포트카드">
@@ -130,7 +132,8 @@ body:has(.modal-overlay) [id$="-quick-actions"],body:has(.onboarding-overlay) [i
   td[role="button"]{min-width:36px;padding-top:8px!important;padding-bottom:8px!important}
   .tb{min-height:36px;padding:7px 12px!important}
   .region-pill{min-height:32px;padding:6px 11px!important}
-  input[type=checkbox]{width:18px!important;height:18px!important}
+  input[type=checkbox]{width:22px!important;height:22px!important}
+  .share-btn,.apply-btn{min-height:28px;padding:5px 12px!important}
   .bottom-nav-btn{min-height:44px}
 }
 /* 강좌 상세 시트: 모바일에서는 하단에서 올라오는 바텀시트 형태 */
@@ -258,7 +261,7 @@ tr:hover td{background:var(--card-hover)!important}
 /* Footer */
 .app-footer{background:var(--bg-secondary);border-top:1px solid var(--card-border);padding:20px 16px;margin-top:24px}
 .app-footer .footer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;margin:0 auto 16px;text-align:left}
-.app-footer .footer-col h4{font-size:11px;font-weight:700;color:var(--text-primary);margin-bottom:8px}
+.app-footer .footer-col h2{font-size:11px;font-weight:700;color:var(--text-primary);margin-bottom:8px}
 .app-footer .footer-col p{font-size:10px;color:var(--text-muted);line-height:1.8}
 .app-footer .footer-bottom{font-size:9px;color:var(--text-faint);border-top:1px solid var(--card-border);padding-top:12px;text-align:center;max-width:900px;margin:0 auto}
 
@@ -576,6 +579,10 @@ function App(){
   const [courseDetail,setCourseDetail]=useState(null); // 강좌 상세 시트(데이터 인덱스)
   const [showSuggest,setShowSuggest]=useState(false);  // 검색 자동완성 드롭다운
   const deepLinkDone=useRef(false);
+  const [showMap,setShowMap]=useState(false);          // 센터 지도 모달
+  const mapRef=useRef(null);
+  const [obYear,setObYear]=useState("");               // 온보딩 2문답
+  const [obAddr,setObAddr]=useState("");
   const [showScrollTop,setShowScrollTop]=useState(false);
   const [recentSearches,setRecentSearches]=useState(()=>load('cc-recent',[]));
   const [centerModal,setCenterModal]=useState(null); // center name for detail modal
@@ -637,6 +644,7 @@ function App(){
       if(e.key==='Escape'){
         if(modal){setModal(null);return;}
         if(courseDetail!==null){setCourseDetail(null);return;}
+        if(showMap){setShowMap(false);return;}
         if(centerModal){setCenterModal(null);return;}
         if(showCompare){setShowCompare(false);return;}
         if(q){setQ("");return;}
@@ -644,7 +652,7 @@ function App(){
     };
     window.addEventListener('keydown',handler);
     return()=>window.removeEventListener('keydown',handler);
-  },[modal,centerModal,showCompare,q,courseDetail]);
+  },[modal,centerModal,showCompare,q,courseDetail,showMap]);
 
   // Parse price from string to number
   const parsePrice=(s)=>{
@@ -736,9 +744,8 @@ function App(){
     });
   };
 
-  const applyAddr=async()=>{
-    const addr=addrInput.trim();
-    if(!addr){USER_POS=null;TRAVEL_CACHE={};setSettings({...settings,address:""});setSearchMsg("출발지를 입력하세요");return;}
+  const applyAddrValue=async(addr)=>{
+    if(!addr){USER_POS=null;TRAVEL_CACHE={};setSettings(s=>({...s,address:""}));setSearchMsg("출발지를 입력하세요");return;}
     setSearchMsg("\""+addr+"\" 위치 검색중...");
     window._transport=settings.transport;
     TRAVEL_CACHE={};
@@ -753,9 +760,58 @@ function App(){
       setSearchMsg(addr+" - 이동시간 계산중... "+pct+"%");
     });
     setTravelVer(v=>v+1);
-    setSettings({...settings,address:addr});
+    // 함수형 업데이트 필수: 비동기(지오코딩) 완료 시점에 옛 settings 스냅샷으로 덮어쓰면
+    // 그 사이 바뀐 다른 설정(예: 온보딩의 출생년도)이 지워진다(실측 버그)
+    setSettings(s=>({...s,address:addr}));
     setSearchMsg(addr+" 기준 | "+(settings.transport==="car"?"차량":"대중교통")+" | "+settings.maxMin+"분 이내");
   };
+  const applyAddr=()=>applyAddrValue(addrInput.trim());
+
+  // 온보딩 2문답 적용: 출생년도(연령 필터) + 동네(이동시간 계산) → 즉시 맞춤 목록
+  const obApply=()=>{
+    if(obYear)setSettings(s=>({...s,birthYear:+obYear}));
+    completeOnboarding();
+    const a=obAddr.trim();
+    if(a){setAddrInput(a);applyAddrValue(a);}
+    showT(obYear||a?"맞춤 설정 적용!":"전체 강좌를 보여드립니다");
+  };
+
+  // 지도 모달: 첫 열림 시 Leaflet(버전핀 1.9.4) 지연 로드 → 현재 필터 기준 센터 마커
+  const loadLeaflet=()=>new Promise((res,rej)=>{
+    if(window.L)return res();
+    const css=document.createElement('link');css.rel='stylesheet';css.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';document.head.appendChild(css);
+    const s=document.createElement('script');s.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';s.onload=()=>res();s.onerror=rej;document.head.appendChild(s);
+  });
+  useEffect(()=>{
+    if(!showMap)return;
+    let cancelled=false;
+    loadLeaflet().then(()=>{
+      if(cancelled)return;
+      const el=document.getElementById('cc-map');
+      if(!el||mapRef.current)return;
+      const counts={};
+      filtered.forEach(({r})=>{counts[r[1]]=(counts[r[1]]||0)+1;});
+      const pts=Object.entries(counts).filter(([c])=>CENTER_COORDS[c]).map(([c,n])=>({c,n,ll:CENTER_COORDS[c]}));
+      const map=window.L.map(el);
+      window.L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+      if(USER_POS)window.L.circleMarker([USER_POS.lat,USER_POS.lng],{radius:8,color:'#F87171',fillOpacity:.9}).addTo(map).bindPopup('출발지');
+      pts.forEach(p=>{
+        const safe=p.c.replace(/</g,'&lt;').replace(/"/g,'&quot;');
+        window.L.circleMarker(p.ll,{radius:Math.min(14,5+Math.log2(p.n+1)*2),color:'#3AAFA9',fillColor:'#7EC8E3',fillOpacity:.75,weight:1.5})
+          .addTo(map)
+          .bindPopup('<b>'+safe+'</b><br/>'+p.n+'개 강좌<br/><a href="#" data-center="'+safe+'" class="cc-map-pick">이 센터 강좌 보기</a>');
+      });
+      if(pts.length)map.fitBounds(pts.map(p=>p.ll),{padding:[30,30],maxZoom:12});
+      else map.setView([36.4,127.8],7);
+      el.addEventListener('click',(ev)=>{
+        const a=ev.target&&ev.target.closest?ev.target.closest('.cc-map-pick'):null;
+        if(a){ev.preventDefault();const c=a.getAttribute('data-center');setShowMap(false);setQ(c);showT(c+" 강좌만 표시");}
+      });
+      mapRef.current=map;
+      setTimeout(()=>{try{map.invalidateSize();}catch(e){}},120);
+    }).catch(()=>{showT("지도 로드 실패 — 네트워크 확인");setShowMap(false);});
+    return()=>{cancelled=true;if(mapRef.current){try{mapRef.current.remove();}catch(e){}mapRef.current=null;}};
+  },[showMap]);
 
   const GROUPS=useMemo(()=>[...new Set(data.map(r=>r[3]))].sort(),[data]);
   const DAYS=["월","화","수","목","금","토","일"];
@@ -766,7 +822,7 @@ function App(){
 
   // 모달 포커스 트랩(a11y): 모달 열리면 포커스를 모달로 이동, Tab 순환을 모달 내부로 가둠(WCAG 2.4.3)
   useEffect(()=>{
-    const anyOpen=modal||centerModal||showCompare||courseDetail!==null;
+    const anyOpen=modal||centerModal||showCompare||courseDetail!==null||showMap;
     if(!anyOpen)return;
     const el=document.querySelector('.modal');
     if(!el)return;
@@ -783,7 +839,7 @@ function App(){
     };
     document.addEventListener('keydown',onKey);
     return()=>{document.removeEventListener('keydown',onKey);if(prev&&prev.focus)try{prev.focus();}catch(e){}};
-  },[modal,centerModal,showCompare,courseDetail]);
+  },[modal,centerModal,showCompare,courseDetail,showMap]);
 
   const [searchMsg,setSearchMsg]=useState("");
   const [travelVer,setTravelVer]=useState(0);
@@ -1169,7 +1225,7 @@ function App(){
         const iF=fav.has(rowKey(r));
         const isCompare=compareItems.includes(gi);
         return(
-          <div key={gi} className="course-card" style={{animationDelay:(idx%12)*30+'ms'}} onClick={()=>setCourseDetail(gi)} role="button" tabIndex={0} aria-label={r[4]+" 강좌 상세 보기"} onKeyDown={e=>{if((e.key==='Enter'||e.key===' ')&&e.target===e.currentTarget){e.preventDefault();setCourseDetail(gi);}}}>
+          <div key={gi} className="course-card" style={{animationDelay:(idx%12)*30+'ms'}} onClick={()=>setCourseDetail(gi)} role="button" tabIndex={0} onKeyDown={e=>{if((e.key==='Enter'||e.key===' ')&&e.target===e.currentTarget){e.preventDefault();setCourseDetail(gi);}}}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:8}}>
               <div style={{fontSize:10,color:CC[r[0]]||"var(--text-muted)",fontWeight:600}}>
                 {r[0]==="백화점"?"🏬":r[0]==="대형마트"?"🛒":"🏛"} {r[1].replace(/홈플러스 |이마트 |롯데마트 |롯데쇼핑 /,'')}
@@ -1477,6 +1533,7 @@ function App(){
             <button className={`tb ${favOnly?"a":""}`} onClick={()=>setFavOnly(!favOnly)} style={{color:favOnly?"#FBBF24":"",borderColor:favOnly?"rgba(251,191,36,0.3)":"",background:favOnly?"rgba(251,191,36,0.12)":""}}>
               {"⭐"} 즐겨찾기
             </button>
+            <button className="tb" onClick={()=>setShowMap(true)} aria-label="센터 지도 보기">{"🗺️"} 지도</button>
 
             <div style={{marginLeft:"auto",display:"flex",gap:4,alignItems:"center"}}>
               {/* View toggle */}
@@ -1531,7 +1588,7 @@ function App(){
             {settings.address&&<span style={{fontSize:9,color:"var(--text-faint)"}}>| {centers.length}곳</span>}
             <div style={{marginLeft:"auto"}} className="price-filter">
               <span>가격:</span>
-              <select value={priceSort} onChange={e=>setPriceSort(e.target.value)}>
+              <select value={priceSort} onChange={e=>setPriceSort(e.target.value)} aria-label="가격 정렬">
                 <option value="none">기본</option>
                 <option value="asc">낮은순</option>
                 <option value="desc">높은순</option>
@@ -1727,11 +1784,11 @@ function App(){
       <footer className="app-footer" role="contentinfo">
         <div className="footer-grid">
           <div className="footer-col">
-            <h4>문화센터 강좌 파인더</h4>
-            <p>전국 84,000+ 문화센터 강좌를 한눈에 비교하고 검색하세요. OSRM 기반 실시간 이동시간 계산으로 나에게 가까운 강좌를 찾아드립니다.</p>
+            <h2>문화센터 강좌 파인더</h2>
+            <p>전국 15,000+ 신청 가능한(개강 전) 문화센터 강좌를 한눈에 비교하고 검색하세요. 출발지 기반 이동시간 계산으로 나에게 가까운 강좌를 찾아드립니다.</p>
           </div>
           <div className="footer-col">
-            <h4>데이터 소스</h4>
+            <h2>데이터 소스</h2>
             <p>홈플러스 문화센터</p>
             <p>롯데마트 문화센터</p>
             <p>이마트 문화센터</p>
@@ -1745,7 +1802,7 @@ function App(){
             <p>NC·뉴코아 문화센터</p>
           </div>
           <div className="footer-col">
-            <h4>기능 안내</h4>
+            <h2>기능 안내</h2>
             <p>출발지 기반 이동시간 계산</p>
             <p>종목/요일/상태/지역 필터</p>
             <p>강좌 비교 (최대 3개)</p>
@@ -1835,6 +1892,19 @@ function App(){
       )}
 
       {/* Center Detail Modal */}
+      {/* 센터 지도: 현재 필터 기준 센터 마커(강좌수 비례 크기), 마커 팝업에서 해당 센터 강좌로 이동 */}
+      {showMap&&(
+        <div className="modal-overlay" onClick={()=>setShowMap(false)}>
+          <div className="modal" role="dialog" aria-modal="true" aria-label="센터 지도" onClick={e=>e.stopPropagation()} style={{width:"94%",maxWidth:900,padding:12}}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+              <h2 style={{fontSize:13,fontWeight:800,color:"var(--text-primary)",margin:0}}>{"🗺️"} 센터 지도 <span style={{fontSize:10,color:"var(--text-muted)",fontWeight:400}}>현재 필터 기준 · 원을 누르면 해당 센터 강좌 보기</span></h2>
+              <button onClick={()=>setShowMap(false)} aria-label="닫기" style={{background:"transparent",border:"none",color:"var(--text-muted)",fontSize:18,cursor:"pointer",lineHeight:1}}>{"✕"}</button>
+            </div>
+            <div id="cc-map" style={{width:"100%",height:"68vh",borderRadius:10,background:"#101826"}}/>
+          </div>
+        </div>
+      )}
+
       {/* 강좌 상세 시트: 모바일은 하단 바텀시트, 데스크탑은 중앙 모달. 큰 신청 버튼 + 저장/공유/메모/센터 */}
       {courseDetail!==null&&data[courseDetail]&&(()=>{
         const r=data[courseDetail];const gi=courseDetail;
@@ -1987,28 +2057,52 @@ function App(){
         </div>
       )}
 
-      {/* Onboarding Guide */}
+      {/* Onboarding Guide — 0단계는 2문답 개인화(출생년도·동네 → 즉시 맞춤 목록), 이후는 기능 안내 */}
       {showOnboarding&&(
         <div className="onboarding-overlay" onClick={completeOnboarding}>
           <div className="onboarding-card" onClick={e=>e.stopPropagation()}>
-            <div className="icon">{ONBOARD_DATA[onboardStep].icon}</div>
-            <h3>{ONBOARD_DATA[onboardStep].title}</h3>
-            <p>{ONBOARD_DATA[onboardStep].desc}</p>
-            <div className="onboarding-steps">
-              {ONBOARD_DATA.map((_,i)=>(
-                <div key={i} className={"onboarding-dot"+(i===onboardStep?" active":"")} onClick={()=>setOnboardStep(i)} style={{cursor:"pointer"}}/>
-              ))}
-            </div>
-            <div style={{display:"flex",gap:8,justifyContent:"center"}}>
-              {onboardStep>0&&(
-                <button className="onboarding-btn" style={{background:"var(--input-bg)",color:"var(--text)"}} onClick={()=>setOnboardStep(s=>s-1)}>이전</button>
-              )}
-              {onboardStep<ONBOARD_DATA.length-1?(
-                <button className="onboarding-btn" onClick={()=>setOnboardStep(s=>s+1)}>다음 ({onboardStep+1}/{ONBOARD_DATA.length})</button>
-              ):(
-                <button className="onboarding-btn" onClick={completeOnboarding}>시작하기!</button>
-              )}
-            </div>
+            {onboardStep===0?(
+              <>
+                <div className="icon">{"👋"}</div>
+                <h3>딱 두 가지만 알려주세요</h3>
+                <p>수강할 분의 출생년도와 동네를 입력하면<br/>바로 맞춤 강좌부터 보여드립니다. 비워두셔도 됩니다.</p>
+                <div style={{display:"flex",flexDirection:"column",gap:8,margin:"12px auto",maxWidth:250}}>
+                  <select value={obYear} onChange={e=>setObYear(e.target.value)} aria-label="수강자 출생년도"
+                    style={{background:"var(--input-bg)",color:"var(--text-primary)",border:"1px solid var(--input-border)",borderRadius:8,padding:"9px 10px",fontSize:12}}>
+                    <option value="">출생년도 (선택)</option>
+                    {Array.from({length:80},(_,i)=>new Date().getFullYear()-i).map(y=>(
+                      <option key={y} value={y}>{y}년생{new Date().getFullYear()-y<=13?" (자녀)":""}</option>
+                    ))}
+                  </select>
+                  <input value={obAddr} onChange={e=>setObAddr(e.target.value)} aria-label="동네"
+                    placeholder="동네 (예: 분당, 마포, 수원)" onKeyDown={e=>{if(e.key==='Enter')obApply();}}
+                    style={{background:"var(--input-bg)",color:"var(--text-primary)",border:"1px solid var(--input-border)",borderRadius:8,padding:"9px 10px",fontSize:12}}/>
+                </div>
+                <div style={{display:"flex",gap:8,justifyContent:"center"}}>
+                  <button className="onboarding-btn" onClick={obApply}>{"맞춤 강좌 보기 →"}</button>
+                  <button className="onboarding-btn" style={{background:"var(--input-bg)",color:"var(--text-muted)"}} onClick={()=>setOnboardStep(1)}>둘러보기</button>
+                </div>
+              </>
+            ):(
+              <>
+                <div className="icon">{ONBOARD_DATA[onboardStep-1].icon}</div>
+                <h3>{ONBOARD_DATA[onboardStep-1].title}</h3>
+                <p>{ONBOARD_DATA[onboardStep-1].desc}</p>
+                <div className="onboarding-steps">
+                  {ONBOARD_DATA.map((_,i)=>(
+                    <div key={i} className={"onboarding-dot"+(i+1===onboardStep?" active":"")} onClick={()=>setOnboardStep(i+1)} style={{cursor:"pointer"}}/>
+                  ))}
+                </div>
+                <div style={{display:"flex",gap:8,justifyContent:"center"}}>
+                  <button className="onboarding-btn" style={{background:"var(--input-bg)",color:"var(--text)"}} onClick={()=>setOnboardStep(s=>s-1)}>이전</button>
+                  {onboardStep<ONBOARD_DATA.length?(
+                    <button className="onboarding-btn" onClick={()=>setOnboardStep(s=>s+1)}>다음 ({onboardStep}/{ONBOARD_DATA.length})</button>
+                  ):(
+                    <button className="onboarding-btn" onClick={completeOnboarding}>시작하기!</button>
+                  )}
+                </div>
+              </>
+            )}
             <button className="onboarding-skip" onClick={completeOnboarding}>건너뛰기</button>
           </div>
         </div>
