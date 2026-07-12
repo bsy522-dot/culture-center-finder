@@ -40,8 +40,9 @@ const BABEL_CDN_RE = /[ \t]*<script[^>]*@babel\/standalone[^>]*><\/script>\s*\n?
 const STATIC_FILES = [
   'manifest.json', 'sw.js', 'icon-192.png', 'icon-512.png',
   'privacy.html', // 개인정보처리방침 — 배포 사이트에 반드시 포함(스토어 심사 하드게이트)
+  'robots.txt', 'sitemap.xml', // SEO — 검색엔진 크롤링 허용 + 지역 랜딩 색인(gen_seo_pages.py 생성물)
 ];
-const STATIC_DIRS = ['data'];
+const STATIC_DIRS = ['data', 'seo']; // seo/ — 지역별 SEO 랜딩 정적페이지(gen_seo_pages.py가 매 데이터 업데이트마다 재생성)
 
 async function readHtml() {
   return fs.readFile(SRC_HTML, 'utf8');

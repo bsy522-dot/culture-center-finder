@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bsy522-dot.github.io/culture-center-finder/sitemap.xml

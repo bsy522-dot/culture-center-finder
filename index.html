@@ -126,6 +126,12 @@ body:has(.modal-overlay) [id$="-quick-actions"],body:has(.onboarding-overlay) [i
    각 패치가 개별로 넣은 max-width:480px 가드는 실제 폰(480~540px대 다수)에서 발동 안 해 무력함 확인 — 768px로 통일 */
 @media (max-width: 768px) {
   [id$="-quick-actions"],[id$="-qa-toggle"]{display:none!important}
+  /* 터치타깃 확보(≥36px 권장): 별표·비교체크·필터칩이 8~12px라 오터치 빈발하던 문제 */
+  td[role="button"]{min-width:36px;padding-top:8px!important;padding-bottom:8px!important}
+  .tb{min-height:36px;padding:7px 12px!important}
+  .region-pill{min-height:32px;padding:6px 11px!important}
+  input[type=checkbox]{width:18px!important;height:18px!important}
+  .bottom-nav-btn{min-height:44px}
 }
 /* vN 패치가 각자 만드는 "새 버전 안내" 자체홍보 토스트(내부 버전명·기능목록을 사용자에게 그대로 노출) —
    auto-dismiss가 안 돼 v9~v12 토스트가 동시에 겹쳐 뜨는 등 상용 서비스에 부적절해 화면 크기 무관 항상 숨김 */
@@ -552,7 +558,9 @@ function App(){
   const [theme,setTheme]=useState(()=>{
     try{return localStorage.getItem('cc-theme')||'dark';}catch(e){return 'dark';}
   });
-  const [viewMode,setViewMode]=useState("table"); // "table" or "card"
+  // 모바일(<768px)은 카드뷰가 기본 — 13컬럼 표는 좁은 화면에서 가로스크롤·미세 터치타깃 문제(사용자는 토글로 표 전환 가능)
+  const [viewMode,setViewMode]=useState(()=>{try{return window.innerWidth<768?"card":"table";}catch(e){return "table";}}); // "table" or "card"
+  const [dataDate,setDataDate]=useState("");
   const [showScrollTop,setShowScrollTop]=useState(false);
   const [recentSearches,setRecentSearches]=useState(()=>load('cc-recent',[]));
   const [centerModal,setCenterModal]=useState(null); // center name for detail modal
@@ -714,6 +722,27 @@ function App(){
   useEffect(()=>{save(LSM,memos);},[memos]);
   useEffect(()=>{save(LSS,settings);},[settings]);
 
+  // 모달 포커스 트랩(a11y): 모달 열리면 포커스를 모달로 이동, Tab 순환을 모달 내부로 가둠(WCAG 2.4.3)
+  useEffect(()=>{
+    const anyOpen=modal||centerModal||showCompare;
+    if(!anyOpen)return;
+    const el=document.querySelector('.modal');
+    if(!el)return;
+    const prev=document.activeElement;
+    el.setAttribute('tabindex','-1');
+    el.focus();
+    const onKey=(e)=>{
+      if(e.key!=='Tab')return;
+      const f=el.querySelectorAll('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])');
+      if(!f.length)return;
+      const first=f[0],last=f[f.length-1];
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+    };
+    document.addEventListener('keydown',onKey);
+    return()=>{document.removeEventListener('keydown',onKey);if(prev&&prev.focus)try{prev.focus();}catch(e){}};
+  },[modal,centerModal,showCompare]);
+
   const [searchMsg,setSearchMsg]=useState("");
   const [travelVer,setTravelVer]=useState(0);
 
@@ -721,6 +750,8 @@ function App(){
     setLoading(true);setSplashPct(10);
     setSearchMsg("데이터 로딩중...");
     const coordsP=fetch("data/center_coords.json").then(r=>r.json()).catch(()=>({}));
+    // 데이터 기준일 동적 표시(하드코딩 금지 — meta.json의 updated_at 사용)
+    fetch("data/meta.json").then(r=>r.json()).then(m=>{if(m&&m.updated_at)setDataDate(String(m.updated_at).slice(0,10));}).catch(()=>{});
     // 폴백: 기존 통짜 all.json 로딩(regions 인덱스가 없거나 일부 지역 파일이 실패한 경우)
     const legacyLoad=()=>{
       Promise.all([
@@ -1132,6 +1163,7 @@ function App(){
                 <div style={{fontSize:10,color:"var(--text-muted)",marginTop:3,display:"flex",alignItems:"center",gap:4}}>
                   {searchMsg||filtered.length.toLocaleString()+"개 강좌 | "+centers.length+"곳"}
                   {favOnly&&<span style={{color:"#FBBF24"}}> | 즐겨찾기</span>}
+                  {dataDate&&<span style={{fontSize:8.5,color:"var(--text-faint)"}} title="데이터 수집 기준일">{"| 데이터 "+dataDate}</span>}
                 </div>
               </div>
             </div>
