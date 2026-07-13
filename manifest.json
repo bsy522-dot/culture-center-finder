@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 수강완주율분석Canvas, 학습스타일6축RadarCanvas, 시간대최적화히트맵Canvas, 커뮤니티매칭네트워크Canvas, 강좌ROI계산기Canvas, 마일스톤트래커Canvas, 지역밀도히트맵Canvas, 성장리포트CanvasPNG, 업적150종, 퀴즈165문, AI추천, OSRM 이동시간.",
+  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 실데이터분석허브v16 가격분포Canvas, 센터유형비교Canvas, 요일시간히트맵Canvas, 카테고리분석Canvas, 수강료구간Canvas, 개강캘린더Canvas, 접수현황Canvas, 지역분포Canvas, 업적162종, 퀴즈180문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -38,6 +38,14 @@
     {"name": "ROI 계산기", "url": "./index.html#course-roi", "description": "강좌 투자 대비 효과 분석"},
     {"name": "마일스톤", "url": "./index.html#milestone-tracker", "description": "학습 마일스톤 XP 트래커"},
     {"name": "밀도 히트맵", "url": "./index.html#density-map", "description": "17개 시도 강좌 밀도 분석"},
-    {"name": "성장 리포트", "url": "./index.html#growth-report", "description": "학습 성장 리포트 카드 PNG"}
+    {"name": "성장 리포트", "url": "./index.html#growth-report", "description": "학습 성장 리포트 카드 PNG"},
+    {"name": "가격 분포 분석", "url": "./index.html#v16-price", "description": "실데이터 강좌 가격 분포 분석"},
+    {"name": "센터 유형 비교", "url": "./index.html#v16-center", "description": "센터 유형별 비교 분석"},
+    {"name": "시간대 히트맵", "url": "./index.html#v16-heatmap", "description": "요일×시간대 강좌 분포"},
+    {"name": "카테고리 분석", "url": "./index.html#v16-category", "description": "카테고리별 비율 분석"},
+    {"name": "수강료 구간", "url": "./index.html#v16-priceband", "description": "수강료 구간별 카테고리 분석"},
+    {"name": "개강 캘린더", "url": "./index.html#v16-calendar", "description": "개강 예정 강좌 캘린더"},
+    {"name": "접수 현황", "url": "./index.html#v16-status", "description": "접수 상태 대시보드"},
+    {"name": "지역별 분포", "url": "./index.html#v16-region", "description": "지역별 강좌 분포 분석"}
   ]
 }
