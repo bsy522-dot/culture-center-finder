@@ -2,6 +2,60 @@
 
 ---
 
+## [AUTO] 2026-07-16 v17.0 심층분석허브v17 가성비분석Canvas+센터다양성지수Canvas+대상별카테고리히트맵Canvas+키워드빈도Canvas+시간경쟁밀도Canvas+센터규모비교Canvas+개강트렌드Canvas+수강료산점도Canvas+퀴즈+15(180→195)+업적+12(162→174)+SFX12종+키보드8종
+
+### 1차: 벤치마킹
+
+경쟁 대상: 클래스101, 탈잉, Udemy, Coursera
+
+| 열위점 | 경쟁앱 | 해결 방법 |
+|---|---|---|
+| 가성비 비교 없음 | 클래스101 가격대비 리뷰 | 카테고리별 시간당 수강료 가성비 분석기 Canvas |
+| 센터 다양성 분석 없음 | 탈잉 카테고리 다양성 | 센터별 카테고리 종류 수 다양성 지수 Canvas |
+| 대상별 추천 없음 | Udemy 학습자 프로필 | 대상(성인/영유아/어린이)×카테고리 히트맵 Canvas |
+| 키워드 트렌드 없음 | 클래스101 인기 키워드 | 강좌명 인기 키워드 빈도 TOP 20 Canvas |
+| 시간대 추천 없음 | 탈잉 시간대 필터 | 요일×시간 경쟁 밀도 분석기(최적 시간 추천) Canvas |
+| 센터 규모 비교 없음 | 네이버 플레이스 규모 | 강좌 수 기준 센터 규모 TOP 15 Canvas |
+| 시즌 트렌드 없음 | Coursera 시즌 인기 | 월별 개강 트렌드 라인차트 Canvas |
+| 가격 vs 횟수 없음 | 클래스101 가격 비교 | 수강료 vs 횟수 산점도(센터유형별) Canvas |
+
+### 2차: 개발
+
+- v17_patch.js 신규 (811줄 ~38KB, 자기완결형 IIFE 패치 모듈)
+- 가성비 분석기: 카테고리별 시간당 수강료 수평바 Canvas 620x400, 최고/최저 가성비 표시
+- 센터 다양성 지수: 12센터 카테고리 종류 수 수평바 Canvas 620x400, 최다양 센터 표시
+- 대상별 카테고리 히트맵: 5대상(성인/영유아/유아/어린이/패밀리)×10카테고리 Canvas 640x420
+- 키워드 빈도 분석기: 14,317개 강좌명에서 키워드 추출, TOP 20 듀얼컬럼 수평바 Canvas 620x400
+- 시간대 경쟁 밀도: 7요일×14시간(8~21시) 히트맵 Canvas 620x400, 피크/한산 시간 자동 표시
+- 센터 규모 비교: 강좌 수 기준 TOP 15 센터 수평바 Canvas 620x420
+- 개강 트렌드: 12월 라인차트+영역채우기 Canvas 620x380, 피크월 자동 표시
+- 수강료 vs 횟수 산점도: 8종 센터유형 색상코딩 산점도 Canvas 620x400
+- 퀴즈 v17 +15문 (180→195): 가성비/센터유형/키워드/밀도/산점도/PWA 관련
+- 업적 +12종 (162→174): v17_value_analyst/v17_diversity_explorer/v17_target_mapper/v17_keyword_analyst/v17_density_strategist/v17_scale_surveyor/v17_trend_watcher/v17_scatter_master/v17_all_charts/v17_quiz_master/v17_quiz_s_rank + 각 섹션 열기 업적 8종
+- SFX 12종 Web Audio API (nav/tab/hover/value/diversity/target/keyword/density/scale/trend/scatter/quiz/achieve)
+- 키보드 Shift+A~H (8섹션) + Shift+Q (퀴즈)
+- index.html: v17.0 SEO 전면 갱신 (title/desc/keywords/OG/Twitter) + v17 스크립트태그
+- sw.js: v17→v18 (ccf-v18 캐시, v17_patch.js PRECACHE)
+- manifest.json: v17.0 설명 + shortcuts 8종 추가 (총40종)
+
+### 3차: 품질 검증
+
+- JS 구문 검사: node -c v17_patch.js → PASS
+- Node.js 파싱: PASS
+- 외부 CDN: 0건 (Three.js/Tone.js/Leaflet 허용 외 없음)
+- 개인정보: 0건
+- 하단 고정 네비바 신설: 0건 (UI 불가침 규칙 준수)
+- 기존 네비게이션 영향: 없음 (v16-analytics-hub 아래에 독립 삽입)
+- 모든 분석 도구: window.__v4Data 실데이터 전용, 가짜 통계 없음
+
+### 4차: 마무리
+
+- 커밋: [AUTO] 2026-07-16 culture-center-finder v17.0
+- 벤치마킹 8개 열위점 해결
+- 업적 162→174, 퀴즈 180→195
+
+---
+
 ## [AUTO] 2026-07-13 v16.0 실데이터분석허브v16 가격분포Canvas+센터유형비교Canvas+요일시간히트맵Canvas+카테고리분석Canvas+수강료구간Canvas+개강캘린더Canvas+접수현황Canvas+지역분포Canvas+퀴즈+15(165→180)+업적+12(150→162)+SFX12종+키보드9종
 
 ### 1차: 벤치마킹

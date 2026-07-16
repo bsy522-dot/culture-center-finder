@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 실데이터분석허브v16 가격분포Canvas, 센터유형비교Canvas, 요일시간히트맵Canvas, 카테고리분석Canvas, 수강료구간Canvas, 개강캘린더Canvas, 접수현황Canvas, 지역분포Canvas, 업적162종, 퀴즈180문, AI추천, OSRM 이동시간.",
+  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v17 가성비분석Canvas, 센터다양성지수Canvas, 대상별카테고리Canvas, 키워드빈도Canvas, 경쟁밀도Canvas, 센터규모Canvas, 개강트렌드Canvas, 수강료산점도Canvas, 업적174종, 퀴즈195문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -46,6 +46,14 @@
     {"name": "수강료 구간", "url": "./index.html#v16-priceband", "description": "수강료 구간별 카테고리 분석"},
     {"name": "개강 캘린더", "url": "./index.html#v16-calendar", "description": "개강 예정 강좌 캘린더"},
     {"name": "접수 현황", "url": "./index.html#v16-status", "description": "접수 상태 대시보드"},
-    {"name": "지역별 분포", "url": "./index.html#v16-region", "description": "지역별 강좌 분포 분석"}
+    {"name": "지역별 분포", "url": "./index.html#v16-region", "description": "지역별 강좌 분포 분석"},
+    {"name": "가성비 분석", "url": "./index.html#v17-value", "description": "카테고리별 시간당 수강료 분석"},
+    {"name": "센터 다양성", "url": "./index.html#v17-diversity", "description": "센터별 카테고리 다양성 지수"},
+    {"name": "대상별 분석", "url": "./index.html#v17-target", "description": "대상×카테고리 히트맵"},
+    {"name": "키워드 빈도", "url": "./index.html#v17-keyword", "description": "강좌명 인기 키워드 TOP 20"},
+    {"name": "경쟁 밀도", "url": "./index.html#v17-density", "description": "시간대별 강좌 경쟁 밀도"},
+    {"name": "센터 규모", "url": "./index.html#v17-scale", "description": "강좌 수 기준 센터 규모 비교"},
+    {"name": "개강 트렌드", "url": "./index.html#v17-trend", "description": "월별 개강 강좌 수 추이"},
+    {"name": "수강료 산점도", "url": "./index.html#v17-scatter", "description": "수강료 vs 횟수 산점도"}
   ]
 }
