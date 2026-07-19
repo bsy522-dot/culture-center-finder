@@ -965,3 +965,66 @@ manifest.json: v15.0 설명 + shortcuts 8종 추가 (총24종)
 - 커밋: [AUTO] 2026-06-24 culture-center-finder v11.0
 - 파일 변경: v11_patch.js(신규), index.html, sw.js, manifest.json, AUTO_REPORT.md
 - 총 변경: 신규 1,404줄 + 기존 파일 수정
+
+---
+
+## [AUTO] 2026-07-19 culture-center-finder v18.0
+
+### 1차: 벤치마킹+분석
+
+**비교 대상**: 클래스101, 탈잉
+
+| 경쟁앱 기능 | 우리 앱 현황 (v17) | v18 해결 |
+|---|---|---|
+| 가격 비교/랭킹 | 가성비 분석만 있음 | 센터 평균수강료 랭킹 Canvas 추가 |
+| 대상별 맞춤 추천 | 필터만 있음 | 카테고리×대상 인기도 히트맵 |
+| 지역별 가격 정보 | 없음 | 지역별 가격대 분포 박스플롯 |
+| 센터 유형별 분석 | 기본 비교만 | 센터유형 요일 점유율 스택바 |
+| 수강횟수 대비 가격 | 없음 | 수강횟수 가격효율 산점도 |
+| 시간대별 강좌 분석 | 경쟁 밀도만 | 시간대 카테고리 집중도 히트맵 |
+| 경쟁도 정보 | 없음 | 카테고리×지역 경쟁지수 히트맵 |
+| 센터 종합 비교 | 없음 | 6축 레이더 종합평가 |
+
+### 2차: 개발팀 투입
+
+**v18_patch.js** (신규 926줄, 자기완결형 IIFE 패치 모듈):
+
+1. **센터 평균수강료 랭킹 Canvas 620x400**: TOP 15 저렴/프리미엄 센터 수평바차트, 클릭 전환, 5강좌 이상 센터 필터
+2. **카테고리×대상 인기도 히트맵 Canvas 640x420**: 12카테고리 × 6대상 히트맵, 마우스 오버 상세 표시
+3. **지역별 가격대 분포 Canvas 620x400**: 15지역 박스플롯(Q1/Q3 박스+중앙값+수염), 최소 20건 이상 지역
+4. **센터유형 요일 점유율 Canvas 620x380**: 7요일 스택바차트, 8종 센터유형 색상코딩, 범례
+5. **수강횟수 가격효율 Canvas 600x380**: X=수강횟수 Y=1회당가격 산점도, 8카테고리 색상, 50포인트/카테고리
+6. **시간대 카테고리 집중도 Canvas 620x400**: 6시간대 × 10카테고리 히트맵, 마우스 오버, 오전/오후/저녁/야간
+7. **강좌 경쟁지수 Canvas 620x380**: 8카테고리 × 8지역 경쟁 히트맵, 값=해당 지역 해당 카테고리 강좌 수
+8. **센터 종합평가 레이더 Canvas 600x400**: 6축(가격경쟁력/카테고리다양성/시간대범위/대상다양성/요일커버리지/규모) Radar, 6브랜드, 클릭 전환
+
+**추가 콘텐츠**:
+- 퀴즈 v18 +15문 (195→210): 가성비/경쟁지수/분위수/스택바/히트맵/레이더/산점도/PWA/시간대/박스플롯/요일/실데이터/다양성
+- 업적 +12종 (174→186): price_ranker/target_mapper/region_pricer/day_analyst/efficiency/time_expert/competitor/radar_master/all_sections/quiz_clear/quiz_s/explorer
+- SFX 12종 Web Audio API (nav/tab/hover/rank/heat/region/stack/scatter/time/compete/radar/quiz/achieve)
+- 키보드 Shift+1~8 (8섹션) + Shift+0 (퀴즈)
+
+**파일 변경**:
+- index.html: v18.0 SEO 전면 갱신 (title/desc/keywords/OG/Twitter) + v18스크립트태그
+- sw.js: v18→v19 (ccf-v19-20260719 캐시, v18_patch.js PRECACHE)
+- manifest.json: v18.0 설명 + shortcuts 8종 추가 (총48종)
+
+### 3차: 품질팀 검증
+
+| 검증 항목 | 결과 | 상세 |
+|---|---|---|
+| JS 구문 검사 (node -c) | PASS | v18_patch.js, sw.js 모두 통과 |
+| JSON 파싱 | PASS | manifest.json 정상 |
+| 외부 CDN 참조 | 0건 | grep 확인 |
+| 개인정보 노출 | 0건 | grep 확인 |
+| 하단 고정 네비바 | 0건 | UI불가침 규칙 준수 |
+| 실데이터 전용 | PASS | window.__v4Data(data/all.json) 기반만 사용 |
+| 중복 실행 방지 | PASS | meta[id=ccf-v18-patch] 마커 |
+| HTML entities | PASS | esc() 함수 적용 |
+| roundRect 폴리필 | PASS | Canvas 호환성 보장 |
+| 인터랙티브 기능 | PASS | 마우스오버/클릭 이벤트 정상 |
+
+### 4차: 배포
+
+- 커밋: [AUTO] 2026-07-19 culture-center-finder v18.0
+- 파일 변경: v18_patch.js(신규 926줄), index.html, sw.js, manifest.json, AUTO_REPORT.md

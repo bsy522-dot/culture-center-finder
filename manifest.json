@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v17 가성비분석Canvas, 센터다양성지수Canvas, 대상별카테고리Canvas, 키워드빈도Canvas, 경쟁밀도Canvas, 센터규모Canvas, 개강트렌드Canvas, 수강료산점도Canvas, 업적174종, 퀴즈195문, AI추천, OSRM 이동시간.",
+  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v18 센터평균수강료랭킹Canvas, 카테고리대상인기도Canvas, 지역별가격분포Canvas, 센터유형요일점유Canvas, 수강횟수가격효율Canvas, 시간대카테고리집중도Canvas, 강좌경쟁지수Canvas, 센터종합평가레이더Canvas, 업적186종, 퀴즈210문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -54,6 +54,14 @@
     {"name": "경쟁 밀도", "url": "./index.html#v17-density", "description": "시간대별 강좌 경쟁 밀도"},
     {"name": "센터 규모", "url": "./index.html#v17-scale", "description": "강좌 수 기준 센터 규모 비교"},
     {"name": "개강 트렌드", "url": "./index.html#v17-trend", "description": "월별 개강 강좌 수 추이"},
-    {"name": "수강료 산점도", "url": "./index.html#v17-scatter", "description": "수강료 vs 횟수 산점도"}
+    {"name": "수강료 산점도", "url": "./index.html#v17-scatter", "description": "수강료 vs 횟수 산점도"},
+    {"name": "센터 수강료 랭킹", "url": "./index.html#v18-price-rank", "description": "센터별 평균 수강료 TOP 15"},
+    {"name": "대상 인기도", "url": "./index.html#v18-target-heat", "description": "카테고리×대상 인기도 히트맵"},
+    {"name": "지역 가격분포", "url": "./index.html#v18-region-price", "description": "지역별 수강료 박스플롯"},
+    {"name": "요일 점유율", "url": "./index.html#v18-day-type", "description": "센터유형별 요일 점유율"},
+    {"name": "가격효율", "url": "./index.html#v18-session-eff", "description": "수강횟수 vs 1회당 가격"},
+    {"name": "시간대 집중도", "url": "./index.html#v18-time-cat", "description": "시간대별 카테고리 히트맵"},
+    {"name": "경쟁지수", "url": "./index.html#v18-compete", "description": "카테고리×지역 경쟁 분석"},
+    {"name": "센터 레이더", "url": "./index.html#v18-radar", "description": "센터유형 6축 종합평가"}
   ]
 }
