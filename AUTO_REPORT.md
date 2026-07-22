@@ -1028,3 +1028,67 @@ manifest.json: v15.0 설명 + shortcuts 8종 추가 (총24종)
 
 - 커밋: [AUTO] 2026-07-19 culture-center-finder v18.0
 - 파일 변경: v18_patch.js(신규 926줄), index.html, sw.js, manifest.json, AUTO_REPORT.md
+
+---
+
+## v19.0 (2026-07-22)
+
+### 1차: 벤치마킹+분석
+
+**경쟁앱**: 클래스101, 탈잉
+
+| 비교 항목 | 클래스101/탈잉 | CCF v18.0 | v19.0 개선 |
+|---|---|---|---|
+| 시간대별 가격 트렌드 | 기본 필터만 | 없음 | 시간대별 평균 수강료 바차트 + 카테고리 드릴다운 |
+| 강좌 수명/지속성 분석 | 없음 | 없음 | 카테고리별 평균 수강횟수 + 1회당 가격 전환 |
+| 브랜드 경쟁력 비교 | 강사별 비교만 | 없음 | 6축 Radar로 브랜드 다차원 경쟁력 비교 |
+| 가격대별 세분화 | 단순 필터 | 구간별 바차트만 | 트리맵으로 가격구간×카테고리 비율 시각화 |
+| 요일별 선호도 패턴 | 없음 | 없음 | 7축 Radar로 카테고리별 요일 분포 패턴 분석 |
+| 대상별 가격 분포 | 없음 | 없음 | 바이올린 플롯으로 대상별 가격 분포/중앙값/사분위 |
+| 센터 시간표 밀도 | 기본 캘린더 | 없음 | 요일×시간 히트맵으로 센터별 시간표 밀도 |
+| 조건부 추천 매칭 | AI 추천 | 기존 AI추천 | 4축 필터(시간/예산/카테고리/대상) 인터랙티브 매칭 |
+
+### 2차: 개발팀 투입
+
+**v19_patch.js 신규 (926줄, 자기완결형 IIFE 패치 모듈)**:
+
+1. **시간대별 가격 분석기**: 6시간대(오전6~9/9~12/오후12~15/15~18/저녁18~21/야간21~) 평균 수강료 수직 바차트 Canvas 620x400, 클릭 시 해당 시간대 카테고리 분포 수평바 드릴다운
+2. **카테고리별 강좌 수명 분석기**: 상위 10개 카테고리 평균 수강횟수 수평바 Canvas 600x380, 클릭으로 횟수↔1회당 가격 전환
+3. **센터 브랜드 경쟁력 매트릭스**: 상위 8개 브랜드(백화점/대형마트/경기평생학습/아울렛 등) 6축 Radar(가격경쟁력/카테고리다양성/시간대범위/지역커버리지/강좌수/대상다양성) Canvas 640x420, 클릭 브랜드 전환
+4. **수강료 구간별 카테고리 트리맵**: 6구간(무료/~5만/5~10만/10~20만/20~30만/30만+) 재귀적 slice-and-dice 트리맵 Canvas 620x400, 클릭 드릴다운
+5. **요일별 카테고리 선호도 레이더**: 7축(월~일) Radar Canvas 600x400, 상위 8개 카테고리 순환, 클릭 전환
+6. **대상별 수강료 분포 바이올린 플롯**: 5대상(성인/영유아/유아/어린이/패밀리) 30-bin 히스토그램 바이올린 Canvas 620x380, 중앙값/Q1/Q3 마커
+7. **센터별 시간표 밀도 히트맵**: TOP 10 센터 7요일×12시간(8~20시) 히트맵 Canvas 640x400, 클릭 센터 전환
+8. **강좌 추천 적합도 매칭 엔진**: 4축 필터(시간대/예산/카테고리/대상) 인터랙티브 선택, TOP 5 매칭 결과 스택바 Canvas 600x380
+
+**추가 콘텐츠**:
+- 퀴즈 v19 +15문 (210→225): 시간대가격/트리맵/레이더/히트맵/바이올린/매칭/브랜드/카테고리/분석 관련
+- 업적 +12종 (186→198): time_price/cat_duration/brand_matrix/treemap/day_radar/violin/heatmap/recommend/all_sections/quiz_clear/quiz_s/explorer
+- SFX 12종 Web Audio API (click/open/slide/chart/matrix/tree/spin/violin/grid/match/correct/unlock)
+- 키보드 Shift+A~H (8섹션) + Shift+0 (퀴즈)
+
+**파일 변경**:
+- v19_patch.js: 신규 (926줄, IIFE 패치 모듈)
+- index.html: v19.0 SEO 전면 갱신 (title/desc/keywords/OG/Twitter) + v19스크립트태그
+- sw.js: v19→v20 (ccf-v20-20260722 캐시, v19_patch.js PRECACHE)
+- manifest.json: v19.0 설명 + shortcuts 8종 추가 (총56종)
+
+### 3차: 품질팀 검증
+
+| 검증 항목 | 결과 | 상세 |
+|---|---|---|
+| JS 구문 검사 (node -c) | PASS | v19_patch.js, sw.js 모두 통과 |
+| JSON 파싱 | PASS | manifest.json 정상 (56 shortcuts) |
+| 외부 CDN 참조 | 0건 | grep 확인 |
+| 개인정보 노출 | 0건 | grep 확인 |
+| 하단 고정 네비바 | 0건 | UI불가침 규칙 준수 |
+| 실데이터 전용 | PASS | window.__v4Data(data/all.json) 기반만 사용 |
+| 중복 실행 방지 | PASS | meta[id=ccf-v19-patch] 마커 |
+| HTML entities | PASS | esc() 함수 적용 |
+| roundRect 폴리필 | PASS | Canvas 호환성 보장 |
+| 인터랙티브 기능 | PASS | 클릭 드릴다운/전환/필터 이벤트 정상 |
+
+### 4차: 배포
+
+- 커밋: [AUTO] 2026-07-22 culture-center-finder v19.0
+- 파일 변경: v19_patch.js(신규 926줄), index.html, sw.js, manifest.json, AUTO_REPORT.md

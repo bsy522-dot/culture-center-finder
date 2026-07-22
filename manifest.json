@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v18 센터평균수강료랭킹Canvas, 카테고리대상인기도Canvas, 지역별가격분포Canvas, 센터유형요일점유Canvas, 수강횟수가격효율Canvas, 시간대카테고리집중도Canvas, 강좌경쟁지수Canvas, 센터종합평가레이더Canvas, 업적186종, 퀴즈210문, AI추천, OSRM 이동시간.",
+  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v19 시간대별가격분석Canvas, 카테고리수명분석Canvas, 브랜드경쟁력매트릭스Canvas, 수강료구간트리맵Canvas, 요일별선호레이더Canvas, 대상별바이올린플롯Canvas, 시간표밀도히트맵Canvas, 강좌추천엔진Canvas, 업적198종, 퀴즈225문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -62,6 +62,14 @@
     {"name": "가격효율", "url": "./index.html#v18-session-eff", "description": "수강횟수 vs 1회당 가격"},
     {"name": "시간대 집중도", "url": "./index.html#v18-time-cat", "description": "시간대별 카테고리 히트맵"},
     {"name": "경쟁지수", "url": "./index.html#v18-compete", "description": "카테고리×지역 경쟁 분석"},
-    {"name": "센터 레이더", "url": "./index.html#v18-radar", "description": "센터유형 6축 종합평가"}
+    {"name": "센터 레이더", "url": "./index.html#v18-radar", "description": "센터유형 6축 종합평가"},
+    {"name": "시간대 가격", "url": "./index.html#v19-time-price", "description": "시간대별 평균 수강료 분석"},
+    {"name": "카테고리 수명", "url": "./index.html#v19-cat-duration", "description": "카테고리별 강좌 수명 분석"},
+    {"name": "브랜드 매트릭스", "url": "./index.html#v19-brand-matrix", "description": "센터 브랜드 6축 경쟁력 레이더"},
+    {"name": "가격 트리맵", "url": "./index.html#v19-price-tree", "description": "수강료 구간별 카테고리 트리맵"},
+    {"name": "요일 레이더", "url": "./index.html#v19-day-radar", "description": "요일별 카테고리 선호도 7축"},
+    {"name": "대상 바이올린", "url": "./index.html#v19-violin", "description": "대상별 수강료 분포 바이올린 플롯"},
+    {"name": "시간표 밀도", "url": "./index.html#v19-sched-heat", "description": "센터별 요일×시간 밀도 히트맵"},
+    {"name": "강좌 추천", "url": "./index.html#v19-recommend", "description": "조건별 강좌 추천 매칭 엔진"}
   ]
 }
