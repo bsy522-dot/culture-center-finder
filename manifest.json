@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v19 시간대별가격분석Canvas, 카테고리수명분석Canvas, 브랜드경쟁력매트릭스Canvas, 수강료구간트리맵Canvas, 요일별선호레이더Canvas, 대상별바이올린플롯Canvas, 시간표밀도히트맵Canvas, 강좌추천엔진Canvas, 업적198종, 퀴즈225문, AI추천, OSRM 이동시간.",
+  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v20 강사클러스터분석Canvas, 가치분석Canvas, 성장률비교Canvas, 포트폴리오레이더Canvas, 대상시간매트릭스Canvas, 운영효율분석Canvas, 네이밍패턴Canvas, 스코어카드Canvas, 업적210종, 퀴즈240문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -70,6 +70,14 @@
     {"name": "요일 레이더", "url": "./index.html#v19-day-radar", "description": "요일별 카테고리 선호도 7축"},
     {"name": "대상 바이올린", "url": "./index.html#v19-violin", "description": "대상별 수강료 분포 바이올린 플롯"},
     {"name": "시간표 밀도", "url": "./index.html#v19-sched-heat", "description": "센터별 요일×시간 밀도 히트맵"},
-    {"name": "강좌 추천", "url": "./index.html#v19-recommend", "description": "조건별 강좌 추천 매칭 엔진"}
+    {"name": "강좌 추천", "url": "./index.html#v19-recommend", "description": "조건별 강좌 추천 매칭 엔진"},
+    {"name": "강사 클러스터", "url": "./index.html#v20-cluster", "description": "센터별 강좌 카테고리 클러스터 분석"},
+    {"name": "가치 분석", "url": "./index.html#v20-value", "description": "수강료 구간별 가치 효율 분석"},
+    {"name": "성장률 비교", "url": "./index.html#v20-growth", "description": "카테고리별 성장률 스택바 비교"},
+    {"name": "포트폴리오 레이더", "url": "./index.html#v20-portfolio", "description": "센터유형별 6축 포트폴리오 레이더"},
+    {"name": "대상 시간 매트릭스", "url": "./index.html#v20-target-time", "description": "대상x시간대 선호도 히트맵"},
+    {"name": "운영 효율", "url": "./index.html#v20-efficiency", "description": "요일별 센터 운영 효율 분석"},
+    {"name": "네이밍 패턴", "url": "./index.html#v20-naming", "description": "강좌명 키워드 네이밍 패턴 분석"},
+    {"name": "스코어카드", "url": "./index.html#v20-scorecard", "description": "통합 강좌 데이터 스코어카드"}
   ]
 }

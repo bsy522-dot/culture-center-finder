@@ -1091,4 +1091,67 @@ manifest.json: v15.0 설명 + shortcuts 8종 추가 (총24종)
 ### 4차: 배포
 
 - 커밋: [AUTO] 2026-07-22 culture-center-finder v19.0
+
+---
+
+## [AUTO] 2026-07-25 culture-center-finder v20.0
+
+### 1차: 벤치마킹+분석
+
+**비교 대상**: 클래스101, 탈잉
+
+| 열위점 | 경쟁앱 기능 | v20 해결 |
+|---|---|---|
+| 강사별 분석 없음 | 클래스101 강사별 분류/분석 | 센터별 카테고리 클러스터 분석기 |
+| 가치 분석 부재 | 탈잉 가격 대비 가치 분석 | 수강료 구간별 가치 분석기 |
+| 성장률 미시각화 | 카테고리별 성장 트렌드 제공 | 카테고리 성장률 비교 스택바 |
+| 포트폴리오 분석 없음 | 센터 다양성/밸런스 시각화 | 센터 포트폴리오 6축 레이더 |
+| 대상×시간 교차 분석 부재 | 탈잉 대상별 시간대 매칭 | 대상×시간대 히트맵 매트릭스 |
+| 운영 효율 미제공 | 요일별 센터 효율 분석 | 요일별 운영 효율 스택바 |
+| 네이밍 분석 없음 | 클래스101 키워드/SEO 분석 | 강좌 네이밍 패턴 분석기 |
+| 통합 스코어 없음 | 양 경쟁사 종합 스코어 제공 | 8메트릭 통합 스코어카드 |
+
+### 2차: 개발팀 투입
+
+**v20_patch.js** (1028줄, 자기완결형 IIFE 패치 모듈)
+
+1. **센터별 강좌 클러스터 분석기**: TOP 15 센터 카테고리 수평 스택바 Canvas 620x400, 클릭 드릴다운 카테고리 분포
+2. **수강료 구간별 가치 분석기**: 6구간 듀얼축 바+라인차트 Canvas 600x380, S~D등급, 가치 효율 비교
+3. **카테고리 성장률 비교**: TOP 12 카테고리 스택바 Canvas 620x400, 센터유형별 색상, 퍼센트/절대값 전환
+4. **센터 포트폴리오 밸런스 레이더**: 6축(다양성/가격/시간/대상/요일/규모) Radar Canvas 600x380, 클릭 타입전환 오버레이
+5. **대상×시간대 선호 매트릭스**: 6대상×6시간대 히트맵 Canvas 620x400, 셀클릭 상세 카테고리
+6. **요일별 센터 운영 효율 분석기**: 7요일 스택바 Canvas 620x380, 8센터유형, 효율 히트맵 전환
+7. **강좌 네이밍 패턴 분석기**: TOP 20 키워드 듀얼컬럼 수평바 Canvas 600x380, 클릭 카테고리 드릴다운
+8. **통합 강좌 스코어카드**: 8메트릭 반원게이지 Canvas 620x380, 종합 S~D등급
+
+**추가 콘텐츠**:
+- 퀴즈 v20 +15문 (225→240): 클러스터/가치/성장률/포트폴리오/히트맵/효율/네이밍/스코어카드 관련
+- 업적 +12종 (198→210): cluster/value/growth/portfolio/target_time/efficiency/naming/scorecard/all_sections/quiz_clear/quiz_s/explorer
+- SFX 12종 Web Audio API (click/open/cluster/value/growth/radar/heatmap/efficiency/naming/scorecard/correct/unlock)
+- 키보드 Shift+I~P (8섹션) + Shift+9 (퀴즈)
+
+**파일 변경**:
+- v20_patch.js: 신규 (1028줄, IIFE 패치 모듈)
+- index.html: v20.0 SEO 전면 갱신 (title/desc/keywords/OG/Twitter) + v20스크립트태그
+- sw.js: v20→v21 (ccf-v21-20260725 캐시, v20_patch.js PRECACHE)
+- manifest.json: v20.0 설명 + shortcuts 8종 추가 (총64종)
+
+### 3차: 품질팀 검증
+
+| 검증 항목 | 결과 | 상세 |
+|---|---|---|
+| JS 구문 검사 (node -c) | PASS | v20_patch.js, sw.js 모두 통과 |
+| JSON 파싱 | PASS | manifest.json 정상 (64 shortcuts) |
+| 외부 CDN 참조 | 0건 | grep 확인 |
+| 개인정보 노출 | 0건 | grep 확인 |
+| 하단 고정 네비바 | 0건 | UI불가침 규칙 준수 |
+| 실데이터 전용 | PASS | window.__v4Data(data/all.json) 기반만 사용 |
+| 중복 실행 방지 | PASS | meta[id=ccf-v20-patch] 마커 |
+| HTML entities | PASS | esc() 함수 적용 |
+| roundRect 폴리필 | PASS | Canvas 호환성 보장 |
+| 인터랙티브 기능 | PASS | 클릭 드릴다운/전환/필터 이벤트 정상 |
+
+### 4차: 배포
+
+- 커밋: [AUTO] 2026-07-25 culture-center-finder v20.0
 - 파일 변경: v19_patch.js(신규 926줄), index.html, sw.js, manifest.json, AUTO_REPORT.md
