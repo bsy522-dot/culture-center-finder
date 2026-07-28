@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v20 강사클러스터분석Canvas, 가치분석Canvas, 성장률비교Canvas, 포트폴리오레이더Canvas, 대상시간매트릭스Canvas, 운영효율분석Canvas, 네이밍패턴Canvas, 스코어카드Canvas, 업적210종, 퀴즈240문, AI추천, OSRM 이동시간.",
+  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v21 강좌계절성히트맵Canvas, 연령대포트폴리오Canvas, 센터효율스코어보드Canvas, 카테고리상생네트워크Canvas, 주말평일선호Canvas, 운영시간스펙트럼Canvas, 수강료피라미드Canvas, 인사이트대시보드Canvas, 업적222종, 퀴즈255문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -78,6 +78,14 @@
     {"name": "대상 시간 매트릭스", "url": "./index.html#v20-target-time", "description": "대상x시간대 선호도 히트맵"},
     {"name": "운영 효율", "url": "./index.html#v20-efficiency", "description": "요일별 센터 운영 효율 분석"},
     {"name": "네이밍 패턴", "url": "./index.html#v20-naming", "description": "강좌명 키워드 네이밍 패턴 분석"},
-    {"name": "스코어카드", "url": "./index.html#v20-scorecard", "description": "통합 강좌 데이터 스코어카드"}
+    {"name": "스코어카드", "url": "./index.html#v20-scorecard", "description": "통합 강좌 데이터 스코어카드"},
+    {"name": "계절성 히트맵", "url": "./index.html#v21-seasonal", "description": "강좌 계절성 카테고리×12월 히트맵"},
+    {"name": "연령대 포트폴리오", "url": "./index.html#v21-age", "description": "연령대별 수강 포트폴리오 분석"},
+    {"name": "센터 스코어보드", "url": "./index.html#v21-scoreboard", "description": "센터 유형 효율 4축 스코어보드"},
+    {"name": "카테고리 네트워크", "url": "./index.html#v21-network", "description": "카테고리 상생 네트워크 그래프"},
+    {"name": "주말평일 비교", "url": "./index.html#v21-compare", "description": "주말 vs 평일 카테고리 선호도"},
+    {"name": "시간 스펙트럼", "url": "./index.html#v21-spectrum", "description": "센터 운영 시간 스펙트럼 분석"},
+    {"name": "수강료 피라미드", "url": "./index.html#v21-pyramid", "description": "카테고리별 수강료 계층 피라미드"},
+    {"name": "인사이트 대시보드", "url": "./index.html#v21-dashboard", "description": "종합 인사이트 6 KPI 대시보드"}
   ]
 }
