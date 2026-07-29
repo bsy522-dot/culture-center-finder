@@ -1,9 +1,7 @@
 name: Homeplus Crawl & Update
 
 on:
-  schedule:
-    # 매주 월요일 오전 6시 KST (= 일요일 21:00 UTC)
-    - cron: '0 21 * * 0'
+  # 고아 파이프라인(산출물을 index.html이 읽지 않음)+PII(강사 실명) 미제거로 자동실행 중단, 수동 전용 전환
   workflow_dispatch:
     # 수동 실행 허용
 
