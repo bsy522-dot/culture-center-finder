@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v21 강좌계절성히트맵Canvas, 연령대포트폴리오Canvas, 센터효율스코어보드Canvas, 카테고리상생네트워크Canvas, 주말평일선호Canvas, 운영시간스펙트럼Canvas, 수강료피라미드Canvas, 인사이트대시보드Canvas, 업적222종, 퀴즈255문, AI추천, OSRM 이동시간.",
+  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v22 카테고리시장점유율도넛Canvas, 강좌가격탄력성산점도Canvas, 센터접근효율매트릭스Canvas, 멀티카테고리수강패턴네트워크Canvas, 센터충성도랭킹Canvas, 강좌포화도히트맵Canvas, 수강ROI시뮬레이터RadarCanvas, 종합시장인텔리전스게이지Canvas, 업적234종, 퀴즈270문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -86,6 +86,14 @@
     {"name": "주말평일 비교", "url": "./index.html#v21-compare", "description": "주말 vs 평일 카테고리 선호도"},
     {"name": "시간 스펙트럼", "url": "./index.html#v21-spectrum", "description": "센터 운영 시간 스펙트럼 분석"},
     {"name": "수강료 피라미드", "url": "./index.html#v21-pyramid", "description": "카테고리별 수강료 계층 피라미드"},
-    {"name": "인사이트 대시보드", "url": "./index.html#v21-dashboard", "description": "종합 인사이트 6 KPI 대시보드"}
+    {"name": "인사이트 대시보드", "url": "./index.html#v21-dashboard", "description": "종합 인사이트 6 KPI 대시보드"},
+    {"name": "시장점유율", "url": "./index.html#v22-market", "description": "카테고리 시장점유율 도넛 차트"},
+    {"name": "가격 탄력성", "url": "./index.html#v22-elastic", "description": "강좌 가격 탄력성 산점도 분석"},
+    {"name": "접근 효율", "url": "./index.html#v22-access", "description": "센터 접근 효율 매트릭스 4축"},
+    {"name": "멀티수강 패턴", "url": "./index.html#v22-multi", "description": "멀티카테고리 수강 패턴 네트워크"},
+    {"name": "충성도 랭킹", "url": "./index.html#v22-loyalty", "description": "센터 충성도 TOP 15 랭킹"},
+    {"name": "포화도 히트맵", "url": "./index.html#v22-saturation", "description": "지역 x 카테고리 강좌 포화도"},
+    {"name": "ROI 시뮬레이터", "url": "./index.html#v22-roi", "description": "수강 ROI 6축 레이더 분석"},
+    {"name": "시장 인텔리전스", "url": "./index.html#v22-intel", "description": "종합 시장 인텔리전스 KPI 대시보드"}
   ]
 }
