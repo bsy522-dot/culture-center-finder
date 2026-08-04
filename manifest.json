@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v22 카테고리시장점유율도넛Canvas, 강좌가격탄력성산점도Canvas, 센터접근효율매트릭스Canvas, 멀티카테고리수강패턴네트워크Canvas, 센터충성도랭킹Canvas, 강좌포화도히트맵Canvas, 수강ROI시뮬레이터RadarCanvas, 종합시장인텔리전스게이지Canvas, 업적234종, 퀴즈270문, AI추천, OSRM 이동시간.",
+  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v23 강좌지속율퍼널Canvas, 센터경쟁력포지셔닝맵Canvas, 카테고리수요공급갭Canvas, 수강생페르소나클러스터Canvas, 센터가격대비가치매트릭스Canvas, 강좌시간대최적화히트맵Canvas, 카테고리생태계건강도Canvas, 수강여정타임라인시뮬레이터Canvas, 업적246종, 퀴즈285문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -94,6 +94,14 @@
     {"name": "충성도 랭킹", "url": "./index.html#v22-loyalty", "description": "센터 충성도 TOP 15 랭킹"},
     {"name": "포화도 히트맵", "url": "./index.html#v22-saturation", "description": "지역 x 카테고리 강좌 포화도"},
     {"name": "ROI 시뮬레이터", "url": "./index.html#v22-roi", "description": "수강 ROI 6축 레이더 분석"},
-    {"name": "시장 인텔리전스", "url": "./index.html#v22-intel", "description": "종합 시장 인텔리전스 KPI 대시보드"}
+    {"name": "시장 인텔리전스", "url": "./index.html#v22-intel", "description": "종합 시장 인텔리전스 KPI 대시보드"},
+    {"name": "지속율 퍼널", "url": "./index.html#v23-funnel", "description": "강좌 지속율 5단계 퍼널 분석"},
+    {"name": "경쟁력 포지셔닝", "url": "./index.html#v23-position", "description": "센터 경쟁력 2D 포지셔닝 맵"},
+    {"name": "수요공급 갭", "url": "./index.html#v23-gap", "description": "카테고리 수요공급 갭 토네이도 차트"},
+    {"name": "페르소나 클러스터", "url": "./index.html#v23-persona", "description": "수강생 6페르소나 Radar 분석"},
+    {"name": "가치 매트릭스", "url": "./index.html#v23-value-matrix", "description": "센터 BCG 가치 매트릭스 4사분면"},
+    {"name": "시간대 최적화", "url": "./index.html#v23-time-opt", "description": "7요일x12시간 경쟁도 히트맵"},
+    {"name": "생태계 건강도", "url": "./index.html#v23-ecosystem", "description": "카테고리 생태계 건강도 게이지"},
+    {"name": "수강 여정", "url": "./index.html#v23-journey", "description": "12주 수강 여정 타임라인 시뮬레이터"}
   ]
 }
