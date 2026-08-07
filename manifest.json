@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v23 강좌지속율퍼널Canvas, 센터경쟁력포지셔닝맵Canvas, 카테고리수요공급갭Canvas, 수강생페르소나클러스터Canvas, 센터가격대비가치매트릭스Canvas, 강좌시간대최적화히트맵Canvas, 카테고리생태계건강도Canvas, 수강여정타임라인시뮬레이터Canvas, 업적246종, 퀴즈285문, AI추천, OSRM 이동시간.",
+  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v24 커리큘럼깊이분석기Canvas, 센터브랜드인지도레이더Canvas, 카테고리크로스셀링매트릭스Canvas, 학습속도분석기Canvas, 시즌수요예측기Canvas, 센터운영최적화스코어Canvas, 가치사슬분석기Canvas, 종합수강전략대시보드Canvas, 업적258종, 퀴즈300문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -102,6 +102,14 @@
     {"name": "가치 매트릭스", "url": "./index.html#v23-value-matrix", "description": "센터 BCG 가치 매트릭스 4사분면"},
     {"name": "시간대 최적화", "url": "./index.html#v23-time-opt", "description": "7요일x12시간 경쟁도 히트맵"},
     {"name": "생태계 건강도", "url": "./index.html#v23-ecosystem", "description": "카테고리 생태계 건강도 게이지"},
-    {"name": "수강 여정", "url": "./index.html#v23-journey", "description": "12주 수강 여정 타임라인 시뮬레이터"}
+    {"name": "수강 여정", "url": "./index.html#v23-journey", "description": "12주 수강 여정 타임라인 시뮬레이터"},
+    {"name": "커리큘럼 깊이", "url": "./index.html#v24-curriculum", "description": "강좌 커리큘럼 깊이 분석기"},
+    {"name": "브랜드 레이더", "url": "./index.html#v24-brand", "description": "센터 브랜드 인지도 6축 레이더"},
+    {"name": "크로스셀링", "url": "./index.html#v24-crosssell", "description": "카테고리 크로스셀링 매트릭스"},
+    {"name": "학습 속도", "url": "./index.html#v24-pace", "description": "수강생 학습 속도 분석기"},
+    {"name": "시즌 수요", "url": "./index.html#v24-season", "description": "강좌 시즌 수요 예측기 히트맵"},
+    {"name": "운영 최적화", "url": "./index.html#v24-operation", "description": "센터 운영 최적화 스코어"},
+    {"name": "가치사슬", "url": "./index.html#v24-valuechain", "description": "강좌 가치사슬 분석기"},
+    {"name": "수강 전략", "url": "./index.html#v24-strategy", "description": "종합 수강 전략 대시보드 8KPI"}
   ]
 }
