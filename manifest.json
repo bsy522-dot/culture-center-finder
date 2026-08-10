@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v24 커리큘럼깊이분석기Canvas, 센터브랜드인지도레이더Canvas, 카테고리크로스셀링매트릭스Canvas, 학습속도분석기Canvas, 시즌수요예측기Canvas, 센터운영최적화스코어Canvas, 가치사슬분석기Canvas, 종합수강전략대시보드Canvas, 업적258종, 퀴즈300문, AI추천, OSRM 이동시간.",
+  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v25 포트폴리오분산투자분석기Canvas, 센터벤치마크매치업비교기Canvas, 수강패턴시퀀스마이닝Canvas, 카테고리성숙도라이프사이클Canvas, 운영시간대갭분석기Canvas, 수강료가성비프론티어Canvas, 접근성인클루전매트릭스Canvas, 종합수강인텔리전스리포트Canvas, 업적270종, 퀴즈315문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -110,6 +110,14 @@
     {"name": "시즌 수요", "url": "./index.html#v24-season", "description": "강좌 시즌 수요 예측기 히트맵"},
     {"name": "운영 최적화", "url": "./index.html#v24-operation", "description": "센터 운영 최적화 스코어"},
     {"name": "가치사슬", "url": "./index.html#v24-valuechain", "description": "강좌 가치사슬 분석기"},
-    {"name": "수강 전략", "url": "./index.html#v24-strategy", "description": "종합 수강 전략 대시보드 8KPI"}
+    {"name": "수강 전략", "url": "./index.html#v24-strategy", "description": "종합 수강 전략 대시보드 8KPI"},
+    {"name": "포트폴리오 분산투자", "url": "./index.html#v25-portfolio", "description": "강좌 포트폴리오 분산투자 분석기"},
+    {"name": "벤치마크 매치업", "url": "./index.html#v25-matchup", "description": "센터 벤치마크 매치업 비교기 6축"},
+    {"name": "시퀀스 마이닝", "url": "./index.html#v25-sequence", "description": "수강 패턴 시퀀스 마이닝"},
+    {"name": "성숙도 라이프사이클", "url": "./index.html#v25-maturity", "description": "카테고리 성숙도 라이프사이클 S커브"},
+    {"name": "시간대 갭분석", "url": "./index.html#v25-gap", "description": "센터 운영 시간대 갭 분석기"},
+    {"name": "가성비 프론티어", "url": "./index.html#v25-frontier", "description": "수강료 가성비 프론티어"},
+    {"name": "접근성 인클루전", "url": "./index.html#v25-inclusion", "description": "강좌 접근성 인클루전 매트릭스"},
+    {"name": "종합 인텔리전스", "url": "./index.html#v25-intelligence", "description": "종합 수강 인텔리전스 리포트 8KPI"}
   ]
 }
