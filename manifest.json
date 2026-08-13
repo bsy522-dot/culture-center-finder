@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 42,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v25 포트폴리오분산투자분석기Canvas, 센터벤치마크매치업비교기Canvas, 수강패턴시퀀스마이닝Canvas, 카테고리성숙도라이프사이클Canvas, 운영시간대갭분석기Canvas, 수강료가성비프론티어Canvas, 접근성인클루전매트릭스Canvas, 종합수강인텔리전스리포트Canvas, 업적270종, 퀴즈315문, AI추천, OSRM 이동시간.",
+  "description": "전국 48,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v26 강좌명키워드동시출현네트워크Canvas, 센터별가격전략포지셔닝맵Canvas, 강사멀티센터활동분석기Canvas, 카테고리대상시간대3차원히트맵Canvas, 수강료구간별효율분석기Canvas, 센터운영다각화트리맵Canvas, 지역별카테고리특화도지수Canvas, 종합강좌데이터헬스체크대시보드Canvas, 업적282종, 퀴즈330문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -118,6 +118,13 @@
     {"name": "시간대 갭분석", "url": "./index.html#v25-gap", "description": "센터 운영 시간대 갭 분석기"},
     {"name": "가성비 프론티어", "url": "./index.html#v25-frontier", "description": "수강료 가성비 프론티어"},
     {"name": "접근성 인클루전", "url": "./index.html#v25-inclusion", "description": "강좌 접근성 인클루전 매트릭스"},
-    {"name": "종합 인텔리전스", "url": "./index.html#v25-intelligence", "description": "종합 수강 인텔리전스 리포트 8KPI"}
+    {"name": "종합 인텔리전스", "url": "./index.html#v25-intelligence", "description": "종합 수강 인텔리전스 리포트 8KPI"},
+    {"name": "키워드 네트워크", "url": "./index.html#v26-keyword", "description": "강좌명 키워드 동시출현 네트워크"},
+    {"name": "가격 포지셔닝", "url": "./index.html#v26-pricing", "description": "센터별 가격 전략 포지셔닝 맵"},
+    {"name": "강사 멀티센터", "url": "./index.html#v26-instructor", "description": "강사 멀티센터 활동 분석기"},
+    {"name": "3차원 히트맵", "url": "./index.html#v26-heatmap3d", "description": "카테고리x대상x시간대 3차원 히트맵"},
+    {"name": "수강료 효율", "url": "./index.html#v26-efficiency", "description": "수강료 구간별 효율 분석기"},
+    {"name": "다각화 트리맵", "url": "./index.html#v26-treemap", "description": "센터 운영 다각화 트리맵"},
+    {"name": "카테고리 특화도", "url": "./index.html#v26-lq", "description": "지역별 카테고리 특화도 지수 LQ"}
   ]
 }
