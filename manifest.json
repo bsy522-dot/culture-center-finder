@@ -1,7 +1,7 @@
 {
   "name": "문화센터 강좌 파인더",
   "short_name": "문센파인더",
-  "description": "전국 48,000+ 문화센터 강좌를 한눈에 비교. 심층분석허브v26 강좌명키워드동시출현네트워크Canvas, 센터별가격전략포지셔닝맵Canvas, 강사멀티센터활동분석기Canvas, 카테고리대상시간대3차원히트맵Canvas, 수강료구간별효율분석기Canvas, 센터운영다각화트리맵Canvas, 지역별카테고리특화도지수Canvas, 종합강좌데이터헬스체크대시보드Canvas, 업적282종, 퀴즈330문, AI추천, OSRM 이동시간.",
+  "description": "전국 48,000+ 문화센터 강좌를 한눈에 비교. 시장분석허브v27 강좌수요예측트렌드분석기Canvas, 센터운영효율성벤치마크레이더Canvas, 수강료세분화가격전략워터폴Canvas, 강좌시너지조합추천기Canvas, 대상별학습수요갭토네이도Canvas, 센터입지경쟁력매트릭스Canvas, 요일별카테고리점유율흐름도Canvas, 종합수강시장인사이트대시보드Canvas, 업적294종, 퀴즈345문, AI추천, OSRM 이동시간.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080B10",
@@ -125,6 +125,14 @@
     {"name": "3차원 히트맵", "url": "./index.html#v26-heatmap3d", "description": "카테고리x대상x시간대 3차원 히트맵"},
     {"name": "수강료 효율", "url": "./index.html#v26-efficiency", "description": "수강료 구간별 효율 분석기"},
     {"name": "다각화 트리맵", "url": "./index.html#v26-treemap", "description": "센터 운영 다각화 트리맵"},
-    {"name": "카테고리 특화도", "url": "./index.html#v26-lq", "description": "지역별 카테고리 특화도 지수 LQ"}
+    {"name": "카테고리 특화도", "url": "./index.html#v26-lq", "description": "지역별 카테고리 특화도 지수 LQ"},
+    {"name": "수요 예측 트렌드", "url": "./index.html#v27-demand", "description": "강좌 수요 예측 트렌드 분석기"},
+    {"name": "효율성 벤치마크", "url": "./index.html#v27-efficiency", "description": "센터 운영 효율성 벤치마크 레이더"},
+    {"name": "가격 전략 워터폴", "url": "./index.html#v27-pricing-waterfall", "description": "수강료 세분화 가격 전략 워터폴"},
+    {"name": "시너지 조합", "url": "./index.html#v27-synergy", "description": "강좌 시너지 조합 추천기"},
+    {"name": "수요 갭 분석", "url": "./index.html#v27-demand-gap", "description": "대상별 학습 수요 갭 토네이도"},
+    {"name": "입지 매트릭스", "url": "./index.html#v27-location", "description": "센터 입지 경쟁력 매트릭스"},
+    {"name": "요일 점유율", "url": "./index.html#v27-daily-flow", "description": "요일별 카테고리 점유율 흐름도"},
+    {"name": "시장 인사이트", "url": "./index.html#v27-market-insight", "description": "종합 수강 시장 인사이트 대시보드"}
   ]
 }

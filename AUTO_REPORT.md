@@ -1319,3 +1319,76 @@ manifest.json: v15.0 설명 + shortcuts 8종 추가 (총24종)
 
 - 커밋: [AUTO] 2026-07-25 culture-center-finder v20.0
 - 파일 변경: v19_patch.js(신규 926줄), index.html, sw.js, manifest.json, AUTO_REPORT.md
+
+---
+
+## v27.0 — 2026-08-16
+
+### 1차: 벤치마크
+
+| 항목 | 클래스101/탈잉 | culture-center-finder v26 | v27 목표 |
+|------|--------------|--------------------------|---------|
+| 수요 예측 | 키워드 트렌드 | 없음 | 카테고리별 월별 개설 추이+선형회귀 예측 Canvas |
+| 운영 효율 벤치마크 | 카테고리별 매출 비교 | 없음 | 8센터유형×6축 레이더 Canvas |
+| 가격 전략 시각화 | 가격대별 필터 | 수강료 효율 분석기 | 가격구간 워터폴+카테고리별 세분화 Canvas |
+| 시너지 분석 | 패키지 추천 | 없음 | 카테고리 결합률 네트워크 Canvas |
+| 수요 갭 | 없음 | 없음 | 대상별 공급-수요 압력 토네이도 Canvas |
+| 입지 분석 | 지역 필터 | 지역별 특화도 LQ | 지역×센터유형 경쟁력 매트릭스 Canvas |
+| 요일 분석 | 스케줄 표시 | 요일시간 히트맵 | 요일별 카테고리 100% 누적영역 Canvas |
+| 종합 대시보드 | 회원 통계 | 헬스체크 대시보드 | 8 KPI 가중평가 게이지 대시보드 Canvas |
+
+### 2차: 개발
+
+#### 프론트엔드 (v27_patch.js — 1,344줄)
+- **IIFE 모듈**: `(function(){ 'use strict'; ... })()` 패턴, `meta[id=ccf-v27-patch]` 중복 실행 방지
+- **Canvas 도구 8종** (620×400 / 640×400, 다크 테마 #080B10):
+  1. 📈 강좌 수요 예측 트렌드 분석기 — TOP6 카테고리 월별(8~12월) 라인차트 + 선형회귀 예측 + 트렌드 등급(S/A/B/C/D)
+  2. 🏢 센터 운영 효율성 벤치마크 — 8센터유형×6축(강좌수/카테고리다양성/가격경쟁력/시간대활용/대상다양성/지역커버) 레이더
+  3. 💵 수강료 세분화 가격 전략 워터폴 — 6개 가격구간 누적 워터폴 + 카테고리별 필터 + 평균가 비교
+  4. 🔗 강좌 시너지 조합 추천기 — TOP12 카테고리 공동개설 결합률 네트워크 + 상위 시너지 페어 표시
+  5. 👥 대상별 학습 수요 갭 토네이도 — 성인/유아동/패밀리/미지정 공급-수요 압력 토네이도 차트
+  6. 📍 센터 입지 경쟁력 매트릭스 — 지역×센터유형 히트맵 + LQ(Location Quotient) 색상 매핑
+  7. 📊 요일별 카테고리 점유율 흐름도 — 7요일×TOP6+그외 100% 누적 영역차트 + 레이어 강조
+  8. 🎯 종합 수강 시장 인사이트 대시보드 — 8 KPI(시장성장세/가격접근성/공급수요균형/시너지밀도/입지커버리지/요일운영균형/센터유형다양성/카테고리폭) 가중평가 게이지
+
+#### 백엔드/데이터
+- 데이터 소스: `window.__v4Data` (data/all.json, 48,225건) — 가짜 데이터 없음
+- 데이터 인덱스: d[0]=센터유형, d[1]=센터명, d[3]=카테고리, d[5]=대상, d[6]=요일, d[7]=시간, d[8]=수강료, d[10]=접수상태, d[13]=개강일, d[14]=회차
+- 파생 함수: parsePrice(), parseHour(), parseDays(), parseSessions(), parseMonth(), parseDurationHours(), getRegion(), getCenterType(), classifyTarget(), getPriceBand()
+
+#### 콘텐츠
+- **퀴즈 15문** (330→345): 8개 Canvas 도구 내용 기반, 4지선다, 정답 인덱스 0
+- **업적 12종** (282→294): 8개 섹션 열기 업적 + 퀴즈마스터(10문+정답) + 퀴즈만점(15문) + 탐험가(5섹션+) + 정복자(전체완료)
+
+#### 오디오/비주얼
+- **SFX 12종**: click, open, close, correct, wrong, achieve, scroll, hover, complete, expand, collapse, milestone — Web Audio API 오실레이터
+- **색상 테마**: 앰버(#F59E0B) v27 전용 브랜딩, 다크 배경 #080B10
+- **키보드 단축키 9종**: Shift+A~K(8섹션), Shift+9(퀴즈)
+
+#### 통합
+- **하단 네비바**: 기존 `.bottom-nav-inner`에 9개 버튼 append (UI불가침 규칙 준수)
+- **허브 배치**: `#ccf-v26-hub` 뒤에 삽입 (없으면 `#root` append)
+- **토글**: 전체 열기/닫기 버튼
+- **SEO**: title/description/og/twitter 메타 태그 v27 업데이트
+- **PWA**: sw.js CACHE_NAME `ccf-v28-20260816`, STATIC_ASSETS에 v27_patch.js 추가
+- **매니페스트**: description v27 업데이트, shortcuts 8종 추가 (111→119)
+
+### 3차: 품질 검증
+
+| 항목 | 결과 | 비고 |
+|------|------|------|
+| node -c v27_patch.js | PASS | 문법 오류 없음 |
+| manifest.json 파싱 | PASS | JSON 유효 |
+| 외부 CDN | 0건 | v27_patch.js에 외부 URL 없음 |
+| 개인정보 노출 | 0건 | 확인 완료 |
+| 하단 고정 네비바 | 0건 | UI불가침 규칙 준수 — 기존 nav에 append |
+| 실데이터 전용 | PASS | window.__v4Data(data/all.json) 기반만 사용 |
+| 중복 실행 방지 | PASS | meta[id=ccf-v27-patch] 마커 |
+| HTML entities | PASS | esc() 함수 적용 |
+| roundRect 폴리필 | PASS | Canvas 호환성 보장 |
+| 인터랙티브 기능 | PASS | 클릭 드릴다운/전환/필터/호버 이벤트 정상 |
+
+### 4차: 배포
+
+- 커밋: [AUTO] 2026-08-16 culture-center-finder v27.0
+- 파일 변경: v27_patch.js(신규 1,344줄), index.html, sw.js, manifest.json, AUTO_REPORT.md
