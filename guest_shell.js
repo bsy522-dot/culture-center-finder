@@ -168,13 +168,25 @@
     });
   }
 
+  // 시트 안내문구 갱신. 도구 타일은 패치가 로드된 '뒤에도' sweep()이 비동기로 계속 채우므로
+  // (패치마다 자기 내비 버튼을 붙이는 시점이 다르다) 이 함수는 sweep() 끝에서도 매번 불린다.
+  // 2026-08-31 재감사 N-2: 로드 직후 한 번만 부르던 탓에 도구 27개가 다 뜬 뒤에도
+  // '불러오지 못했습니다'가 영구히 남아 있었다.
   function refreshSheetState() {
+    if (!sheet) return;
     var empty = sheet.querySelector('#ccf-expert-empty');
-    if (grid.children.length > 0) { empty.hidden = true; return; }
-    empty.hidden = false;
-    empty.textContent = patchState === 'loading'
-      ? '분석 도구를 불러오는 중입니다…'
-      : '분석 도구를 불러오지 못했습니다. 새로고침 후 다시 시도해 주세요.';
+    if (!empty) return;
+    if (grid.children.length > 0) {
+      if (!empty.hidden) empty.hidden = true;
+      return;
+    }
+    var msg = patchState === 'done'
+      ? '분석 도구를 불러오지 못했습니다. 새로고침 후 다시 시도해 주세요.'
+      : '분석 도구를 불러오는 중입니다…';
+    if (empty.hidden) empty.hidden = false;
+    // 같은 문자열을 다시 써도 childList 변경으로 잡혀 MutationObserver→sweep→여기로 되돌아온다.
+    // 값이 실제로 달라질 때만 쓴다.
+    if (empty.textContent !== msg) empty.textContent = msg;
   }
 
   function openSheet() {
@@ -244,7 +256,12 @@
     }
   }
 
-  function sweep() { sweepNav(); sweepHubs(); }
+  function sweep() {
+    sweepNav();
+    sweepHubs();
+    // 타일이 뒤늦게 도착해도 안내문구가 따라오도록 매 스윕마다 재평가한다(재감사 N-2).
+    if (sheet && !sheet.hidden) refreshSheetState();
+  }
 
   /* ── 기동 ─────────────────────────────────────────────────────────── */
   function start() {
