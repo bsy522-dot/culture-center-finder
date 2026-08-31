@@ -122,6 +122,7 @@ async function copyStatics() {
       if (e.code !== 'ENOENT') throw e; // 없으면 조용히 skip
     }
   }
+  await sanitizeManifest();
   for (const d of STATIC_DIRS) {
     const srcP = path.join(ROOT, d);
     try {
@@ -130,6 +131,28 @@ async function copyStatics() {
       if (e.code !== 'ENOENT') throw e;
     }
   }
+}
+
+/**
+ * 배포용 manifest.json 위생 처리 (2026-08-31 신설 — 감사 P0-1의 OS 메뉴판)
+ * 외부 봇이 manifest 의 shortcuts 에 분석도구 항목을 계속 쌓아 119개까지 불어났다.
+ * PWA shortcuts 는 안드로이드에서 앱 아이콘을 길게 누르면 뜨는 메뉴라, 설치한 학부모가
+ * 보는 첫 메뉴가 '트렌드 분석 / 강사 평가 / 비용 최적화'였다.
+ * 게다가 이 앱에는 `#c=`(강좌 딥링크) 말고 해시 라우팅이 아예 없어 119개 전부 죽은 링크였고,
+ * 그중 40개는 배포조차 되지 않는 v8~v15 기능을 가리켰다.
+ * → 배포본에서는 shortcuts 를 통째로 제거한다. 봇이 원본에 다시 채워 넣어도 라이브는 안전하다.
+ *   (탭 상태가 URL로 주소화되면 그때 '검색·즐겨찾기' 같은 진짜 바로가기만 다시 넣을 것)
+ */
+async function sanitizeManifest() {
+  const p = path.join(DIST_DIR, 'manifest.json');
+  let m;
+  try { m = JSON.parse(await fs.readFile(p, 'utf8')); }
+  catch (e) { if (e.code === 'ENOENT') return; throw e; }
+  const n = Array.isArray(m.shortcuts) ? m.shortcuts.length : 0;
+  if (!n) return;
+  delete m.shortcuts;
+  await fs.writeFile(p, JSON.stringify(m, null, 2), 'utf8');
+  console.log(`[build]   manifest shortcuts ${n}건 제거(해시 라우팅 없음 — 전부 죽은 링크)`);
 }
 
 async function main() {
