@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ccf-v28-20260816';
+const CACHE_NAME = 'ccf-v29-20260831';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -435,6 +435,11 @@ function getRegion(addr){
 }
 
 const CATS=["백화점","대형마트"];
+// 오늘 날짜(로컬 시간, "YYYY.MM.DD"). toISOString()은 UTC라 한국 새벽 0~9시에 하루가 밀리는 함정 회피.
+const localToday=()=>{const d=new Date();return d.getFullYear()+"."+String(d.getMonth()+1).padStart(2,"0")+"."+String(d.getDate()).padStart(2,"0");};
+// 개강일이 이미 지난 강좌 제거 — "지금 신청해서 처음부터 들을 수 있는 강좌만"(2026-07-10 정책)의 화면단 보강.
+// 파이프라인이 배포 시점에 걸러도 다음 갱신 전까지 날이 지나면 이미 시작한 강좌가 '진행중'으로 남던 문제(2026-08-31 병석님 지적).
+const dropStarted=(rows)=>{const t=localToday();return Array.isArray(rows)?rows.filter(r=>!r[13]||String(r[13])>=t):rows;};
 const SL=["접수중","마감임박","대기접수","조기마감주의","접수예정","확인필요","추가모집","모집마감"];
 const SC={"접수중":"#34D399","마감임박":"#FB923C","대기접수":"#FBBF24","조기마감주의":"#EF4444","접수예정":"#60A5FA","확인필요":"#94A3B8","추가모집":"#34D399","모집마감":"#EF4444"};
 const CC={"백화점":"#E8A0BF","대형마트":"#95D5B2"};
@@ -878,10 +883,11 @@ function App(){
       ]).then(([d,cc])=>{
         setSplashPct(90);
         CENTER_COORDS=cc;
-        setData(d);setAllData(d);
+        const live=dropStarted(d);
+        setData(live);setAllData(live);
         setSplashPct(100);
         setTimeout(()=>{setSplashDone(true);setTimeout(()=>setLoading(false),400);},300);
-        setSearchMsg(d.length.toLocaleString()+"개 강좌 - 출발지를 입력하세요");
+        setSearchMsg(live.length.toLocaleString()+"개 강좌 - 출발지를 입력하세요");
       }).catch(e=>{console.error(e);setLoading(false);setSearchMsg("로드 실패");});
     };
     // 지역 분할 로딩: 전국 14MB를 한 번에 받지 않고 지역별 파일을 병렬로 받아
@@ -896,7 +902,7 @@ function App(){
       await Promise.all(names.map((n,pi)=>
         fetch("data/regions/"+encodeURIComponent(n)+".json").then(r=>{if(!r.ok)throw new Error(n);return r.json();}).then(d=>{
           parts[pi]=d;done++;
-          const rows=[].concat(...parts.filter(Boolean));
+          const rows=dropStarted([].concat(...parts.filter(Boolean)));
           setSplashPct(Math.min(100,20+Math.round(done/names.length*80)));
           setData(rows);setAllData(rows);
           if(!shown){shown=true;setSplashDone(true);setTimeout(()=>setLoading(false),400);}
@@ -912,7 +918,7 @@ function App(){
   const showT=(m)=>{setToast(m);if(tt.current)clearTimeout(tt.current);tt.current=setTimeout(()=>setToast(null),2500);};
 
   const childAge = settings.birthYear ? (new Date().getFullYear() - settings.birthYear) : 0;
-  const TODAY = new Date().toISOString().slice(0,10).replace(/-/g,'.');
+  const TODAY = localToday();
 
   // 검색 인덱스(행별 소문자 텍스트+초성) — 매 키입력마다 toLowerCase 반복 방지 + 초성검색 지원
   const searchIdx=useMemo(()=>data.map(r=>{
@@ -1333,6 +1339,10 @@ function App(){
                   {favOnly&&<span style={{color:"#FBBF24"}}> | 즐겨찾기</span>}
                   {dataDate&&<span style={{fontSize:8.5,color:"var(--text-faint)"}} title="데이터 수집 기준일">{"| 데이터 "+dataDate}</span>}
                 </div>
+                {(()=>{if(!dataDate)return null;const age=Math.floor((new Date(localToday().replace(/\./g,"-"))-new Date(String(dataDate).replace(/\./g,"-")))/86400000);if(!(age>=3))return null;
+                  return <div role="alert" style={{marginTop:6,padding:"7px 10px",borderRadius:8,background:"rgba(251,146,60,0.14)",border:"1px solid rgba(251,146,60,0.45)",color:"#FDBA74",fontSize:11,fontWeight:700,lineHeight:1.4}}>
+                    ⚠ 강좌 정보가 {age}일 전({dataDate}) 자료입니다 — 자동 갱신이 지연되고 있습니다. 신청 전 센터에 접수 여부를 확인하세요.
+                  </div>;})()}
               </div>
             </div>
             <div style={{display:"flex",gap:6,alignItems:"center",flexWrap:"wrap"}}>
@@ -1751,7 +1761,7 @@ function App(){
                               <td style={{padding:"5px 3px",color:"var(--accent)",fontSize:9,textAlign:"center"}}>{r[6]}</td>
                               <td style={{padding:"5px 3px",color:"#FFB347",fontWeight:600,fontSize:9}}>{r[7]}</td>
                               <td style={{padding:"5px 3px",color:"#95D5B2",fontSize:9}}>{r[8]}</td>
-                              <td style={{padding:"5px 3px",fontSize:8.5,whiteSpace:"nowrap",color:r[13]&&r[13]>=TODAY?"#34D399":"var(--text-faint)"}}>{r[13]?r[13].slice(5):"-"}{r[13]&&r[13]<TODAY?" 진행중":""}{(()=>{const dd=ddayOf(r[13],TODAY);return dd!==null&&dd>=0&&dd<=7?<span style={{color:dd<=3?"#F87171":"#FBBF24",fontWeight:700}}>{" "+(dd===0?"오늘":"D-"+dd)}</span>:null;})()}</td>
+                              <td style={{padding:"5px 3px",fontSize:8.5,whiteSpace:"nowrap",color:r[13]&&r[13]>=TODAY?"#34D399":"var(--text-faint)"}}>{r[13]?r[13].slice(5):"-"}{r[13]&&r[13]<TODAY?(r[14]&&Number(r[14])<=1?" 종료":" 시작됨"):""}{(()=>{const dd=ddayOf(r[13],TODAY);return dd!==null&&dd>=0&&dd<=7?<span style={{color:dd<=3?"#F87171":"#FBBF24",fontWeight:700}}>{" "+(dd===0?"오늘":"D-"+dd)}</span>:null;})()}</td>
                               <td style={{padding:"5px 3px",textAlign:"center",fontSize:8.5,color:"var(--text-muted)"}}>{r[14]?r[14]+"회":"-"}</td>
                               <td style={{padding:"5px 3px",textAlign:"center"}}><span style={{color:sc,fontWeight:700,fontSize:8.5}}>{r[10]}</span></td>
                               <td style={{padding:"5px 2px",textAlign:"center"}}>
