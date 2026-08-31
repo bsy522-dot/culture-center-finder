@@ -1,10 +1,11 @@
-const CACHE_NAME = 'ccf-v29-20260831';
+const CACHE_NAME = 'ccf-v30-20260831-icon';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
+  './icon-512-maskable.png',
   './v4_patch.js',
   './v5_patch.js',
   './v6_patch.js',

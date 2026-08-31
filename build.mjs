@@ -69,7 +69,7 @@ const LAZY_PATCHES = [
 
 // dist 로 복사할 정적 자산(존재하는 것만 복사). data/ 는 디렉터리 재귀 복사.
 const STATIC_FILES = [
-  'manifest.json', 'sw.js', 'icon-192.png', 'icon-512.png',
+  'manifest.json', 'sw.js', 'icon-192.png', 'icon-512.png', 'icon-512-maskable.png',
   'privacy.html', // 개인정보처리방침 — 배포 사이트에 반드시 포함(스토어 심사 하드게이트)
   'robots.txt', 'sitemap.xml', // SEO — 검색엔진 크롤링 허용 + 지역 랜딩 색인(gen_seo_pages.py 생성물)
 ];
