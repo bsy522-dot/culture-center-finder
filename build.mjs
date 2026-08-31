@@ -36,6 +36,27 @@ const BABEL_CLOSE = '</script>';
 // 원본 index.html 에서 그대로 제거할 @babel/standalone 로더 라인
 const BABEL_CDN_RE = /[ \t]*<script[^>]*@babel\/standalone[^>]*><\/script>\s*\n?/i;
 
+// ★ 배포 허용 패치 화이트리스트 (2026-08-31 신설 — 감사 P0-1)
+// 외부 자동봇이 매주 [AUTO] 커밋으로 vN_patch.js를 추가하고 index.html에 <script> 태그를 붙인다.
+// 이전에는 루트의 vN_patch.js를 '전량 자동수집'해 dist에 넣었기 때문에, 아무도 승인하지 않은
+// 기능이 그대로 손님 화면(특히 하단 내비)에 쌓였다(내비 31칸 중 27칸이 B2B 분석도구).
+// 이제는 아래 목록에 있는 것만 dist로 복사하고, 목록에 없는 패치의 <script> 태그는
+// dist/index.html 에서 주석 처리한다(파일은 보존 — 404도 나지 않음).
+//
+// ※새 패치를 배포하려면: (1) 실데이터 기반인지 감사(CLAUDE.md 5항) → (2) 여기에 이름 추가.
+//   추가하지 않으면 라이브에 절대 나가지 않는다. 이것이 의도된 동작이다.
+const ALLOWED_PATCHES = new Set([
+  // 손님용 기능 패치(유지) — 세분화·AI추천·시간표·리뷰·플래너·진도트래커 등
+  'v4_patch.js', 'v5_patch.js', 'v6_patch.js', 'v7_patch.js',
+  // 전문가용 분석 허브(유지하되 guest_shell.js가 '분석' 시트 안으로 격리)
+  'v16_patch.js', 'v17_patch.js', 'v18_patch.js', 'v19_patch.js', 'v20_patch.js',
+  'v21_patch.js', 'v22_patch.js', 'v25_patch.js', 'v26_patch.js', 'v27_patch.js',
+  // 손님 우선 셸 — 내비 격리·빈결과 안내·롯데마트 대체동선(직접 작성, 봇 생성물 아님)
+  'guest_shell.js',
+]);
+// v8~v15(가짜 인물·리뷰·Math.random 통계), v23·v24(이용자 행동 날조)는 의도적으로 제외 —
+// 되살리려면 감사 후 병석님 승인 필요.
+
 // dist 로 복사할 정적 자산(존재하는 것만 복사). data/ 는 디렉터리 재귀 복사.
 const STATIC_FILES = [
   'manifest.json', 'sw.js', 'icon-192.png', 'icon-512.png',
@@ -70,12 +91,25 @@ function buildDistHtml(html) {
   const end = out.indexOf(BABEL_CLOSE, start + BABEL_OPEN.length);
   const blockEnd = end + BABEL_CLOSE.length;
   out = out.slice(0, start) + '<script src="app.js"></script>' + out.slice(blockEnd);
+
+  // (c) 화이트리스트에 없는 vN_patch.js <script> 태그 제거(주석화)
+  //     — 파일을 복사하지 않으므로 태그를 남겨두면 404 콘솔 에러가 난다. 태그째 무력화한다.
+  //     ※이미 `<!-- <script src="v23_patch.js"></script> -->` 처럼 주석 안에 든 태그는 건드리지 않는다.
+  //       주석을 또 감싸면 `<!-- <!-- … --> -->` 가 되어 브라우저가 첫 `-->` 에서 주석을 닫고
+  //       남은 ` -->` 를 본문 텍스트로 그려버린다(2026-08-31 실측).
+  out = out.replace(/(<!--\s*)?<script\s+src="(v\d+_patch\.js)"><\/script>/g, (m, pre, f) => {
+    if (pre) return m;                       // 이미 비활성화된 태그 — 그대로 둔다
+    return ALLOWED_PATCHES.has(f) ? m : `<!-- 배포 제외(build.mjs ALLOWED_PATCHES 미등재): ${f} -->`;
+  });
   return out;
 }
 
 async function copyStatics() {
-  // vN_patch.js 자동 수집 — 외부 봇이 v9,v10… 추가해도 dist 누락 없이 단독 배포 유지
-  const patchFiles = (await fs.readdir(ROOT)).filter(f => /^v\d+_patch\.js$/.test(f));
+  // 화이트리스트에 있는 패치만 dist로 복사(자동 수집 금지 — 위 ALLOWED_PATCHES 주석 참조)
+  const onDisk = (await fs.readdir(ROOT)).filter(f => /^v\d+_patch\.js$/.test(f) || f === 'guest_shell.js');
+  const patchFiles = onDisk.filter(f => ALLOWED_PATCHES.has(f));
+  const skipped = onDisk.filter(f => !ALLOWED_PATCHES.has(f));
+  if (skipped.length) console.log(`[build]   미승인 패치 ${skipped.length}건 배포 제외: ${skipped.join(', ')}`);
   for (const f of patchFiles) {
     try { await fs.copyFile(path.join(ROOT, f), path.join(DIST_DIR, f)); }
     catch (e) { if (e.code !== 'ENOENT') throw e; }
