@@ -129,7 +129,10 @@
      <meta name="ccf-lazy-patches"> 에 파일명만 남긴다. 손님 대부분은 강좌만 찾고
      나가므로 첫 방문 전송량에서 통째로 빠진다. 시트를 처음 열 때만 순서대로 주입한다.
      meta 가 없으면(원본 index.html = legacy 폴백) 이미 로드돼 있으므로 아무것도 안 한다. */
-  var patchState = 'idle';   // idle → loading → done
+  var patchState = 'idle';   // idle → loading → done(스크립트 로드 완료)
+  var doneAt = 0;            // 스크립트 로드가 끝난 시각
+  var GRACE_MS = 10000;      // 로드 완료 후 타일이 붙기를 기다려 주는 시간
+  var graceTimer = null;
 
   function lazyList() {
     var m = document.querySelector('meta[name="ccf-lazy-patches"]');
@@ -164,6 +167,7 @@
                           Promise.resolve());
     }).then(function () {
       patchState = 'done';
+      doneAt = Date.now();
       sweep();
     });
   }
@@ -180,9 +184,19 @@
       if (!empty.hidden) empty.hidden = true;
       return;
     }
-    var msg = patchState === 'done'
+    // '스크립트 로드 완료'와 '도구 타일 준비 완료'는 다르다. 각 패치는 스크립트가 실행된 뒤
+    // 저마다 다른 시점에 하단 내비 버튼을 붙이고, guest_shell 은 그걸 관찰해 시트로 옮긴다.
+    // 그래서 로드 직후 타일이 비어 있는 것은 '실패'가 아니라 '아직'이다.
+    // 유예 시간이 지나도록 타일이 하나도 없을 때만 실패라고 말한다(재감사 N-2 후속).
+    var failed = patchState === 'done' && doneAt && (Date.now() - doneAt > GRACE_MS);
+    var msg = failed
       ? '분석 도구를 불러오지 못했습니다. 새로고침 후 다시 시도해 주세요.'
       : '분석 도구를 불러오는 중입니다…';
+    // 유예가 끝나는 시점에 한 번 다시 평가해 문구가 멈춰 있지 않게 한다.
+    if (!failed && patchState === 'done' && doneAt && !graceTimer) {
+      graceTimer = setTimeout(function () { graceTimer = null; refreshSheetState(); },
+                              Math.max(500, GRACE_MS - (Date.now() - doneAt)) + 100);
+    }
     if (empty.hidden) empty.hidden = false;
     // 같은 문자열을 다시 써도 childList 변경으로 잡혀 MutationObserver→sweep→여기로 되돌아온다.
     // 값이 실제로 달라질 때만 쓴다.
