@@ -29,6 +29,14 @@
   css.textContent = [
     /* 분석 허브: 전문가 모드일 때만 표시 */
     'body:not(.' + EXPERT_ON + ') [data-ccf-hub]{display:none!important}',
+    /* 반대로 전문가 모드에서는 강좌 목록·푸터를 감춘다.
+       (1) 분석 화면 위에 강좌 목록이 남아 있으면 무슨 화면인지 알 수 없다.
+       (2) 더 중요한 이유: 도구를 누르면 허브까지 스크롤하는데, 그 과정에서 목록 하단의
+           무한스크롤 감시자(sentinel)가 화면에 들어와 카드를 100개씩 계속 붙인다.
+           실측으로 7,110px 페이지가 33,261px까지 불어났다. 목록을 감추면 애초에 안 걸린다. */
+    'body.' + EXPERT_ON + ' #main-content{display:none!important}',
+    'body.' + EXPERT_ON + ' .app-footer{display:none!important}',
+    'body.' + EXPERT_ON + ' #ccf-expert-launcher{display:none!important}',
 
     /* 전문가용 진입 카드(데스크톱·모바일 공통, 목록 맨 아래) */
     '#ccf-expert-launcher{max-width:700px;margin:28px auto 8px;padding:16px 18px;border:1px dashed var(--card-border,rgba(255,255,255,.14));border-radius:14px;background:var(--card-bg,rgba(255,255,255,.03));display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}',
@@ -116,10 +124,64 @@
     });
   }
 
+  /* ── 분석 패치 지연 로드 ────────────────────────────────────────
+     build.mjs 가 배포본에서 분석 패치 10개(551KB)의 <script> 태그를 빼고
+     <meta name="ccf-lazy-patches"> 에 파일명만 남긴다. 손님 대부분은 강좌만 찾고
+     나가므로 첫 방문 전송량에서 통째로 빠진다. 시트를 처음 열 때만 순서대로 주입한다.
+     meta 가 없으면(원본 index.html = legacy 폴백) 이미 로드돼 있으므로 아무것도 안 한다. */
+  var patchState = 'idle';   // idle → loading → done
+
+  function lazyList() {
+    var m = document.querySelector('meta[name="ccf-lazy-patches"]');
+    var v = m && m.getAttribute('content');
+    return v ? v.split(',').map(function (x) { return x.trim(); }).filter(Boolean) : [];
+  }
+
+  function loadScript(src) {
+    return new Promise(function (res) {
+      var el = document.createElement('script');
+      el.src = src;
+      el.async = false;              // 주입 순서 = 실행 순서(허브 연결 순서 유지)
+      el.onload = el.onerror = function () { res(); };
+      document.body.appendChild(el);
+    });
+  }
+
+  function ensurePatches() {
+    if (patchState !== 'idle') return Promise.resolve();
+    var files = lazyList();
+    if (!files.length) { patchState = 'done'; return Promise.resolve(); }
+    patchState = 'loading';
+    // 패치는 window.__v4Data(강좌 원본)를 읽는다. 아직 안 왔으면 잠깐 기다린다(최대 8초).
+    var waited = 0;
+    return new Promise(function (res) {
+      (function wait() {
+        if ((window.__v4Data && window.__v4Data.length) || waited >= 8000) return res();
+        waited += 200; setTimeout(wait, 200);
+      })();
+    }).then(function () {
+      return files.reduce(function (p, f) { return p.then(function () { return loadScript(f); }); },
+                          Promise.resolve());
+    }).then(function () {
+      patchState = 'done';
+      sweep();
+    });
+  }
+
+  function refreshSheetState() {
+    var empty = sheet.querySelector('#ccf-expert-empty');
+    if (grid.children.length > 0) { empty.hidden = true; return; }
+    empty.hidden = false;
+    empty.textContent = patchState === 'loading'
+      ? '분석 도구를 불러오는 중입니다…'
+      : '분석 도구를 불러오지 못했습니다. 새로고침 후 다시 시도해 주세요.';
+  }
+
   function openSheet() {
     buildSheet();
-    sheet.querySelector('#ccf-expert-empty').hidden = grid.children.length > 0;
     sheet.hidden = false;
+    refreshSheetState();
+    ensurePatches().then(refreshSheetState);
     var first = grid.querySelector('button') || sheet.querySelector('.ccf-x');
     if (first) { try { first.focus(); } catch (_) {} }
   }
@@ -165,6 +227,8 @@
     }
     // 목록 맨 아래 전문가용 진입 카드
     // (데스크톱에는 하단 내비가 없으므로 — .bottom-nav 는 768px 이하 전용 — 이 카드가 유일한 입구)
+    // 지연 로드 중이면 허브가 아직 없으므로 #root 끝에 붙인다.
+    if (!first && !launcher && lazyList().length) first = document.getElementById('root');
     if (first && !launcher) {
       buildSheet();
       launcher = document.createElement('div');
@@ -175,7 +239,8 @@
         '강좌를 찾는 데는 필요 없어서 기본으로 접어 두었습니다.</div></div>' +
         '<button type="button">열어 보기</button>';
       launcher.querySelector('button').addEventListener('click', openSheet);
-      first.parentNode.insertBefore(launcher, first);
+      if (first.id === 'root') first.appendChild(launcher);
+      else first.parentNode.insertBefore(launcher, first);
     }
   }
 

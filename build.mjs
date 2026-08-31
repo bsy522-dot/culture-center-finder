@@ -57,6 +57,16 @@ const ALLOWED_PATCHES = new Set([
 // v8~v15(가짜 인물·리뷰·Math.random 통계), v23·v24(이용자 행동 날조)는 의도적으로 제외 —
 // 되살리려면 감사 후 병석님 승인 필요.
 
+// ★지연 로드 대상 (2026-08-31 — 감사 C-6 "손님이 안 쓸 분석 JS 상시 로드")
+// 아래 10개(551KB)는 '분석 도구' 시트를 처음 열 때만 내려받는다. 손님 대부분은 강좌만 찾고
+// 나가므로 첫 방문 전송량에서 통째로 빠진다. 파일은 그대로 배포되고, guest_shell.js 가
+// <meta name="ccf-lazy-patches"> 를 읽어 필요할 때 순서대로 주입한다(순서 = 허브 연결 순서).
+// v4~v7 은 손님용 기능(세분화·추천·시간표·진도)이라 지연 로드 대상이 아니다.
+const LAZY_PATCHES = [
+  'v16_patch.js', 'v17_patch.js', 'v18_patch.js', 'v19_patch.js', 'v20_patch.js',
+  'v21_patch.js', 'v22_patch.js', 'v25_patch.js', 'v26_patch.js', 'v27_patch.js',
+];
+
 // dist 로 복사할 정적 자산(존재하는 것만 복사). data/ 는 디렉터리 재귀 복사.
 const STATIC_FILES = [
   'manifest.json', 'sw.js', 'icon-192.png', 'icon-512.png',
@@ -97,10 +107,22 @@ function buildDistHtml(html) {
   //     ※이미 `<!-- <script src="v23_patch.js"></script> -->` 처럼 주석 안에 든 태그는 건드리지 않는다.
   //       주석을 또 감싸면 `<!-- <!-- … --> -->` 가 되어 브라우저가 첫 `-->` 에서 주석을 닫고
   //       남은 ` -->` 를 본문 텍스트로 그려버린다(2026-08-31 실측).
+  const lazy = new Set(LAZY_PATCHES);
+  const deferred = [];
   out = out.replace(/(<!--\s*)?<script\s+src="(v\d+_patch\.js)"><\/script>/g, (m, pre, f) => {
     if (pre) return m;                       // 이미 비활성화된 태그 — 그대로 둔다
-    return ALLOWED_PATCHES.has(f) ? m : `<!-- 배포 제외(build.mjs ALLOWED_PATCHES 미등재): ${f} -->`;
+    if (!ALLOWED_PATCHES.has(f)) return `<!-- 배포 제외(build.mjs ALLOWED_PATCHES 미등재): ${f} -->`;
+    if (lazy.has(f)) { deferred.push(f); return `<!-- 지연 로드('분석 도구' 첫 사용 시): ${f} -->`; }
+    return m;
   });
+  // (d) 지연 로드 목록을 head 에 남긴다 — guest_shell.js 가 읽어 필요할 때 주입한다.
+  //     이 meta 가 없으면(=원본 index.html 로 여는 legacy 폴백) 패치는 지금까지처럼 즉시 로드된다.
+  if (deferred.length) {
+    const meta = `<meta name="ccf-lazy-patches" content="${deferred.join(',')}">
+</head>`;
+    out = out.replace('</head>', meta);
+    console.log(`[build]   분석 패치 ${deferred.length}건 지연 로드 전환(첫 방문 전송량에서 제외)`);
+  }
   return out;
 }
 
