@@ -1,4 +1,4 @@
-/*! hub-back.js v1.0.2 — 폰 뒤로가기(◁)가 앱 '안'에서 한 단계씩 되돌아가게 하는 공용 부품 (PRIME UI · 2026-09-14)
+/*! hub-back.js v1.0.3 — 폰 뒤로가기(◁)가 앱 '안'에서 한 단계씩 되돌아가게 하는 공용 부품 (PRIME UI · 2026-09-14)
  *
  * 왜 필요한가
  *   안드로이드 뒤로가기 키는 브라우저 히스토리를 한 칸 되돌린다. 탭·바텀시트·상세 화면을 JS 로만
@@ -19,10 +19,12 @@
  *     크롬은 history.back() 의 목적지를 호출 시점에 고정하므로, 닫자마자 새 화면을 열면 새 칸이 고아가 되고
  *     페이지가 바닥까지 떨어지던 문제(서랍 교체·PIN 뒤 확인창)를 막는다.
  *   - v1.0.2: 새로고침(크롬 당겨서 새로고침) 뒤 남은 가짜 칸 N 개를 history.go(-N) 으로 한 번에 걷어낸다(죽은 ◁ 누름 방지).
+ *   - v1.0.3: 맨 위가 아닌 '중간 칸'의 pop(예: React 가 정리 함수를 선언 순서대로 불러 아래 층이 먼저 닫힐 때)은
+ *     죽은 표시만 해 두고, 그 위 칸이 닫힐 때(앱이 닫든 ◁로 닫든) 죽은 칸들을 함께 걷어낸다 → 헛눌림 없음.
  */
 (function(){
   "use strict";
-  if(window.HubBack && window.HubBack.version >= "1.0.2") return;
+  if(window.HubBack && window.HubBack.version >= "1.0.3") return;
   var stack = [], inPop = false, silent = 0, pendingBack = 0, timer = null;
 
   function state(){ return {hubBack: stack.length}; }
@@ -34,11 +36,16 @@
       try{ history.go(-n); }catch(e){ silent = 0; }
     }
   }
+  function scheduleBack(n){
+    if(n <= 0) return;
+    pendingBack += n;
+    if(!timer) timer = setTimeout(flush, 0);
+  }
 
   function push(name, close, opts){
     opts = opts || {};
     var top = stack[stack.length - 1];
-    if(opts.replace && top && top.name === name){ top.close = close; return top; }
+    if(opts.replace && top && top.name === name && !top.dead){ top.close = close; return top; }
     var entry = {name: name, close: close, pushed: false, dead: false};
     if(pendingBack > 0){
       /* 방금 닫힌 칸이 아직 되돌려지기 전 → 그 칸을 이 화면의 칸으로 재활용(이동 없음) */
@@ -53,18 +60,21 @@
     return entry;
   }
 
-  /* ref = 이름(문자열) 또는 push 가 돌려준 토큰(객체). 토큰이면 그 칸이 아직 맨 위에 살아 있을 때만 닫는다 */
+  /* ref = 이름(문자열) 또는 push 가 돌려준 토큰(객체). 살아 있는 칸 중 맨 위에서 가까운 것을 닫는다 */
   function pop(ref){
     if(inPop) return;
-    var top = stack[stack.length - 1];
-    if(!top) return;
-    if(ref && typeof ref === "object"){ if(ref.dead || top !== ref) return; }
-    else if(ref && top.name !== ref) return;
-    stack.pop(); top.dead = true;
-    if(top.pushed){
-      pendingBack++;
-      if(!timer) timer = setTimeout(flush, 0);
+    var idx = -1, i;
+    if(ref && typeof ref === "object"){
+      if(ref.dead) return;
+      idx = stack.lastIndexOf(ref);
+    } else {
+      for(i = stack.length - 1; i >= 0; i--){ if(!stack[i].dead && (!ref || stack[i].name === ref)){ idx = i; break; } }
     }
+    if(idx < 0) return;
+    if(idx !== stack.length - 1){ stack[idx].dead = true; return; }   /* 중간 칸: 죽은 표시만 */
+    var n = 0, e = stack.pop(); e.dead = true; if(e.pushed) n++;
+    while(stack.length && stack[stack.length - 1].dead){ var d = stack.pop(); if(d.pushed) n++; }   /* 바로 아래 죽은 칸들도 함께 */
+    scheduleBack(n);
   }
 
   function onPop(ev){
@@ -74,10 +84,14 @@
     inPop = true;
     try{
       while(stack.length > depth){
-        var s = stack.pop(); s.dead = true;
-        try{ s.close(); }catch(e){}
+        var s = stack.pop();
+        if(!s.dead){ s.dead = true; try{ s.close(); }catch(e){} }
       }
     } finally { inPop = false; }
+    /* 새로 드러난 맨 위가 죽은 칸이면 그것들도 곧바로 걷어낸다(한 번 누름 = 산 층 하나) */
+    var k = 0;
+    while(stack.length && stack[stack.length - 1].dead){ var d = stack.pop(); if(d.pushed) k++; }
+    if(k > 0){ silent = 1; try{ history.go(-k); }catch(e){ silent = 0; } }
   }
   window.addEventListener("popstate", onPop);
 
@@ -94,7 +108,7 @@
     push: push,
     pop: pop,
     depth: function(){ return stack.length; },
-    version: "1.0.2"
+    version: "1.0.3"
   };
 })();
 /* end hub-back.js */
