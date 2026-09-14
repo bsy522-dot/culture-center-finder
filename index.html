@@ -347,8 +347,19 @@ a:focus-visible,button:focus-visible,.tb:focus-visible,.eb:focus-visible,input:f
   setTimeout(fallback,12000);
 })();
 </script>
+<script src="hub-back.js"></script>
 <script type="text/babel">
 const {useState,useMemo,useEffect,useRef,useCallback} = React;
+
+/* 폰 뒤로가기(◁) 한 단계 되돌리기 — 화면이 열려 있는 동안 히스토리에 가짜 칸을 하나 쌓아 두고,
+   ◁ 가 오면 그 화면의 닫기 함수를 대신 부른다. 부품 본체는 hub-back.js. */
+function useHubBack(open,name,onClose,replace){
+  useEffect(()=>{
+    if(!open||!window.HubBack) return;
+    const t=window.HubBack.push(name,()=>{ if(onClose) onClose(); },replace?{replace:true}:undefined);
+    return ()=>window.HubBack.pop(t);
+  },[open]);
+}
 
 const DEFAULT_DATA = [];
 const REGIONS=["전국","서울","경기","인천","부산","대구","대전","광주","울산","세종","강원","충북","충남","전북","전남","경북","경남","제주"];
@@ -698,6 +709,14 @@ function App(){
   },[]);
 
   const scrollToTop=()=>window.scrollTo({top:0,behavior:'smooth'});
+
+  /* 폰 뒤로가기(◁): 열려 있는 시트·모달을 한 단계씩 닫는다 (2026-09-14) */
+  useHubBack(!!modal,'modal',()=>setModal(null));
+  useHubBack(courseDetail!==null,'courseDetail',()=>setCourseDetail(null));
+  useHubBack(showMap,'map',()=>setShowMap(false));
+  useHubBack(!!centerModal,'centerModal',()=>setCenterModal(null));
+  useHubBack(showCompare,'compare',()=>setShowCompare(false));
+  useHubBack(showOnboarding,'onboarding',()=>completeOnboarding());
 
   // Keyboard shortcuts
   useEffect(()=>{

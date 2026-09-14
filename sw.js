@@ -1,7 +1,8 @@
-const CACHE_NAME = 'ccf-v30-20260831-icon';
+const CACHE_NAME = 'ccf-v31-20260914-backkey';
 const STATIC_ASSETS = [
   './',
   './index.html',
+  './hub-back.js',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
