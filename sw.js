@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ccf-v31-20260914-backkey';
+const CACHE_NAME = 'ccf-v32-20260924-mobile';
 const STATIC_ASSETS = [
   './',
   './index.html',
