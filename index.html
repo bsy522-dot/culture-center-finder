@@ -304,6 +304,57 @@ a:focus-visible,button:focus-visible,.tb:focus-visible,.eb:focus-visible,input:f
   .bottom-nav-btn{min-height:48px;justify-content:center}
 }
 </style>
+<style id="ccfMobile0924">
+/* 2026-09-24 폰 화면 수선 — 폭 760px 이하 전용(PC 화면 무변경).
+   병석님 폰(412px·시스템 글자 약 1.7배)에서 글자를 줄이지 않고 배치가 버티게 한다.
+   뒤에 붙는 패치 스타일보다 이기도록 'html body' 로 시작한다. */
+@media (max-width: 760px) {
+  html body { word-break: keep-all; overflow-wrap: anywhere; }
+  /* ① 줄 간격을 px 로 박아 둔 글(강좌 제목·상세 제목·표 칸 등): 글자가 커지면 윗줄·아랫줄이 포개졌다.
+        보통 글자에선 원래 간격 그대로, 글자가 커질 때만 글자 크기의 1.3배로 벌어진다. */
+  html body [style*="line-height: 13px"] { line-height: max(13px, 1.3em) !important; }
+  html body [style*="line-height: 15px"] { line-height: max(15px, 1.3em) !important; }
+  html body [style*="line-height: 16px"] { line-height: max(16px, 1.3em) !important; }
+  html body [style*="line-height: 20px"] { line-height: max(20px, 1.3em) !important; }
+  html body [style*="line-height: 22px"] { line-height: max(22px, 1.3em) !important; }
+  html body [style*="line-height: 24px"] { line-height: max(24px, 1.3em) !important; }
+  html body [style*="line-height: 26px"] { line-height: max(26px, 1.3em) !important; }
+  html body .ccf-ctitle { line-height: max(16px, 1.35em) !important; }
+  /* ② 첫 안내창: 강제 줄바꿈 없애고, 버튼 글자 안 끊기게 — 한 줄에 안 들어가면 위아래로 꽉 차게 */
+  html body .onboarding-card p br { display: none; }
+  html body .onboarding-card div:has(> .onboarding-btn) { flex-wrap: wrap; }
+  html body .onboarding-card .onboarding-btn { flex: 1 1 auto; white-space: nowrap; min-height: 44px; padding-left: 16px; padding-right: 16px; }
+  /* ③ 강좌 카드 오른쪽 위 비교 체크칸: 흰 기본 상자 → 앱 색, 조금 크게. ☆ 는 누르는 자리만 넓힘 */
+  html body .course-card input[type=checkbox] { accent-color: var(--accent); width: 26px !important; height: 26px !important; margin: 0; }
+  html body input[type=checkbox] { accent-color: var(--accent); }
+  html[data-theme="dark"] body input[type=checkbox] { color-scheme: dark; }
+  html body .course-card span[style*="cursor: pointer"] { padding: 8px; margin: -8px -2px; }
+  /* 2026-09-26 ③-2 비교 체크칸(카드·목록형 표) 누르는 자리 26px → 44px: 보이는 상자는 26px 그대로(둘레 9px 는 투명한 누름 자리),
+     바깥 여백 -9px 로 카드 머리 줄 높이·배치는 그대로 */
+  html body .course-card input[type=checkbox], html body .ccf-listtable input[type=checkbox] { -webkit-appearance: none; appearance: none; box-sizing: border-box;
+    width: 44px !important; height: 44px !important; margin: -9px !important; padding: 0; border: 0; border-radius: 0;
+    background: transparent; flex: 0 0 auto; outline: 2px solid var(--text-muted); outline-offset: -11px; }
+  html body .course-card input[type=checkbox]:checked, html body .ccf-listtable input[type=checkbox]:checked { outline-color: var(--accent);
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px 18px no-repeat,
+      linear-gradient(var(--accent), var(--accent)) center / 26px 26px no-repeat; }
+  html[data-theme="dark"] body .course-card input[type=checkbox]:checked, html[data-theme="dark"] body .ccf-listtable input[type=checkbox]:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23080B10' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"),
+      linear-gradient(var(--accent), var(--accent)); }
+  html body .course-card input[type=checkbox]:focus-visible, html body .ccf-listtable input[type=checkbox]:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
+  /* ④ 통계 막대 줄: 이름 칸 60~100px 고정이라 '대형마/트'로 끊기거나 센터 이름이 잘렸다 → 이름은 다 보이고, 모자라면 막대가 다음 줄로 */
+  html body .ccf-barrow { flex-wrap: wrap; row-gap: 4px; }
+  html body .ccf-barrow > span:first-child { width: auto !important; min-width: 1.2em; white-space: nowrap; }
+  html body .ccf-barrow > span:last-child { width: auto !important; min-width: 2.8em; flex: 0 0 auto; white-space: nowrap; }
+  html body .ccf-barrow > div { flex: 1 1 5em !important; min-width: 5em; }
+  html body .ccf-barrow > .ccf-barname { flex: 1 1 auto; min-width: 0; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; }
+  /* ⑤ 머리글 아래 안내 줄: '| 즐겨찾/기', '2026-/09-24' 처럼 끊기던 꼬리표는 통째로 다음 줄로 */
+  html body .ccf-subline { flex-wrap: wrap; column-gap: 6px; }
+  html body .ccf-subline > span { white-space: nowrap; }
+  /* ⑥ 목록형(☰) 표·센터 강좌 표: 좁은 칸에 욱여넣어 '파크/골프/아카/데미'로 끊기던 것 → 단어는 통째로, 표는 틀 안에서 옆으로 밀기 */
+  html body .ccf-listtable { min-width: 36em; }
+  html body .ccf-listtable th, html body .ccf-listtable td { overflow-wrap: normal; word-break: keep-all; }
+}
+</style>
 </head>
 <body>
 <div id="scroll-progress"></div>
@@ -350,6 +401,8 @@ a:focus-visible,button:focus-visible,.tb:focus-visible,.eb:focus-visible,input:f
 <script src="hub-back.js"></script>
 <script type="text/babel">
 const {useState,useMemo,useEffect,useRef,useCallback} = React;
+/* 2026-09-26: 폰 폭(760px 이하)에선 입력칸 안내 글을 짧게 — 큰 글자에서 끝이 잘리던 것. PC 는 원래 글 그대로 */
+const CCF_PHONE = !!(window.matchMedia && window.matchMedia("(max-width: 760px)").matches);
 
 /* 폰 뒤로가기(◁) 한 단계 되돌리기 — 화면이 열려 있는 동안 히스토리에 가짜 칸을 하나 쌓아 두고,
    ◁ 가 오면 그 화면의 닫기 함수를 대신 부른다. 부품 본체는 hub-back.js. */
@@ -1345,7 +1398,7 @@ function App(){
               </div>
             </div>
             <div style={{fontSize:9,color:"var(--text-muted)",marginBottom:4}}>{getEmoji(r[3])} {r[3]}</div>
-            <div style={{fontSize:12,fontWeight:600,color:"var(--text-primary)",marginBottom:8,lineHeight:"16px"}}>{r[4]}</div>
+            <div className="ccf-ctitle" style={{fontSize:12,fontWeight:600,color:"var(--text-primary)",marginBottom:8,lineHeight:"16px"}}>{r[4]}</div>
             <div style={{display:"flex",flexWrap:"wrap",gap:4,marginBottom:6}}>
               {r[7]&&<span style={{fontSize:9,color:"#FFB347",background:"rgba(255,183,71,0.1)",padding:"1px 6px",borderRadius:4}}>{r[7]}</span>}
               {r[6]&&<span style={{fontSize:9,color:"var(--accent)",background:"rgba(126,200,227,0.1)",padding:"1px 6px",borderRadius:4}}>{r[6]}</span>}
@@ -1396,7 +1449,7 @@ function App(){
                   <input value={addrInput} onChange={e=>setAddrInput(e.target.value)}
                     aria-label="출발지 주소 입력 (이동시간 계산용)"
                     onKeyDown={e=>{if(e.key==='Enter')applyAddr();}}
-                    placeholder="출발지 (예: 일산, 서초역, 강남구)"
+                    placeholder={CCF_PHONE ? "출발지 (예: 서초역)" : "출발지 (예: 일산, 서초역, 강남구)"}
                     style={{background:"rgba(126,200,227,0.12)",border:"1px solid rgba(126,200,227,0.25)",borderRadius:5,color:"var(--accent)",fontWeight:700,fontSize:12,padding:"4px 8px",flex:"1 1 120px",minWidth:120,outline:"none",fontFamily:"inherit"}}/>
                   <button onClick={()=>{const t=settings.transport==="public"?"car":"public";window._transport=t;setSettings({...settings,transport:t});}}
                     style={{background:settings.transport==="car"?"rgba(149,213,178,0.15)":"rgba(126,200,227,0.15)",border:"1px solid "+(settings.transport==="car"?"rgba(149,213,178,0.3)":"rgba(126,200,227,0.3)"),borderRadius:5,color:settings.transport==="car"?"#95D5B2":"var(--accent)",fontWeight:700,fontSize:11,padding:"4px 8px",cursor:"pointer",fontFamily:"inherit",whiteSpace:"nowrap"}}>
@@ -1415,7 +1468,7 @@ function App(){
                     검색
                   </button>
                 </div>
-                <div style={{fontSize:10,color:"var(--text-muted)",marginTop:3,display:"flex",alignItems:"center",gap:4}}>
+                <div className="ccf-subline" style={{fontSize:10,color:"var(--text-muted)",marginTop:3,display:"flex",alignItems:"center",gap:4}}>
                   {searchMsg||filtered.length.toLocaleString()+"개 강좌 | "+centers.length+"곳"}
                   {favOnly&&<span style={{color:"#FBBF24"}}> | 즐겨찾기</span>}
                   {dataDate&&<span style={{fontSize:8.5,color:"var(--text-faint)"}} title="데이터 수집 기준일">{"| 데이터 "+dataDate}</span>}
@@ -1464,7 +1517,7 @@ function App(){
               <div style={{background:"var(--stat-card-bg)",border:"1px solid var(--stat-card-border)",borderRadius:10,padding:16}}>
                 <h3 style={{fontSize:13,fontWeight:700,color:"var(--text-primary)",marginBottom:12}}>센터 분류별</h3>
                 {Object.entries(stats.cc).map(([k,v])=>(
-                  <div key={k} style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
+                  <div key={k} className="ccf-barrow" style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
                     <span style={{fontSize:11,color:CC[k],fontWeight:600,width:60}}>{k}</span>
                     <div style={{flex:1,height:20,background:"var(--bar-bg)",borderRadius:4,overflow:"hidden"}}>
                       <div style={{width:(v/stats.total*100)+"%",height:"100%",background:"linear-gradient(90deg,"+CC[k]+","+CC[k]+"88)",borderRadius:4,transition:"width .5s ease"}}/>
@@ -1547,7 +1600,7 @@ function App(){
                   const colors={"무료":"#34D399","~5만원":"#60A5FA","5~10만원":"#FBBF24","10~20만원":"#FB923C","20만원~":"#F87171","미정":"#94A3B8"};
                   const c=colors[k]||"var(--accent)";
                   return(
-                    <div key={k} style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
+                    <div key={k} className="ccf-barrow" style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
                       <span style={{fontSize:11,width:60,color:c,fontWeight:600}}>{k}</span>
                       <div style={{flex:1,height:18,background:"var(--bar-bg)",borderRadius:4,overflow:"hidden"}}>
                         <div style={{width:(max>0?(v/max*100):0)+"%",height:"100%",background:"linear-gradient(90deg,"+c+","+c+"88)",borderRadius:4,transition:"width .5s ease"}}/>
@@ -1603,9 +1656,9 @@ function App(){
                   const max=stats.centerTop10[0]?.[1]||1;
                   const medal=idx===0?"🥇":idx===1?"🥈":idx===2?"🥉":"";
                   return(
-                    <div key={name} style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
+                    <div key={name} className="ccf-barrow" style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
                       <span style={{fontSize:10,width:12,textAlign:"center",color:"var(--text-faint)"}}>{medal||idx+1}</span>
-                      <span style={{fontSize:10,width:100,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",color:"var(--text-secondary)",cursor:"pointer"}} onClick={()=>setCenterModal(name)} role="button" tabIndex={0} aria-label={name+" 센터 상세 보기"} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setCenterModal(name);}}} title={name}>{name.replace(/홈플러스 |이마트 |롯데마트 |롯데쇼핑 /,'')}</span>
+                      <span className="ccf-barname" style={{fontSize:10,width:100,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",color:"var(--text-secondary)",cursor:"pointer"}} onClick={()=>setCenterModal(name)} role="button" tabIndex={0} aria-label={name+" 센터 상세 보기"} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setCenterModal(name);}}} title={name}>{name.replace(/홈플러스 |이마트 |롯데마트 |롯데쇼핑 /,'')}</span>
                       <div style={{flex:1,height:16,background:"var(--bar-bg)",borderRadius:3,overflow:"hidden"}}>
                         <div style={{width:(cnt/max*100)+"%",height:"100%",background:"linear-gradient(90deg,#E8A0BF,#E8A0BF88)",borderRadius:3,transition:"width .5s ease"}}/>
                       </div>
@@ -1628,7 +1681,7 @@ function App(){
                 onKeyDown={e=>{if(e.key==='Enter'){handleSearchSubmit();setShowSuggest(false);}}}
                 onFocus={()=>setShowSuggest(true)}
                 onBlur={()=>setTimeout(()=>setShowSuggest(false),150)}
-                placeholder="강좌/센터/종목 · 초성(ㅇㄱ)도 OK"
+                placeholder={CCF_PHONE ? "강좌·센터·초성 검색" : "강좌/센터/종목 · 초성(ㅇㄱ)도 OK"}
                 style={{width:220,background:"var(--input-bg)",color:"var(--text-primary)",border:"1px solid var(--input-border)",borderRadius:7,padding:"5px 10px",fontSize:11,outline:"none",transition:"border-color .2s"}}/>
               {showSuggest&&q.trim().length>=1&&suggestions.length>0&&(
                 <div style={{position:"absolute",top:"calc(100% + 3px)",left:0,zIndex:60,background:"var(--modal-bg)",border:"1px solid var(--card-border)",borderRadius:8,minWidth:230,overflow:"hidden",boxShadow:"0 10px 28px rgba(0,0,0,.35)"}} role="listbox" aria-label="검색 추천">
@@ -1817,7 +1870,7 @@ function App(){
                     </div>
                   )}
                   <div style={{overflowX:"auto"}}>
-                    <table style={{width:"100%",borderCollapse:"collapse",fontSize:10}}>
+                    <table className="ccf-listtable" style={{width:"100%",borderCollapse:"collapse",fontSize:10}}>
                       <thead><tr>
                         <th style={{padding:"6px 4px",borderBottom:"2px solid var(--table-header-border)",position:"sticky",top:0,background:"var(--table-header-bg)",zIndex:2,width:24}}/>
                         <th style={{padding:"6px 4px",borderBottom:"2px solid var(--table-header-border)",position:"sticky",top:0,background:"var(--table-header-bg)",zIndex:2,width:18}}/>
@@ -2144,7 +2197,7 @@ function App(){
             </div>
             <div style={{fontSize:10,color:"var(--text-muted)",marginBottom:8}}>{getCenterCourses(centerModal).length}개 강좌</div>
             <div style={{maxHeight:"50vh",overflowY:"auto"}}>
-              <table style={{width:"100%",borderCollapse:"collapse",fontSize:10}}>
+              <table className="ccf-listtable" style={{width:"100%",borderCollapse:"collapse",fontSize:10}}>
                 <thead>
                   <tr>
                     <th style={{padding:"6px",textAlign:"left",color:"var(--text-secondary)",fontWeight:600,fontSize:9.5,borderBottom:"2px solid var(--table-header-border)"}}>종목</th>
@@ -2248,7 +2301,7 @@ function App(){
               <>
                 <div className="icon">{"👋"}</div>
                 <h3>딱 두 가지만 알려주세요</h3>
-                <p>수강할 분의 출생년도와 동네를 입력하면<br/>바로 맞춤 강좌부터 보여드립니다. 비워두셔도 됩니다.</p>
+                <p>수강할 분의 출생년도와 동네를 입력하면 <br/>바로 맞춤 강좌부터 보여드립니다. 비워두셔도 됩니다.</p>
                 <div style={{display:"flex",flexDirection:"column",gap:8,margin:"12px auto",maxWidth:250}}>
                   <select value={obYear} onChange={e=>setObYear(e.target.value)} aria-label="수강자 출생년도"
                     style={{background:"var(--input-bg)",color:"var(--text-primary)",border:"1px solid var(--input-border)",borderRadius:8,padding:"9px 10px",fontSize:12}}>
