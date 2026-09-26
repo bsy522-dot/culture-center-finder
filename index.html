@@ -329,6 +329,18 @@ a:focus-visible,button:focus-visible,.tb:focus-visible,.eb:focus-visible,input:f
   html body input[type=checkbox] { accent-color: var(--accent); }
   html[data-theme="dark"] body input[type=checkbox] { color-scheme: dark; }
   html body .course-card span[style*="cursor: pointer"] { padding: 8px; margin: -8px -2px; }
+  /* 2026-09-26 ③-2 비교 체크칸(카드·목록형 표) 누르는 자리 26px → 44px: 보이는 상자는 26px 그대로(둘레 9px 는 투명한 누름 자리),
+     바깥 여백 -9px 로 카드 머리 줄 높이·배치는 그대로 */
+  html body .course-card input[type=checkbox], html body .ccf-listtable input[type=checkbox] { -webkit-appearance: none; appearance: none; box-sizing: border-box;
+    width: 44px !important; height: 44px !important; margin: -9px !important; padding: 0; border: 0; border-radius: 0;
+    background: transparent; flex: 0 0 auto; outline: 2px solid var(--text-muted); outline-offset: -11px; }
+  html body .course-card input[type=checkbox]:checked, html body .ccf-listtable input[type=checkbox]:checked { outline-color: var(--accent);
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px 18px no-repeat,
+      linear-gradient(var(--accent), var(--accent)) center / 26px 26px no-repeat; }
+  html[data-theme="dark"] body .course-card input[type=checkbox]:checked, html[data-theme="dark"] body .ccf-listtable input[type=checkbox]:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23080B10' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"),
+      linear-gradient(var(--accent), var(--accent)); }
+  html body .course-card input[type=checkbox]:focus-visible, html body .ccf-listtable input[type=checkbox]:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
   /* ④ 통계 막대 줄: 이름 칸 60~100px 고정이라 '대형마/트'로 끊기거나 센터 이름이 잘렸다 → 이름은 다 보이고, 모자라면 막대가 다음 줄로 */
   html body .ccf-barrow { flex-wrap: wrap; row-gap: 4px; }
   html body .ccf-barrow > span:first-child { width: auto !important; min-width: 1.2em; white-space: nowrap; }
@@ -389,6 +401,8 @@ a:focus-visible,button:focus-visible,.tb:focus-visible,.eb:focus-visible,input:f
 <script src="hub-back.js"></script>
 <script type="text/babel">
 const {useState,useMemo,useEffect,useRef,useCallback} = React;
+/* 2026-09-26: 폰 폭(760px 이하)에선 입력칸 안내 글을 짧게 — 큰 글자에서 끝이 잘리던 것. PC 는 원래 글 그대로 */
+const CCF_PHONE = !!(window.matchMedia && window.matchMedia("(max-width: 760px)").matches);
 
 /* 폰 뒤로가기(◁) 한 단계 되돌리기 — 화면이 열려 있는 동안 히스토리에 가짜 칸을 하나 쌓아 두고,
    ◁ 가 오면 그 화면의 닫기 함수를 대신 부른다. 부품 본체는 hub-back.js. */
@@ -1435,7 +1449,7 @@ function App(){
                   <input value={addrInput} onChange={e=>setAddrInput(e.target.value)}
                     aria-label="출발지 주소 입력 (이동시간 계산용)"
                     onKeyDown={e=>{if(e.key==='Enter')applyAddr();}}
-                    placeholder="출발지 (예: 일산, 서초역, 강남구)"
+                    placeholder={CCF_PHONE ? "출발지 (예: 서초역)" : "출발지 (예: 일산, 서초역, 강남구)"}
                     style={{background:"rgba(126,200,227,0.12)",border:"1px solid rgba(126,200,227,0.25)",borderRadius:5,color:"var(--accent)",fontWeight:700,fontSize:12,padding:"4px 8px",flex:"1 1 120px",minWidth:120,outline:"none",fontFamily:"inherit"}}/>
                   <button onClick={()=>{const t=settings.transport==="public"?"car":"public";window._transport=t;setSettings({...settings,transport:t});}}
                     style={{background:settings.transport==="car"?"rgba(149,213,178,0.15)":"rgba(126,200,227,0.15)",border:"1px solid "+(settings.transport==="car"?"rgba(149,213,178,0.3)":"rgba(126,200,227,0.3)"),borderRadius:5,color:settings.transport==="car"?"#95D5B2":"var(--accent)",fontWeight:700,fontSize:11,padding:"4px 8px",cursor:"pointer",fontFamily:"inherit",whiteSpace:"nowrap"}}>
@@ -1667,7 +1681,7 @@ function App(){
                 onKeyDown={e=>{if(e.key==='Enter'){handleSearchSubmit();setShowSuggest(false);}}}
                 onFocus={()=>setShowSuggest(true)}
                 onBlur={()=>setTimeout(()=>setShowSuggest(false),150)}
-                placeholder="강좌/센터/종목 · 초성(ㅇㄱ)도 OK"
+                placeholder={CCF_PHONE ? "강좌·센터·초성 검색" : "강좌/센터/종목 · 초성(ㅇㄱ)도 OK"}
                 style={{width:220,background:"var(--input-bg)",color:"var(--text-primary)",border:"1px solid var(--input-border)",borderRadius:7,padding:"5px 10px",fontSize:11,outline:"none",transition:"border-color .2s"}}/>
               {showSuggest&&q.trim().length>=1&&suggestions.length>0&&(
                 <div style={{position:"absolute",top:"calc(100% + 3px)",left:0,zIndex:60,background:"var(--modal-bg)",border:"1px solid var(--card-border)",borderRadius:8,minWidth:230,overflow:"hidden",boxShadow:"0 10px 28px rgba(0,0,0,.35)"}} role="listbox" aria-label="검색 추천">

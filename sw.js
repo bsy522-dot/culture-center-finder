@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ccf-v32-20260924-mobile';
+const CACHE_NAME = 'ccf-v33-20260926-leftover';
 const STATIC_ASSETS = [
   './',
   './index.html',
