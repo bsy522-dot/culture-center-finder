@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-19 04:47:17",
+  "updated_at": "2026-10-19 18:16:57",
   "total": 11543,
   "regions": {
     "강원": 292,
@@ -22,6 +22,7 @@
     "충북": 116
   },
   "sources": {
+    "홈플러스": 13040,
     "이마트": 1334,
     "롯데마트": 22565,
     "현대백화점": 5484,
@@ -33,14 +34,12 @@
     "갤러리아": 1517,
     "이랜드NC": 1014
   },
-  "duplicates_removed": 575,
-  "excluded_sources": [
-    "홈플러스"
-  ],
-  "total_before_filter": 73796,
-  "expired_removed": 39385,
+  "duplicates_removed": 1008,
+  "excluded_sources": [],
+  "total_before_filter": 86403,
+  "expired_removed": 51992,
   "expired_removed_by_status": {
-    "마감": 20759,
+    "마감": 33366,
     "강의종료": 9962,
     "접수불가": 961,
     "접수마감": 3321,
