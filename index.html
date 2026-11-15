@@ -205,6 +205,9 @@ tr:hover td{background:var(--card-hover)!important}
 .compare-table th,.compare-table td{padding:8px;border-bottom:1px solid var(--card-border);text-align:left}
 .compare-table th{color:var(--text-secondary);font-weight:600;font-size:10px}
 .compare-table td{color:var(--text)}
+.compare-table th:first-child,.compare-table td:first-child{position:sticky;left:0;z-index:1;background:var(--bg)}
+.compare-table th,.compare-table td{min-width:110px}
+.compare-table th:first-child,.compare-table td:first-child{min-width:64px}
 
 /* Theme toggle */
 .theme-toggle{width:36px;height:36px;border-radius:8px;background:var(--input-bg);border:1px solid var(--input-border);color:var(--text);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
@@ -303,6 +306,66 @@ a:focus-visible,button:focus-visible,.tb:focus-visible,.eb:focus-visible,input:f
   .tb,.eb{min-height:38px;padding-top:8px;padding-bottom:8px}
   .bottom-nav-btn{min-height:48px;justify-content:center}
 }
+/* ── 시간표 짜기(2026-11-15) ── */
+.tt-fab{position:fixed;left:16px;bottom:24px;z-index:90;display:flex;align-items:center;gap:6px;padding:10px 16px;border-radius:999px;border:none;cursor:pointer;font-weight:800;font-size:13px;color:#0A1628;background:linear-gradient(135deg,#FBBF24,#F59E0B);box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.tt-fab b{background:#0A1628;color:#FBBF24;border-radius:999px;padding:1px 8px;font-size:12px}
+@media(max-width:768px){.tt-fab{bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
+.tt-sheet{position:fixed;inset:0;z-index:150;background:var(--bg);color:var(--text);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.tt-wrap{max-width:900px;margin:0 auto;padding:0 12px 140px}
+.tt-head{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;align-items:center;justify-content:space-between;padding:12px 0 8px;border-bottom:1px solid var(--card-border)}
+.tt-head h2{font-size:17px;font-weight:800;color:var(--text-primary);margin:0}
+.tt-x{background:none;border:none;color:var(--text-muted);font-size:26px;line-height:1;cursor:pointer;min-width:44px;min-height:44px}
+.tt-sec{margin-top:12px}
+.tt-seg{display:flex;gap:6px;flex-wrap:wrap}
+.tt-seg button,.tt-chip{border:1px solid var(--card-border);background:var(--card-bg);color:var(--text);border-radius:999px;padding:7px 12px;font-size:12.5px;font-weight:600;cursor:pointer;min-height:36px}
+.tt-seg button.on{background:rgba(126,200,227,.16);border-color:var(--accent);color:var(--accent)}
+.tt-chip{padding:5px 10px;font-size:12px;min-height:32px}
+.tt-cmd{display:flex;gap:6px}
+.tt-cmd input{flex:1;min-width:0;background:var(--input-bg);border:1px solid var(--input-border);color:var(--text-primary);border-radius:10px;padding:10px 12px;font-size:14px;font-family:inherit;outline:none}
+.tt-btn{border:none;border-radius:10px;padding:9px 14px;font-weight:800;font-size:13px;cursor:pointer;background:linear-gradient(135deg,#7EC8E3,#3AAFA9);color:#0A1628;white-space:nowrap;min-height:40px}
+.tt-btn.ghost{background:var(--card-bg);color:var(--text);border:1px solid var(--card-border);font-weight:700}
+.tt-got{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.tt-got span{font-size:11.5px;padding:3px 9px;border-radius:999px;background:rgba(52,211,153,.14);color:#34D399;font-weight:700}
+.tt-got span.q{background:rgba(251,146,60,.14);color:#FB923C}
+.tt-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tt-plans.four{grid-template-columns:repeat(4,1fr)}
+.tt-plan{border:1.5px solid var(--card-border);background:var(--card-bg);border-radius:12px;padding:8px 6px;text-align:center;cursor:pointer;color:var(--text);font-family:inherit;min-height:64px}
+.tt-plan.on{border-color:#FBBF24;background:rgba(251,191,36,.10)}
+.tt-plan .n{font-size:12.5px;font-weight:800;color:var(--text-primary)}
+.tt-plan .s{font-size:11px;color:var(--text-muted);margin-top:3px;line-height:1.35}
+.tt-sum{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12.5px;color:var(--text-muted);margin:10px 0 6px}
+.tt-sum b{color:var(--text-primary);font-size:14px}
+.tt-hint{font-size:11.5px;color:var(--text-muted);margin-bottom:6px;line-height:1.45}
+.tt-grid{position:relative;border:1px solid var(--card-border);border-radius:12px;background:var(--card-bg);overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.tt-dayh{position:absolute;top:0;height:26px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--text-primary);border-bottom:1px solid var(--card-border)}
+.tt-dayh.we{color:#F472B6}
+.tt-hr{position:absolute;left:0;right:0;border-top:1px dashed var(--card-border)}
+.tt-hr i{position:absolute;left:3px;top:-1px;font-style:normal;font-size:10px;color:var(--text-muted)}
+.tt-col{position:absolute;top:26px;bottom:0;border-left:1px solid var(--card-border)}
+.tt-blk{position:absolute;border-radius:7px;padding:3px 4px;overflow:hidden;cursor:grab;font-size:10.5px;line-height:1.25;color:var(--text-primary);touch-action:manipulation;box-sizing:border-box}
+.tt-blk .t{font-weight:800;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;word-break:break-all;line-height:13.2px}
+.tt-blk .h{font-size:9.5px;opacity:.8;margin-top:1px}
+.tt-blk.lift{opacity:.25}
+.tt-ghost{position:absolute;border:2px dashed #FBBF24;border-radius:7px;background:rgba(251,191,36,.10);font-size:10px;color:#FBBF24;font-weight:800;display:flex;align-items:center;justify-content:center;text-align:center;pointer-events:none;box-sizing:border-box;padding:2px}
+.tt-ghost.on{background:rgba(251,191,36,.35);color:#0A1628;border-style:solid}
+.tt-float{position:fixed;z-index:160;pointer-events:none;transform:translate(-50%,-110%);padding:6px 10px;border-radius:10px;font-size:12px;font-weight:800;color:#0A1628;box-shadow:0 8px 22px rgba(0,0,0,.4);max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tt-trash{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:155;padding:14px 26px;border-radius:16px;font-weight:800;font-size:14px;border:2px dashed #F87171;background:rgba(30,10,14,.92);color:#FCA5A5}
+.tt-trash.on{background:#F87171;color:#fff;border-style:solid}
+.tt-tools{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tt-list{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.tt-item{display:flex;align-items:center;gap:8px;border:1px solid var(--card-border);background:var(--card-bg);border-radius:10px;padding:8px 8px 8px 4px}
+.tt-item .grip{cursor:grab;color:var(--text-muted);font-size:16px;padding:6px 4px;touch-action:none}
+.tt-item .m{flex:1;min-width:0}
+.tt-item .m .a{font-size:12.5px;font-weight:700;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tt-item .m .b{font-size:11px;color:var(--text-muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tt-item .c{font-size:11px;color:#FB923C;margin-top:2px}
+.tt-add{border:none;border-radius:8px;padding:7px 10px;font-weight:800;font-size:12px;cursor:pointer;background:rgba(126,200,227,.16);color:var(--accent);white-space:nowrap;min-height:36px}
+.tt-add.sw{background:rgba(251,146,60,.16);color:#FB923C}
+.tt-detail{position:fixed;left:0;right:0;bottom:0;z-index:158;background:var(--bg);border-top:1px solid var(--card-border);border-radius:16px 16px 0 0;box-shadow:0 -10px 30px rgba(0,0,0,.45);max-height:72vh;overflow-y:auto;padding:14px 14px calc(20px + env(safe-area-inset-bottom,0px))}
+.tt-detail h3{font-size:15px;margin:0 0 6px;color:var(--text-primary);line-height:1.35}
+.tt-detail .kv{font-size:12.5px;color:var(--text-muted);line-height:1.7}
+.tt-warn{font-size:12px;color:#FB923C;margin-top:6px;line-height:1.45}
+.tt-empty{text-align:center;padding:28px 12px;color:var(--text-muted);font-size:13px;line-height:1.6}
 </style>
 <style id="ccfMobile0924">
 /* 2026-09-24 폰 화면 수선 — 폭 760px 이하 전용(PC 화면 무변경).
@@ -399,6 +462,7 @@ a:focus-visible,button:focus-visible,.tb:focus-visible,.eb:focus-visible,input:f
 })();
 </script>
 <script src="hub-back.js"></script>
+<script src="timetable_core.js"></script><!-- 시간표 짜기 계산 부품(2026-11-15) — window.CCFTT -->
 <script type="text/babel">
 const {useState,useMemo,useEffect,useRef,useCallback} = React;
 /* 2026-09-26: 폰 폭(760px 이하)에선 입력칸 안내 글을 짧게 — 큰 글자에서 끝이 잘리던 것. PC 는 원래 글 그대로 */
@@ -582,6 +646,8 @@ try{localStorage.removeItem("cc-data-v9");localStorage.removeItem("cc-settings-v
 // 즐겨찾기·메모 안정키: 배열 인덱스는 재크롤링 배포마다 행 순서가 바뀌어 별표가 엉뚱한 강좌로 옮겨가므로
 // 행 내용 기반 합성키(센터|강좌명|시간 — merge_all.py dedup 키와 동일 구성)를 사용한다.
 const rowKey=(r)=>r[1]+"|"+r[4]+"|"+(r[7]||"");
+// 비교·시간표 담기 키 — timetable_core.js keyOf 와 같은 공식(그 파일이 못 떠도 앱이 죽지 않게 여기 따로 둔다)
+const pickKeyOf=(r)=>[r[1],r[4],r[6],r[7],r[13]].join("|");
 
 // 초성 검색: "ㅇㄱ"→요가. 질의가 한글 초성만으로 이루어졌을 때 적용
 const CHO_LIST=["ㄱ","ㄲ","ㄴ","ㄷ","ㄸ","ㄹ","ㅁ","ㅂ","ㅃ","ㅅ","ㅆ","ㅇ","ㅈ","ㅉ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
@@ -676,6 +742,410 @@ class ErrorBoundary extends React.Component{
   }
 }
 
+/* ── 시간표 짜기(2026-11-15 회장님 지시) ─────────────────────────────────────
+   관심 강좌(⭐ 즐겨찾기 + ☑ 담기 — 개수 제한 없음)로 겹치지 않는 주간 시간표 3안을 짜고,
+   말로 조건을 주거나(주말만·수영 꼭·하루 2개까지…) 블록을 끌어 같은 종목의 다른 시간으로 바꾼다.
+   계산은 timetable_core.js(window.CCFTT, 단위 시험 tests/timetable_core.test.js), 여기는 화면만. */
+const TT_COLORS={"⚽ 체육/스포츠":"#38BDF8","💃 무용/댄스":"#F472B6","🎹 악기":"#A78BFA","🎨 미술/공예":"#FBBF24","🎵 음악/공연":"#FB923C","🍳 요리":"#F87171","🔬 사고력/교육":"#34D399","📖 어학/인문":"#60A5FA","💄 생활/취미":"#E879F9","🧩 놀이/기타":"#94A3B8"};
+const TT_CAT_GROUP=(()=>{const m={};Object.keys(GG).forEach(g=>GG[g].forEach(c=>{m[c]=g;}));return m;})();
+const ttColor=(cat)=>TT_COLORS[TT_CAT_GROUP[cat]]||"#94A3B8";
+const TT_EXAMPLES=["주말만","평일 오후 3시 이후","수영 꼭","하루 2개까지","10만원 이하","한 곳에서 몰아서","수요일 빼고","특강도 넣기"];
+const TT_PPM=1.0, TT_AXIS=30, TT_HEAD=26, TT_WIDE_CAP=6000;
+// 좁은 블록용 강좌명: 앞에 붙은 날짜 머리말("2.12]" "12/12 " "(1.8)")만 뗀다 — 자세히 창에는 원래 이름 그대로
+const ttShortTitle=(t)=>{const s=String(t||"").replace(/^\s*[\[(<]?\s*\d{1,2}\s*[./]\s*\d{1,2}\s*[\])>]?\s*/,"");return s||String(t||"");};
+function ttLoad(k,d){try{const s=localStorage.getItem(k);return s?JSON.parse(s):d;}catch(e){return d;}}
+function ttSave(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+
+function TimetableSheet({onClose,data,interestGis,wideItems,settings,showT,homeTime,emojiOf}){
+  const TT=window.CCFTT;
+  const [source,setSource]=useState(()=>interestGis.length>=2?"interest":"wide");
+  const [cmd,setCmd]=useState(()=>ttLoad("cc-tt-cmd",""));
+  const [applied,setApplied]=useState(cmd);
+  const [seed,setSeed]=useState(7);
+  const [plans,setPlans]=useState(null);
+  const [active,setActive]=useState(0);
+  const [mine,setMine]=useState(null);
+  const [missing,setMissing]=useState(0);
+  const [edits,setEdits]=useState({});
+  const [hist,setHist]=useState([]);
+  const [busy,setBusy]=useState(true);
+  const [selKey,setSelKey]=useState(null);
+  const [drag,setDrag]=useState(null);
+  const gridRef=useRef(null),trashRef=useRef(null),sheetRef=useRef(null),dragRef=useRef(null),ctxRef=useRef({}),picked=useRef(false);
+
+  const allCats=useMemo(()=>[...new Set(data.map(r=>r[3]).filter(Boolean))],[data]);
+  const allCenters=useMemo(()=>[...new Set(data.map(r=>r[1]).filter(Boolean))],[data]);
+  const travel=useMemo(()=>TT.makeTravel(CENTER_COORDS,settings.transport),[settings.transport,data.length]);
+  const hTime=useCallback((s)=>{const r=data[s.gi];if(!settings.address||!r)return 0;const t=homeTime(r);return t>=999?60:Math.min(120,t||0);},[settings.address,data]);
+  const interestPool=useMemo(()=>interestGis.map(gi=>TT.toSession(data[gi],gi)).filter(Boolean),[interestGis,data]);
+  const widePool=useMemo(()=>{
+    let it=wideItems;
+    if(settings.address) it=[...it].sort((a,b)=>homeTime(a.r)-homeTime(b.r));
+    return it.slice(0,TT_WIDE_CAP).map(({r,i})=>TT.toSession(r,i)).filter(Boolean);
+  },[wideItems,settings.address]);
+  const pool=source==="interest"?interestPool:widePool;
+  // 끌어 옮길 자리는 관심 강좌 + 지금 검색 결과(나이·거리 필터 적용분)에서 찾는다
+  const altPool=useMemo(()=>{const m=new Map();interestPool.forEach(s=>m.set(s.key,s));widePool.forEach(s=>{if(!m.has(s.key))m.set(s.key,s);});return [...m.values()];},[interestPool,widePool]);
+  const consRaw=useMemo(()=>TT.parseCommand(applied,allCats,allCenters),[applied,allCats,allCenters]);
+  // 1회 특강: 말로 안 정했으면 — 직접 담은 강좌는 넣고(일부러 고른 것), 검색 결과 전체에서 짤 땐 뺀다(매주 시간표가 아님)
+  const cons=useMemo(()=>Object.assign({},consRaw,{oneTime:consRaw.oneTime==null?source==="interest":consRaw.oneTime}),[consRaw,source]);
+  const goalIdx=(cons.sameCenter||cons.goal==="near")?1:(cons.goal==="cheap"||cons.goal==="relaxed")?2:0;
+
+  // 저장해 둔 '내 시간표' 복원 — 마감·개강으로 목록에서 빠진 강좌는 개수만 알린다
+  useEffect(()=>{
+    const saved=ttLoad("cc-tt-mine-v1",null);
+    if(!saved||!Array.isArray(saved.keys)||!saved.keys.length)return;
+    const want=new Set(saved.keys),found=[],seen=new Set();
+    data.forEach((r,i)=>{const k=TT.keyOf(r);if(want.has(k)&&!seen.has(k)){const s=TT.toSession(r,i);if(s){seen.add(k);found.push(s);}}});
+    setMine(found);setMissing(saved.keys.length-found.length);
+    if(found.length&&!picked.current){picked.current=true;setActive(3);}
+  },[data.length]);
+
+  useEffect(()=>{
+    setBusy(true);
+    const t=setTimeout(()=>{
+      // 직접 담은 강좌로 짤 땐 겹치지 않는 한 전부 채움(fill), 검색 결과 전체에서 짤 땐 종목마다 1개
+      const ps=TT.suggest(pool,cons,{travel,homeTime:settings.address?hTime:null,seed,timeBudgetMs:400,fill:source==="interest"});
+      setPlans(ps);setEdits({});setHist([]);setBusy(false);
+      if(!picked.current)setActive(goalIdx);
+    },40);
+    return()=>clearTimeout(t);
+  },[pool,cons,seed,travel]);
+
+  const cur=active===3?(mine||[]):(edits[active]||(plans&&plans[active]?plans[active].items:[]));
+  const short=(t)=>t.length>14?t.slice(0,14)+"…":t;
+  const setCur=(next,msg)=>{
+    setHist(h=>[...h.slice(-30),{active,items:cur}]);
+    if(active===3){setMine(next);ttSave("cc-tt-mine-v1",{keys:next.map(s=>s.key),at:Date.now()});}
+    else setEdits(e=>({...e,[active]:next}));
+    if(msg)showT(msg);
+  };
+  const undo=()=>{
+    if(!hist.length)return;
+    const last=hist[hist.length-1];
+    setHist(hist.slice(0,-1));
+    if(last.active===3){setMine(last.items);ttSave("cc-tt-mine-v1",{keys:last.items.map(s=>s.key),at:Date.now()});}
+    else setEdits(e=>({...e,[last.active]:last.items}));
+    setActive(last.active);showT("되돌렸어요");
+  };
+  const removeItem=(it)=>{setSelKey(null);setCur(cur.filter(x=>x.key!==it.key),"「"+short(it.title)+"」 뺐어요");};
+  const replaceItem=(it,alt)=>{setSelKey(null);setCur(cur.map(x=>x.key===it.key?alt:x),TT.DAYS[alt.days[0]]+"요일 "+TT.fmt(alt.s)+"(으)로 바꿨어요");};
+  const addItem=(c)=>{
+    const dup=cur.filter(x=>x.center===c.center&&x.title===c.title);
+    const cf=TT.conflictsWith(cur.filter(x=>!dup.includes(x)),c,travel,cons.minGap);
+    const rm=new Set([...dup,...cf].map(x=>x.key));
+    setCur([...cur.filter(x=>!rm.has(x.key)),c],rm.size?("겹치는 "+rm.size+"개를 빼고 넣었어요 · ↩ 되돌리기 가능"):"「"+short(c.title)+"」 넣었어요");
+  };
+  const savePlan=()=>{ttSave("cc-tt-mine-v1",{keys:cur.map(s=>s.key),at:Date.now()});setMine(cur);setMissing(0);picked.current=true;setActive(3);showT("⭐ 내 시간표로 저장했어요");};
+  const share=async()=>{
+    const txt=TT.planText(cur,"📅 문센 시간표");
+    try{if(navigator.share){await navigator.share({text:txt});return;}}catch(e){if(e&&e.name==="AbortError")return;}
+    try{await navigator.clipboard.writeText(txt);showT("시간표를 글로 복사했어요");}catch(e){showT("복사가 막혀 있어요 — 화면을 캡처해 주세요");}
+  };
+  const apply=(text)=>{const t=String(text!==undefined?text:cmd).trim();setCmd(t);setApplied(t);ttSave("cc-tt-cmd",t);picked.current=false;};
+  const addExample=(ex)=>apply(cmd.trim()?cmd.trim()+", "+ex:ex);
+  const pickTab=(i)=>{picked.current=true;setActive(i);setSelKey(null);};
+
+  const range=useMemo(()=>{
+    let lo=24*60,hi=0;
+    const take=(s)=>{if(s.s<lo)lo=s.s;if(s.e>hi)hi=s.e;};
+    cur.forEach(take);pool.forEach(take);
+    if(hi<=lo){lo=9*60;hi=18*60;}
+    lo=Math.max(7*60,Math.floor(lo/60)*60);hi=Math.min(23*60,Math.ceil(hi/60)*60);
+    if(hi-lo<6*60)hi=Math.min(23*60,lo+6*60);
+    return{lo,hi};
+  },[cur,pool]);
+  const colLeft=(d)=>"calc("+TT_AXIS+"px + (100% - "+TT_AXIS+"px) * "+d+" / 7 + 1px)";
+  const colW="calc((100% - "+TT_AXIS+"px) / 7 - 3px)";
+  const topOf=(m)=>TT_HEAD+(Math.max(m,range.lo)-range.lo)*TT_PPM;
+  const gridH=TT_HEAD+(range.hi-range.lo)*TT_PPM+6;
+
+  /* ── 끌어 옮기기: 손가락은 0.26초 꾹 누르면 시작(그냥 밀면 스크롤), 마우스는 5px 움직이면 시작 ── */
+  ctxRef.current={cur,altPool,cons,travel,range,replaceItem,addItem,removeItem};
+  const hitTest=(x,y,st)=>{
+    const tr=trashRef.current&&trashRef.current.getBoundingClientRect();
+    if(st.kind==="block"&&tr&&x>=tr.left-12&&x<=tr.right+12&&y>=tr.top-12&&y<=tr.bottom+12)return{trash:true};
+    const g=gridRef.current&&gridRef.current.getBoundingClientRect();
+    if(!g||x<g.left||x>g.right||y<g.top+TT_HEAD||y>g.bottom)return null;
+    if(st.kind==="pool")return{add:true};
+    const rg=ctxRef.current.range;
+    const day=Math.min(6,Math.max(0,Math.floor((x-g.left-TT_AXIS)/((g.width-TT_AXIS)/7))));
+    const minute=rg.lo+(y-g.top-TT_HEAD)/TT_PPM;
+    const gh=TT.nearestAt(st.ghosts,day,minute,40);
+    return gh?{ghost:gh}:null;
+  };
+  const begin=(st)=>{
+    const c=ctxRef.current;
+    st.active=true;
+    // 끌 자리에서 '지금과 같은 요일·시간'(같은 강좌의 다른 개강반)은 뺀다 — 블록 바로 밑에 겹쳐 떠서
+    // 손을 떼기만 해도 조용히 바뀌던 것(다른 개강반은 톡 눌러 여는 '자세히' 목록에서 고른다)
+    st.ghosts=st.kind==="block"
+      ?TT.alternativesFor(st.item,c.cur,c.altPool,c.cons,c.travel,60).filter(g=>!(Math.abs(g.s-st.item.s)<5&&g.days.join()===st.item.days.join()))
+      :[st.item];
+    try{if(navigator.vibrate)navigator.vibrate(12);}catch(e){}
+    setSelKey(null);
+    setDrag({item:st.item,kind:st.kind,ghosts:st.ghosts,x:st.x,y:st.y,over:null});
+  };
+  const down=(e,item,kind)=>{
+    if(e.pointerType==="mouse"&&e.button!==0)return;
+    const st={item,kind,pid:e.pointerId,x0:e.clientX,y0:e.clientY,x:e.clientX,y:e.clientY,active:false,moved:false,
+      touch:e.pointerType==="touch"&&kind==="block",timer:null,ghosts:[]};
+    dragRef.current=st;
+    if(st.touch)st.timer=setTimeout(()=>{if(dragRef.current===st&&!st.moved)begin(st);},260);
+  };
+  useEffect(()=>{
+    const move=(e)=>{
+      const st=dragRef.current;if(!st||e.pointerId!==st.pid)return;
+      const dist=Math.hypot(e.clientX-st.x0,e.clientY-st.y0);
+      if(!st.active){
+        if(st.touch){if(dist>8){st.moved=true;clearTimeout(st.timer);dragRef.current=null;}return;}
+        if(dist<=5)return;
+        st.x=e.clientX;st.y=e.clientY;begin(st);
+      }
+      if(e.cancelable)e.preventDefault();
+      st.x=e.clientX;st.y=e.clientY;
+      const sh=sheetRef.current;
+      if(sh){if(st.y<90)sh.scrollTop-=14;else if(st.y>window.innerHeight-120)sh.scrollTop+=14;}
+      const over=hitTest(st.x,st.y,st);
+      setDrag(d=>d?{...d,x:st.x,y:st.y,over}:d);
+    };
+    const up=(e)=>{
+      const st=dragRef.current;if(!st||e.pointerId!==st.pid)return;
+      clearTimeout(st.timer);dragRef.current=null;
+      if(!st.active){if(!st.moved&&st.kind==="block")setSelKey(st.item.key);return;}
+      setDrag(null);
+      // 꾹 누르기만 하고 거의 안 움직였으면 아무것도 바꾸지 않고 '자세히'
+      if(Math.hypot(e.clientX-st.x0,e.clientY-st.y0)<12){if(st.kind==="block")setSelKey(st.item.key);return;}
+      const over=hitTest(e.clientX,e.clientY,st);
+      const c=ctxRef.current;
+      if(!over){
+        if(st.kind==="block")showT(st.ghosts.length?"노란 점선 칸에 놓아야 바뀌어요":"이 강좌는 겹치지 않는 다른 시간이 없어요");
+        else showT("시간표 칸 안에 놓으면 넣어져요");
+        return;
+      }
+      if(over.trash)c.removeItem(st.item);
+      else if(over.ghost)c.replaceItem(st.item,over.ghost);
+      else if(over.add)c.addItem(st.item);
+    };
+    const cancel=(e)=>{const st=dragRef.current;if(!st||e.pointerId!==st.pid)return;clearTimeout(st.timer);dragRef.current=null;setDrag(null);};
+    const tmove=(e)=>{if(dragRef.current&&dragRef.current.active&&e.cancelable)e.preventDefault();};
+    const key=(e)=>{if(e.key==="Escape"){e.stopPropagation();if(dragRef.current){dragRef.current=null;setDrag(null);}else onClose();}};
+    window.addEventListener("pointermove",move,{passive:false});
+    window.addEventListener("pointerup",up);
+    window.addEventListener("pointercancel",cancel);
+    window.addEventListener("touchmove",tmove,{passive:false});
+    window.addEventListener("keydown",key,true);
+    return()=>{
+      window.removeEventListener("pointermove",move);window.removeEventListener("pointerup",up);
+      window.removeEventListener("pointercancel",cancel);window.removeEventListener("touchmove",tmove);
+      window.removeEventListener("keydown",key,true);
+    };
+  },[]);
+  useHubBack(!!selKey,"ttDetail",()=>setSelKey(null));
+
+  const selItem=selKey?cur.find(x=>x.key===selKey):null;
+  const selAlts=useMemo(()=>selItem?TT.alternativesFor(selItem,cur,altPool,cons,travel,12):[],[selKey,cur,altPool,cons,travel]);
+  const st=TT.stats(cur);
+  const missingMust=(cons.must||[]).filter(m=>!cur.some(x=>x.cat===m));
+  const restPool=useMemo(()=>{
+    const inCur=new Set(cur.map(x=>x.key));
+    return interestPool.filter(s=>!inCur.has(s.key))
+      .map(s=>({s,ok:TT.passes(s,cons),cf:TT.conflictsWith(cur,s,travel,cons.minGap)}))
+      .sort((a,b)=>(b.ok-a.ok)||(a.cf.length-b.cf.length)||(a.s.days[0]-b.s.days[0])||(a.s.s-b.s.s));
+  },[interestPool,cur,cons,travel]);
+  const tabs=plans?plans.map((p,i)=>({i,icon:p.icon,name:p.name,desc:p.desc,stats:TT.stats(edits[i]||p.items),edited:!!edits[i]})):[];
+  if(mine)tabs.push({i:3,icon:"⭐",name:"내 시간표",desc:"저장한 시간표",stats:TT.stats(mine),edited:false});
+  const dayTxt=(s)=>s.days.map(d=>TT.DAYS[d]).join("·");
+  const won=(n)=>n>=10000?(Math.round(n/1000)/10)+"만원":n.toLocaleString()+"원";
+
+  const blocks=[];
+  cur.forEach(it=>it.days.forEach(d=>blocks.push({it,d})));
+  const ghosts=[];
+  if(drag)drag.ghosts.forEach(g=>g.days.forEach(d=>ghosts.push({g,d})));
+
+  return(
+    <div className="tt-sheet" ref={sheetRef} role="dialog" aria-modal="true" aria-label="시간표 짜기">
+      <div className="tt-wrap">
+        <div className="tt-head">
+          <h2>📅 시간표 짜기</h2>
+          <button className="tt-x" onClick={onClose} aria-label="닫기">×</button>
+        </div>
+
+        <div className="tt-sec tt-seg" role="group" aria-label="어디서 고를까">
+          <button className={source==="interest"?"on":""} onClick={()=>{setSource("interest");picked.current=false;}}>⭐ 관심 강좌 {interestPool.length}개</button>
+          <button className={source==="wide"?"on":""} onClick={()=>{setSource("wide");picked.current=false;}}>🔍 지금 검색 결과 {Math.min(wideItems.length,TT_WIDE_CAP).toLocaleString()}개</button>
+        </div>
+        {source==="wide"&&!settings.address&&wideItems.length>TT_WIDE_CAP&&
+          <div className="tt-hint" style={{marginTop:6}}>출발지를 넣으면 가까운 곳 위주로 짭니다. 지금은 개강이 빠른 {TT_WIDE_CAP.toLocaleString()}개만 봅니다.</div>}
+        {source==="wide"&&consRaw.oneTime==null&&
+          <div className="tt-hint" style={{marginTop:6}}>검색 결과에서 짤 땐 1회 특강은 빼고 매주 하는 강좌만 씁니다(넣으려면 "특강도 넣기").</div>}
+        {source==="interest"&&interestGis.length>interestPool.length&&
+          <div className="tt-hint" style={{marginTop:6}}>담은 강좌 중 {interestGis.length-interestPool.length}개는 요일·시간이 적혀 있지 않아 시간표에 못 놓습니다.</div>}
+
+        <div className="tt-sec">
+          <div className="tt-cmd">
+            <input value={cmd} onChange={e=>setCmd(e.target.value)} onKeyDown={e=>{if(e.key==="Enter")apply();}}
+              placeholder="말로 시키기: 주말만, 수영 꼭, 하루 2개까지" aria-label="시간표 조건을 말로 입력"/>
+            <button className="tt-btn" onClick={()=>apply()}>적용</button>
+          </div>
+          <div className="tt-got" style={{marginTop:6}}>
+            {TT_EXAMPLES.map(ex=><button key={ex} className="tt-chip" onClick={()=>addExample(ex)}>+ {ex}</button>)}
+          </div>
+          {(cons.understood.length>0||cons.unknown.length>0)&&(
+            <div className="tt-got" aria-live="polite">
+              {cons.understood.map(u=><span key={u}>✓ {u}</span>)}
+              {cons.unknown.map(u=><span key={u} className="q">? 못 알아들음: {u}</span>)}
+              <button className="tt-chip" onClick={()=>apply("")}>조건 지우기</button>
+            </div>
+          )}
+        </div>
+
+        {pool.length===0?(
+          <div className="tt-empty">
+            {source==="interest"?<>아직 담은 강좌가 없어요.<br/>강좌 카드의 <b>☆ 별표</b>나 <b>□ 체크</b>를 누르면 여기 모입니다(개수 제한 없음).<br/><br/>
+              <button className="tt-btn" onClick={()=>setSource("wide")}>🔍 지금 검색 결과로 바로 짜기</button></>
+              :<>검색 결과에 시간표로 놓을 강좌가 없어요. 필터를 넓혀 보세요.</>}
+          </div>
+        ):(
+          <>
+            <div className={"tt-sec tt-plans"+(tabs.length===4?" four":"")}>
+              {tabs.map(t=>(
+                <button key={t.i} className={"tt-plan"+(active===t.i?" on":"")} onClick={()=>pickTab(t.i)} aria-pressed={active===t.i} title={t.desc}>
+                  <div className="n">{t.icon} {t.name}{t.edited?" ✎":""}</div>
+                  <div className="s">종목 {t.stats.cats} · 강좌 {t.stats.items}<br/>센터 {t.stats.centers}곳 · {t.stats.days}일</div>
+                </button>
+              ))}
+            </div>
+            <div className="tt-tools" style={{marginTop:6}}>
+              <button className="tt-chip" onClick={()=>{picked.current=true;setSeed(s=>s+1);}}>🔀 다른 조합으로 다시 짜기</button>
+              {active<3&&plans&&plans[active]&&<span className="tt-hint" style={{margin:"auto 0"}}>{plans[active].desc}</span>}
+            </div>
+
+            <div className="tt-sum" aria-live="polite">
+              {busy?<span>짜는 중…</span>:<>
+                <span>종목 <b>{st.cats}</b></span><span>강좌 <b>{st.items}</b></span><span>센터 <b>{st.centers}</b>곳</span>
+                <span>요일 <b>{st.days}</b>일</span><span>수강료 합계 <b>{won(st.price)}</b></span>
+              </>}
+            </div>
+            {missingMust.length>0&&!busy&&<div className="tt-warn">⚠ {missingMust.join("·")}: 다른 강좌와 겹치지 않는 시간이 없어 못 넣었어요. 조건을 풀거나 아래 목록에서 '바꿔 넣기'를 눌러 보세요.</div>}
+            {active===3&&missing>0&&<div className="tt-warn">⚠ 저장한 강좌 중 {missing}개는 마감·개강으로 목록에서 빠졌어요.</div>}
+            {!busy&&cur.length===0&&<div className="tt-warn">조건에 맞는 강좌가 없어요. 조건을 줄여 보세요.</div>}
+            <div className="tt-hint">블록을 <b>꾹 눌러 끌면</b> 같은 종목의 다른 시간(노란 점선)으로 옮겨집니다 · 🗑에 놓으면 빠짐 · 톡 누르면 자세히</div>
+
+            <div className="tt-grid" ref={gridRef} style={{height:gridH}} onContextMenu={e=>e.preventDefault()}>
+              {TT.DAYS.map((dn,d)=>(
+                <div key={dn} className={"tt-dayh"+(d>=5?" we":"")} style={{left:colLeft(d),width:colW}}>{dn}</div>
+              ))}
+              {TT.DAYS.map((dn,d)=><div key={"c"+d} className="tt-col" style={{left:"calc("+TT_AXIS+"px + (100% - "+TT_AXIS+"px) * "+d+" / 7)"}}/>)}
+              {Array.from({length:(range.hi-range.lo)/60+1},(_,k)=>range.lo+k*60).map(m=>(
+                <div key={m} className="tt-hr" style={{top:topOf(m)}}><i>{m/60}</i></div>
+              ))}
+              {blocks.map(({it,d})=>{
+                const c=ttColor(it.cat);
+                const lifted=drag&&drag.kind==="block"&&drag.item.key===it.key;
+                // 블록 높이에 맞는 줄 수만 보여 준다(반쯤 잘린 줄 없게). 4줄 넘게 들어가면 시간 줄도
+                const bh=Math.max(22,(it.e-it.s)*TT_PPM-2);
+                const lines=Math.max(1,Math.floor((bh-6)/13.2));
+                const showTime=lines>=4;
+                return(
+                  <div key={it.key+"#"+d} className={"tt-blk"+(lifted?" lift":"")} role="button" tabIndex={0}
+                    data-key={it.key} data-day={d}
+                    aria-label={it.title+", "+TT.DAYS[d]+"요일 "+TT.fmt(it.s)+"부터, "+it.center}
+                    style={{left:colLeft(d),width:colW,top:topOf(it.s),height:bh,background:c+"33",borderLeft:"3px solid "+c}}
+                    onPointerDown={e=>down(e,it,"block")}
+                    onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();setSelKey(it.key);}}}>
+                    <div className="t" style={{WebkitLineClamp:showTime?lines-1:lines}}>{ttShortTitle(it.title)}</div>
+                    {showTime&&<div className="h">{TT.fmt(it.s)}{it.oneTime?" · 1회":""}</div>}
+                  </div>
+                );
+              })}
+              {ghosts.map(({g,d})=>{
+                const on=drag&&drag.over&&drag.over.ghost&&drag.over.ghost.key===g.key;
+                return(
+                  <div key={"g"+g.key+"#"+d} className={"tt-ghost"+(on?" on":"")}
+                    style={{left:colLeft(d),width:colW,top:topOf(g.s),height:Math.max(22,(g.e-g.s)*TT_PPM-2)}}>
+                    {drag.kind==="pool"?"여기 들어감":TT.fmt(g.s)}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="tt-tools">
+              <button className="tt-btn ghost" onClick={undo} disabled={!hist.length} style={{opacity:hist.length?1:.45}}>↩ 되돌리기</button>
+              <button className="tt-btn" onClick={savePlan} disabled={!cur.length}>⭐ 내 시간표로 저장</button>
+              <button className="tt-btn ghost" onClick={share} disabled={!cur.length}>📤 글로 공유</button>
+            </div>
+
+            <div className="tt-sec">
+              <div style={{fontSize:13.5,fontWeight:800,color:"var(--text-primary)"}}>관심 강좌 더 넣기 <span style={{fontSize:11.5,color:"var(--text-muted)",fontWeight:600}}>(＋ 누르거나 ⠿ 잡고 시간표로 끌기)</span></div>
+              {restPool.length===0?<div className="tt-hint" style={{marginTop:6}}>{interestPool.length?"관심 강좌가 모두 시간표에 들어갔어요.":"강좌 카드의 ☆·□로 관심 강좌를 담으면 여기서 골라 넣을 수 있어요."}</div>:(
+                <div className="tt-list">
+                  {restPool.slice(0,80).map(({s,ok,cf})=>(
+                    <div key={s.key} className="tt-item" style={{opacity:ok?1:.6}}>
+                      <span className="grip" onPointerDown={e=>down(e,s,"pool")} aria-hidden="true">⠿</span>
+                      <span style={{width:8,height:8,borderRadius:4,background:ttColor(s.cat),flexShrink:0}}/>
+                      <div className="m">
+                        <div className="a">{emojiOf(s.cat)} {s.title}</div>
+                        <div className="b">{dayTxt(s)} {TT.fmt(s.s)}~{TT.fmt(s.e)} · {s.center} · {s.priceText}</div>
+                        {!ok&&<div className="c">지금 조건 밖(요일·시간·종목·예산)</div>}
+                        {ok&&cf.length>0&&<div className="c">겹침: {cf.map(x=>short(x.title)).join(", ")}</div>}
+                      </div>
+                      <button className={"tt-add"+(cf.length?" sw":"")} onClick={()=>addItem(s)}>{cf.length?"바꿔 넣기":"＋ 넣기"}</button>
+                    </div>
+                  ))}
+                  {restPool.length>80&&<div className="tt-hint">…외 {restPool.length-80}개</div>}
+                </div>
+              )}
+            </div>
+          </>
+        )}
+      </div>
+
+      {drag&&(
+        <div className="tt-float" style={{left:Math.min(Math.max(drag.x,115),window.innerWidth-115),top:drag.y,background:ttColor(drag.item.cat)}}>{emojiOf(drag.item.cat)} {ttShortTitle(drag.item.title)}</div>
+      )}
+      {drag&&drag.kind==="block"&&(
+        <div ref={trashRef} className={"tt-trash"+(drag.over&&drag.over.trash?" on":"")}>🗑 여기 놓으면 빼기</div>
+      )}
+
+      {selItem&&(
+        <>
+          <div onClick={()=>setSelKey(null)} style={{position:"fixed",inset:0,zIndex:157,background:"rgba(0,0,0,.35)"}}/>
+          <div className="tt-detail" role="dialog" aria-label="강좌 자세히">
+            <div style={{display:"flex",justifyContent:"space-between",gap:8}}>
+              <h3>{emojiOf(selItem.cat)} {selItem.title}</h3>
+              <button className="tt-x" style={{minHeight:32,fontSize:22}} onClick={()=>setSelKey(null)} aria-label="닫기">×</button>
+            </div>
+            <div className="kv">
+              🏬 {selItem.center}<br/>
+              🗓 {dayTxt(selItem)} {TT.fmt(selItem.s)}~{TT.fmt(selItem.e)}{selItem.start?" · 개강 "+selItem.start:""}<br/>
+              💰 {selItem.priceText||"-"} · 👶 {selItem.target||"-"} · {selItem.status}
+            </div>
+            <div className="tt-tools">
+              {selItem.url&&<a className="tt-btn" href={selItem.url} target="_blank" rel="noopener noreferrer" style={{textDecoration:"none"}}>신청 →</a>}
+              <button className="tt-btn ghost" onClick={()=>removeItem(selItem)}>🗑 시간표에서 빼기</button>
+            </div>
+            <div style={{fontSize:13,fontWeight:800,color:"var(--text-primary)",marginTop:14}}>다른 시간으로 바꾸기 <span style={{fontSize:11.5,color:"var(--text-muted)",fontWeight:600}}>(같은 종목 · 지금 시간표와 안 겹침)</span></div>
+            {selAlts.length===0?<div className="tt-hint" style={{marginTop:6}}>겹치지 않는 다른 시간이 없어요.</div>:(
+              <div className="tt-list">
+                {selAlts.map(a=>(
+                  <div key={a.key} className="tt-item">
+                    <div className="m" style={{paddingLeft:6}}>
+                      <div className="a">{dayTxt(a)} {TT.fmt(a.s)}~{TT.fmt(a.e)}</div>
+                      <div className="b">{a.title} · {a.center}{a.start?" · 개강 "+a.start:""} · {a.priceText}</div>
+                    </div>
+                    <button className="tt-add" onClick={()=>replaceItem(selItem,a)}>이걸로</button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 function App(){
   const [data,setData]=useState([]);
   const [loading,setLoading]=useState(true);
@@ -731,7 +1201,16 @@ function App(){
   const [showScrollTop,setShowScrollTop]=useState(false);
   const [recentSearches,setRecentSearches]=useState(()=>load('cc-recent',[]));
   const [centerModal,setCenterModal]=useState(null); // center name for detail modal
-  const [compareItems,setCompareItems]=useState([]); // array of global indices for comparison (max 3)
+  // 비교·시간표에 담은 강좌 — 개수 제한 없음, 안정키(센터|강좌명|요일|시간|개강일)로 저장해 다시 열어도 유지(2026-11-15)
+  // ※예전엔 배열 인덱스 3개까지만 담고 새로고침하면 사라졌다.
+  const [pickKeys,setPickKeys]=useState(()=>load("cc-picks-v1",[]));
+  const pickIndex=useMemo(()=>{const m=new Map();data.forEach((r,i)=>{const k=pickKeyOf(r);if(!m.has(k))m.set(k,i);});return m;},[data]);
+  const compareItems=useMemo(()=>pickKeys.map(k=>pickIndex.get(k)).filter(i=>i!==undefined),[pickKeys,pickIndex]);
+  useEffect(()=>{try{localStorage.setItem("cc-picks-v1",JSON.stringify(pickKeys));}catch(e){}},[pickKeys]);
+  // 시간표 재료 = ⭐ 즐겨찾기 ∪ ☑ 담기
+  const interestGis=useMemo(()=>{const pick=new Set(compareItems);const out=[];data.forEach((r,i)=>{if(pick.has(i)||fav.has(rowKey(r)))out.push(i);});return out;},[data,fav,compareItems]);
+  const [showTT,setShowTT]=useState(false);
+  useEffect(()=>{window.__ccfOpenTimetable=()=>setShowTT(true);return()=>{delete window.__ccfOpenTimetable;};},[]);
   const [showCompare,setShowCompare]=useState(false);
   const [mobileTab,setMobileTab]=useState("search"); // mobile bottom nav
   const [bottomNavVisible,setBottomNavVisible]=useState(true);
@@ -781,6 +1260,7 @@ function App(){
   useHubBack(showMap,'map',()=>setShowMap(false));
   useHubBack(!!centerModal,'centerModal',()=>setCenterModal(null));
   useHubBack(showCompare,'compare',()=>setShowCompare(false));
+  useHubBack(showTT,'timetable',()=>setShowTT(false));
   useHubBack(showOnboarding,'onboarding',()=>completeOnboarding());
 
   // Keyboard shortcuts
@@ -795,6 +1275,7 @@ function App(){
       }
       // Escape to close modal or clear search
       if(e.key==='Escape'){
+        if(showTT)return; // 시간표 화면이 자기 Esc 를 처리한다
         if(modal){setModal(null);return;}
         if(courseDetail!==null){setCourseDetail(null);return;}
         if(showMap){setShowMap(false);return;}
@@ -805,7 +1286,7 @@ function App(){
     };
     window.addEventListener('keydown',handler);
     return()=>window.removeEventListener('keydown',handler);
-  },[modal,centerModal,showCompare,q,courseDetail,showMap]);
+  },[modal,centerModal,showCompare,q,courseDetail,showMap,showTT]);
 
   // Parse price from string to number
   const parsePrice=(s)=>{
@@ -859,7 +1340,7 @@ function App(){
   const ONBOARD_DATA=[
     {icon:"🔍",title:"출발지 설정",desc:"상단에 출발지 주소를 입력하면 각 문화센터까지의 이동시간이 자동 계산됩니다. 차량/대중교통도 전환 가능합니다."},
     {icon:"🎯",title:"필터로 찾기",desc:"종목, 요일, 상태, 지역, 가격 등 다양한 필터를 조합하여 원하는 강좌를 빠르게 찾으세요."},
-    {icon:"⭐",title:"즐겨찾기와 비교",desc:"관심 있는 강좌에 별표를 누르고, 체크박스로 최대 3개 강좌를 한눈에 비교할 수 있습니다."},
+    {icon:"⭐",title:"즐겨찾기·비교·시간표",desc:"관심 있는 강좌에 별표나 체크를 개수 제한 없이 담고, 한눈에 비교하거나 '📅 시간표 짜기'로 겹치지 않는 주간 시간표 3안을 받아 끌어서 고칠 수 있습니다."},
     {icon:"📊",title:"통계 분석",desc:"통계 탭에서 시간대별, 요일별, 종목별, 가격별 분석을 확인하고 나에게 맞는 강좌를 발견하세요."},
     {icon:"📱",title:"어디서든 사용",desc:"PWA로 설치하면 오프라인에서도 사용 가능합니다. 모바일에서는 하단 네비게이션으로 편리하게 이용하세요."}
   ];
@@ -919,6 +1400,14 @@ function App(){
     setSearchMsg(addr+" 기준 | "+(settings.transport==="car"?"차량":"대중교통")+" | "+settings.maxMin+"분 이내");
   };
   const applyAddr=()=>applyAddrValue(addrInput.trim());
+  // 저장된 출발지 복원(2026-11-15): 앱을 다시 열면 주소 글자만 남고 위치 계산을 안 해서
+  // 모든 강좌가 '이동 999분'으로 걸러져 "0개 강좌"가 되던 결함 — 자료를 다 받은 뒤 한 번 다시 계산한다
+  const addrRestored=useRef(false);
+  useEffect(()=>{
+    if(addrRestored.current||loading||!data.length)return;
+    addrRestored.current=true;
+    if(settings.address&&!USER_POS)applyAddrValue(settings.address);
+  },[loading,data.length]);
 
   // 온보딩 2문답 적용: 출생년도(연령 필터) + 동네(이동시간 계산) → 즉시 맞춤 목록
   const obApply=()=>{
@@ -1329,11 +1818,9 @@ function App(){
 
   // Compare feature
   const toggleCompare=(gi)=>{
-    setCompareItems(prev=>{
-      if(prev.includes(gi)) return prev.filter(x=>x!==gi);
-      if(prev.length>=3){showT("최대 3개까지 비교 가능");return prev;}
-      return[...prev,gi];
-    });
+    const r=data[gi];if(!r)return;
+    const k=pickKeyOf(r);
+    setPickKeys(prev=>prev.includes(k)?prev.filter(x=>x!==k):[...prev,k]); // 제한 없음(2026-11-15)
   };
 
   // Center detail: get courses for a center
@@ -1394,7 +1881,7 @@ function App(){
               </div>
               <div style={{display:"flex",gap:4,alignItems:"center"}}>
                 <span style={{cursor:"pointer",fontSize:12}} onClick={(e)=>{e.stopPropagation();toggleFav(gi);}}>{iF?"⭐":"☆"}</span>
-                <input type="checkbox" checked={isCompare} onChange={(e)=>{e.stopPropagation();toggleCompare(gi);}} onClick={(e)=>e.stopPropagation()} style={{width:12,height:12,cursor:"pointer"}} title="비교 선택"/>
+                <input type="checkbox" checked={isCompare} onChange={(e)=>{e.stopPropagation();toggleCompare(gi);}} onClick={(e)=>e.stopPropagation()} style={{width:12,height:12,cursor:"pointer"}} title="비교·시간표에 담기(개수 제한 없음)" aria-label={r[4]+" 비교·시간표에 담기"}/>
               </div>
             </div>
             <div style={{fontSize:9,color:"var(--text-muted)",marginBottom:4}}>{getEmoji(r[3])} {r[3]}</div>
@@ -1486,6 +1973,7 @@ function App(){
               {[["table","목록"],["stats","통계"]].map(([v,l])=>(
                 <button key={v} className={`tb ${tab===v?"a":""}`} onClick={()=>setTab(v)} aria-pressed={tab===v}>{l}</button>
               ))}
+              {window.CCFTT&&<button className="tb" onClick={()=>setShowTT(true)} aria-label="시간표 짜기">{"📅"} 시간표</button>}
               <button className="tb" onClick={()=>{setShowOnboarding(true);setOnboardStep(0);}} title="사용법 가이드" aria-label="사용법 보기">{"❓"}</button>
             </div>
           </div>
@@ -2022,7 +2510,7 @@ function App(){
             <h2>기능 안내</h2>
             <p>출발지 기반 이동시간 계산</p>
             <p>종목/요일/상태/지역 필터</p>
-            <p>강좌 비교 (최대 3개)</p>
+            <p>강좌 비교·시간표 짜기 (개수 제한 없음)</p>
             <p>즐겨찾기 및 메모</p>
             <p>CSV/JSON 내보내기</p>
           </div>
@@ -2240,7 +2728,8 @@ function App(){
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
               <h2 style={{marginBottom:0}}>강좌 비교 ({compareItems.length}개)</h2>
               <div style={{display:"flex",gap:6}}>
-                <button className="btn-c" onClick={()=>{setCompareItems([]);setShowCompare(false);}}>초기화</button>
+                {window.CCFTT&&<button className="btn-c" style={{background:"linear-gradient(135deg,#FBBF24,#F59E0B)",color:"#0A1628",fontWeight:800}} onClick={()=>{setShowCompare(false);setShowTT(true);}}>📅 시간표로 짜기</button>}
+                <button className="btn-c" onClick={()=>{setPickKeys([]);setShowCompare(false);}}>초기화</button>
                 <button onClick={()=>setShowCompare(false)} style={{background:"none",border:"none",color:"var(--text-muted)",fontSize:20,cursor:"pointer"}}>{"×"}</button>
               </div>
             </div>
@@ -2342,6 +2831,17 @@ function App(){
             <button className="onboarding-skip" onClick={completeOnboarding}>건너뛰기</button>
           </div>
         </div>
+      )}
+
+      {/* 시간표 짜기(2026-11-15): 관심 강좌가 있으면 왼쪽 아래에 떠 있는 버튼 */}
+      {window.CCFTT&&interestGis.length>0&&!showTT&&!showCompare&&!modal&&courseDetail===null&&!centerModal&&!showMap&&!showOnboarding&&(
+        <button className="tt-fab" onClick={()=>setShowTT(true)} aria-label={"시간표 짜기, 관심 강좌 "+interestGis.length+"개"}>
+          {"📅"} 시간표 짜기 <b>{interestGis.length}</b>
+        </button>
+      )}
+      {showTT&&window.CCFTT&&(
+        <TimetableSheet onClose={()=>setShowTT(false)} data={data} interestGis={interestGis} wideItems={filtered}
+          settings={settings} showT={showT} homeTime={getTimeFor} emojiOf={getEmoji}/>
       )}
 
       {toast&&<div className="toast" role="alert">{toast}</div>}

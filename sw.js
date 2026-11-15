@@ -1,8 +1,9 @@
-const CACHE_NAME = 'ccf-v33-20260926-leftover';
+const CACHE_NAME = 'ccf-v34-20261115-timetable';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './hub-back.js',
+  './timetable_core.js',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',

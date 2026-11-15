@@ -320,7 +320,8 @@ function createQuickActions() {
 function handleAction(key) {
   SFX.play('click');
   switch(key) {
-    case 'timetable': toggleTimetable(); break;
+    // 2026-11-15: 옛 읽기전용 시간표(없어진 'cc-fav' 를 읽어 사실상 상위 200개만 보여 줌) 대신 새 '시간표 짜기' 화면으로
+    case 'timetable': if (window.__ccfOpenTimetable) { window.__ccfOpenTimetable(); break; } toggleTimetable(); break;
     case 'recommend': toggleRecommend(); break;
     case 'alerts': toggleAlerts(); break;
     case 'shortcuts': toggleShortcuts(); break;
